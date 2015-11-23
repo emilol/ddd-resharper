@@ -156,7 +156,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OccurencePresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeParameterUtil.cs" />
     <Compile Include="ZoneMarker.cs" />
   </ItemGroup>
   <ItemGroup>
