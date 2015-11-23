@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JsLibGen</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.ReSharper.Build.Tools.JsLibGen">
+            <summary>
+            Generates source code definitions from the <c>Errors.xml</c> files.
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Build.Tools.JsLibGen.InputFile">
+            <summary>
+            The intput file (XML).
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Build.Tools.JsLibGen.OutputFile">
+            <summary>
+            The output file (generated source code).
+            </summary>
+        </member>
+    </members>
+</doc>

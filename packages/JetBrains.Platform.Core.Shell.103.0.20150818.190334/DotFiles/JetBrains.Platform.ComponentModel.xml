@@ -1,0 +1,634 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.ComponentModel</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.Application.Components.IComponentContainer">
+            <summary>
+            Interface for abstract component container
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Components.IComponentContainer.CreateResolveContext(JetBrains.Application.Components.IValueDescriptor)">
+            <summary>
+            Creates value resolution context for requesting descriptor.
+            </summary>
+            <param name="requestingDescriptor">Requesting descriptor or <see cref="F:JetBrains.Application.Components.DynamicComponentDescriptor.Instance"/> for unbound lookups</param>
+            <returns>IValueResolveContext for instance lookups</returns>
+        </member>
+        <member name="F:JetBrains.Application.Components.ComponentContainer.myUnknownContext">
+            <summary>
+            Immutable context for resolving in unknown (dynamic) context. Avoids memory traffic on GetComponent calls without context.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.SingletonDescriptor.ComponentState.Null">
+            <summary>
+            The component has just been created, it has not been initialized yet.
+            Cannot be returned from GetComponent in this state.
+            If queried from the Primary thread, initializes the component; on other threads, fails.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.SingletonDescriptor.ComponentState.Initializing">
+            <summary>
+            We're currently initializing the component.
+            Can be queried on the Primary thread only if there're no nested component initializations (because such a condition means a circular dependency); on other threads, fails.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.SingletonDescriptor.ComponentState.Initialized">
+            <summary>
+            The component has been initialized and its instance is accessible from any thread.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.SingletonDescriptor.ComponentState.Corrupted">
+            <summary>
+            We attempted to init the component, but it has failed to complete its Init.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.SingletonDescriptor.ComponentState.Disposing">
+            <summary>
+            The component is currently being disposed
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.SingletonDescriptor.ComponentState.Disposed">
+            <summary>
+            The component was disposed and no longer accessible 
+            </summary>
+        </member>
+        <member name="T:JetBrains.Application.Extensibility.AppDomainPartCatalogAssembliesResolver">
+            <summary>
+            In a scenario when product assembly is loaded as a dependency of plugin assembly we need to specify product assembly location explicitly (as it can not be resolved in plugin folder).
+            </summary>
+        </member>
+        <member name="T:JetBrains.Application.Parts.IPartCatalogueAssemblyBinder">
+            <summary>
+            Knows how to bind part catalog assemblies to various real-life stuff.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.IPartCatalogueAssemblyBinder.BindToMetadataAssembly(JetBrains.DataFlow.Lifetime)">
+            <summary>
+            Loads the metadata reader for this assembly.
+            </summary>
+            <param name="lifetime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Application.Parts.IPartCatalogueAssemblyBinder.BindToRuntimeAssembly">
+            <summary>
+            Loads the runtime assembly.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Application.Parts.IPartCatalogueAssemblyBinder.BindToStream(JetBrains.DataFlow.Lifetime)">
+            <summary>
+            Gets the assembly contents as a stream.
+            </summary>
+            <param name="lifetime"></param>
+            <returns></returns>
+        </member>
+        <member name="T:JetBrains.Application.Parts.IPartCatalogueAssemblyMasterBinder">
+            <summary>
+            A binder for a session of reading the set of assemblies.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.IPartCatalogueAssemblyMasterBinder.CreateMetadataLoader(JetBrains.DataFlow.Lifetime)">
+            <summary>
+            Creates the metadata loader which can resolve into all of the assemblies of this master binder, plus their references (as needed for reading the catalog).
+            </summary>
+            <param name="lifetime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Application.Parts.IPartCatalogueAssemblyMasterBinder.GetBinder(JetBrains.Metadata.Utils.AssemblyNameInfo,JetBrains.Util.OnError)">
+            <summary>
+            Gets the binder for the specific assembly.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.IPartCatalogueAssemblyMasterBinderEx.BindToMetadataAssembly(JetBrains.Metadata.Utils.AssemblyNameInfo,JetBrains.Metadata.Reader.API.MetadataLoader)">
+            <summary>
+            Loads the metadata reader for this assembly.
+            Optional metadata loader if already created with the same binder for reuse when loading multiple assemblies.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.IPartCatalogueAssemblyMasterBinderEx.BindToRuntimeAssembly(JetBrains.Metadata.Utils.AssemblyNameInfo)">
+            <summary>
+            Loads the runtime assembly.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.IPartCatalogueAssemblyMasterBinderEx.BindToStream(JetBrains.DataFlow.Lifetime,JetBrains.Metadata.Utils.AssemblyNameInfo)">
+            <summary>
+            Gets the assembly contents as a stream.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Application.Components.Optional`1">
+            <summary>
+            Wraps an optional component instance in an explicit fashion.
+            To get a component which is OK to be missing, request <see cref="T:JetBrains.Application.Components.Optional`1"/> specialized with your type.
+            The wrapper value you get is always non-<c>Null</c>, and you can inspect if the contained component instance is present or not.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Application.Components.OptionalValueResolver">
+            <summary>
+            Services <see cref="T:JetBrains.Application.Components.Optional`1"/> for the container.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Components.OptionalValueResolver.TryExtractTypeUnderOptional(System.Type)">
+            <summary>
+            If <paramref name="typePossiblyOptional"/> is a type wrapped in <see cref="T:JetBrains.Application.Components.Optional`1"/>, extracts the type it holds (its generic parametrization type).
+            Otherwise yields NULL.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Components.SignatureResolution.CreateInstance``1(JetBrains.Application.Components.IComponentContainer)">
+            <summary>
+            Create an instance of arbitrary type <typeparamref name="T"/>, selecting best constructor and providing parameter values from container
+            </summary>
+            <typeparam name="T">Type to instantiate</typeparam>
+            <param name="container">Container to get values for parameters from</param>
+            <returns>New instance of type <typeparamref name="T"/></returns>
+        </member>
+        <member name="M:JetBrains.Application.Components.SignatureResolution.CreateInstance(JetBrains.Application.Components.IComponentContainer,System.Type)">
+            <summary>
+            Create an instance of arbitrary type <paramref name="type"/>, selecting best constructor and providing parameter values from container
+            </summary>
+            <param name="container">Container to get values for parameters from</param>
+            <param name="type">Type to instantiate</param>
+            <returns>New instance of type <paramref name="type"/></returns>
+        </member>
+        <member name="M:JetBrains.Application.Components.SignatureResolution.DynamicInvoke(JetBrains.Application.Components.IComponentContainer,System.Delegate)">
+            <summary>
+            Invoke a function using reflection and supplying parameters' values from container
+            </summary>
+            <param name="container">Container</param>
+            <param name="function">Function</param>
+            <returns>Return value of the function</returns>
+        </member>
+        <member name="M:JetBrains.Application.Components.SignatureResolution.CreateInstance(JetBrains.Application.Components.SignatureResolution.Binding)">
+            <summary>
+            Creates an instance from the resolved binding. Method should be <see cref="T:System.Reflection.ConstructorInfo"/>.
+            </summary>
+            <param name="binding">Resolved binding</param>
+            <returns>New instance</returns>
+        </member>
+        <member name="M:JetBrains.Application.Components.SignatureResolution.BindToConstructor(System.Type,JetBrains.Application.Components.IValueResolveContext)">
+            <summary>
+            Creates a binding to a constructor of the specified type using the specified resolver
+            </summary>
+            <param name="type">Type to create binding for</param>
+            <param name="context">Context for parameter resolution</param>
+            <param name="name">Name for diagnostics</param>
+            <returns>Resolved binding</returns>
+        </member>
+        <member name="M:JetBrains.Application.Components.SignatureResolution.BindToMethod(System.Type,System.String,JetBrains.Application.Components.IValueResolveContext)">
+            <summary>
+            Creates a binding to a method of the specified type using the specified resolver
+            </summary>
+            <param name="type">Type to create binding for</param>
+            <param name="context">Context for parameter resolution</param>
+            <param name="name">Name for diagnostics</param>
+            <returns>Resolved binding</returns>
+        </member>
+        <member name="M:JetBrains.Application.Components.SignatureResolution.BindToMethod(System.Reflection.MethodBase[],JetBrains.Application.Components.IValueResolveContext,System.String)">
+            <summary>
+            Finds method in candidates list which can be satisfied by resolver
+            </summary>
+            <param name="candidates">Candidates to select from</param>
+            <param name="context">Resolution service, can find descriptor by type</param>
+            <param name="name">Name for diagnostics</param>
+            <returns>Resolved binding</returns>
+        </member>
+        <member name="T:JetBrains.Application.Components.SignatureResolution.Binding">
+            <summary>
+            Holds information about a method bound to a list of descriptor to supply as parameters
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Components.LazyValueResolver.TryExtractTypeUnderLazy(System.Type)">
+            <summary>
+            If <paramref name="typePossiblyLazy"/> is a lazy type, extracts the type it lazily creates (its generic parametrization type).
+            In case it looks like lazy but is not lazy (e.g. from newer system libraries), issues an exception.
+            If it's just clearly a non-Lazy type, yields NULL.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Application.Components.ViewableValueResolver">
+            <summary>
+            Handles generic descriptors of <see cref="T:JetBrains.DataFlow.IViewable`1"/> kind
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Extensibility.CatalogueComponentSource.myCatalogueSet">
+            <summary>
+            Catalogue set used to retrieve parts from
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Extensibility.CatalogueComponentSource.mySelector">
+            <summary>
+            Selects subset of parts to instantiate, e.g. handles parts overrides
+            </summary>
+        </member>
+        <member name="P:JetBrains.Application.Extensibility.CatalogueComponentSource.PartsFilter">
+            <summary>
+            Filter applied to select parts for this component container
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.DispatcherAccessPolicy.myDispatcher">
+            <summary>
+            Marks the container's thread affinity.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Components.FactoryComponentContainer.CreateInstance``1(JetBrains.DataFlow.Lifetime,JetBrains.Application.Components.IComponentContainer,System.Object[])">
+            <summary>
+            Creates an object instance of type <typeparamref name="TInstance"/>, injecting it with custom <paramref name="args">arguments</paramref> and components from the <paramref name="parent">parent container</paramref>.
+            </summary>
+            <typeparam name="TInstance">Type of the object to create.</typeparam>
+            <param name="lifetime">Defines the lifetime for the object that will be created. The object gets it in the constructor.</param>
+            <param name="parent">The parent component container to define the set of components that could be imported in the object constructor.</param>
+            <param name="args">Additional custom actual parameters to be passed to the object constructor. These take precedence over parent container components. Note that currently there is no indication of unused parameters.</param>
+            <returns>The new instance.</returns>
+        </member>
+        <member name="M:JetBrains.Application.Components.FactoryComponentContainer.CreateInstance(JetBrains.DataFlow.Lifetime,System.Type,JetBrains.Application.Components.IComponentContainer,System.Object[])">
+            <summary>
+            Creates an object instance of type <paramref name="objecttype"/>, injecting it with custom <paramref name="args">arguments</paramref> and components from the <paramref name="parent">parent container</paramref>.
+            </summary>
+            <param name="lifetime">Defines the lifetime for the object that will be created. The object gets it in the constructor.</param>
+            <param name="objecttype">Type of the object to create.</param>
+            <param name="parent">The parent component container to define the set of components that could be imported in the object constructor.</param>
+            <param name="args">Additional custom actual parameters to be passed to the object constructor. These take precedence over parent container components. Note that currently there is no indication of unused parameters.</param>
+            <returns>The new instance.</returns>
+        </member>
+        <member name="M:JetBrains.Application.Components.FactoryComponentContainer.CreateInstanceWithoutContainer(JetBrains.DataFlow.Lifetime,System.Type,System.Object[])">
+            <summary>
+            Creates an object instance of type <paramref name="objecttype"/>, injecting it with custom <paramref name="args">arguments</paramref>, but does not chain this to the parent component container.
+            </summary>
+            <param name="lifetime">Defines the lifetime for the object that will be created. The object gets it in the constructor.</param>
+            <param name="objecttype">Type of the object to create.</param>
+            <param name="args">Additional custom actual parameters to be passed to the object constructor. These take precedence over parent container components. Note that currently there is no indication of unused parameters.</param>
+            <returns>The new instance.</returns>
+        </member>
+        <member name="M:JetBrains.Application.Components.FactoryComponentContainer.CreateInstanceCore(JetBrains.DataFlow.Lifetime,System.Type,JetBrains.Application.Components.IComponentContainer,System.Object[])">
+            <summary>
+            Creates an object instance of type <paramref name="type"/>, injecting it with custom <paramref name="args">arguments</paramref> and components from the <paramref name="parent">parent container</paramref>.
+            </summary>
+            <param name="lifetime">Defines the lifetime for the object that will be created. The object gets it in the constructor.</param>
+            <param name="type">Type of the object to create.</param>
+            <param name="parent">The parent component container to define the set of components that could be imported in the object constructor.</param>
+            <param name="args">Additional custom actual parameters to be passed to the object constructor. These take precedence over parent container components. Note that currently there is no indication of unused parameters.</param>
+            <returns>The new instance.</returns>
+        </member>
+        <member name="M:JetBrains.Application.Components.FactoryComponentContainer.InvokeTransient(JetBrains.Application.Components.IComponentContainer,System.Linq.Expressions.Expression{System.Action})">
+            <summary>
+            Invokes a method transiently (without any lifetime control). The method should not initiate any long-running activities, otherwise the entities passed into the method might get invalid.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Components.FactoryComponentContainer.InvokeLive(JetBrains.DataFlow.Lifetime,JetBrains.Application.Components.IComponentContainer,System.Linq.Expressions.Expression{System.Action},System.Object[])">
+            <summary>
+            Invokes a method with a live result (it gets its own lifetime, based on the lifetime you pass in and lifetimes of any components it also imports). The imported stuff is safe to use as long as you're not exceeding your lifetime.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.ComponentRegisterEntry.myDescriptors">
+            <summary>
+            null, IComponentDescriptor or <see cref="T:System.Collections.Generic.IList`1"/>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Application.Components.ComponentStorage">
+            <summary>
+            Base class for component containers. Provides storage for components and initialization services
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.ComponentStorage.myId">
+            <summary>
+            Container ID 
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.ComponentStorage.myAccessPolicy">
+            <summary>
+            Attached access control policies
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.ComponentStorage.myState">
+            <summary>
+            Current lifetime state for this container
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.ComponentStorage.myDescriptors">
+            <summary>
+            Registered descriptors and their lifetimes 
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.ComponentStorage.myComponentRegister">
+            <summary>
+            Composed components map
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.ComponentStorage.myViewers">
+            <summary>
+            Current viewers
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Components.ComponentStorage.#ctor(System.String,JetBrains.Application.Components.IInitializationStrategy)">
+            <summary>
+            Creates new instance of <see cref="T:JetBrains.Application.Components.ComponentStorage"/>
+            </summary>
+            <param name="id">Identifier string for this container</param>
+            <param name="initializationStrategy"></param>
+        </member>
+        <member name="M:JetBrains.Application.Components.ComponentStorage.AttachPolicy(JetBrains.Application.Components.IComponentAccessPolicy)">
+            <summary>
+            Attaches new policy control to this container
+            </summary>
+            <param name="accessPolicy"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Application.Components.ComponentStorage.Compose">
+            <summary>
+            Initializes the components in the container.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Components.ComponentContainerEx.TryGetComponent``1(JetBrains.Application.Components.IComponentContainer)">
+            <summary>
+            Gets the component whose interface type is <typeparamref name="TInterface"/>.
+            Returns <c>Null</c> if there is no such component, or there are multiple components
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.ComponentStorageState.Initial">
+            <summary>
+            The container has just been created and is not ready for creating the components yet. Call <see cref="M:JetBrains.Application.Components.ComponentContainer.Compose"/> to proceed.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.ComponentStorageState.Initialized">
+            <summary>
+            The container is running. The first pack of components has been created.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.ComponentStorageState.Disposing">
+            <summary>
+            <see cref="M:System.IDisposable.Dispose"/> has been called on the container, and it's currently in the process of tearing down the components.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Components.ComponentStorageState.Disposed">
+            <summary>
+            The container has destroyed all of the components and is functional no more.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Application.Parts.ClassOrMemberWithPartAttributePassFilter">
+            <summary>
+            Lets in types which explicitly have the <see cref="T:JetBrains.Application.Parts.PartAttribute"/> on them, or which have static methods with the <see cref="T:JetBrains.Application.Parts.PartAttribute"/> in them.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Application.Parts.IMetadataPartsPassFilter">
+            <summary>
+            Governs what gets picked into the parts catalog initially when it's constructed (before any of the <see cref="T:JetBrains.Application.Parts.IPartsCatalogueFilter"/> is applied).
+            </summary>
+        </member>
+        <member name="T:JetBrains.Application.Parts.ClassWithPartAttributePassFilter">
+            <summary>
+            Lets in only types which explicitly have the <see cref="T:JetBrains.Application.Parts.PartAttribute"/> on them.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Extensibility.FeaturePartsExtensions.FilterFactoryPattern``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            Uses factory pattern for applicability check. (instantiate part is not null means applicability)
+            Doesn't instantiate parts for overridden components.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Parts.PartCatalogueAttribute.ConstructorFormalParameterTypes">
+            <summary>
+            The signature of the .ctor which is encoded for creation of the attr instance, if known.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartCatalogueAttribute.GetInstance(JetBrains.Util.OnError)">
+            <summary>
+            Tries creating an attribute runtime instance if we got enough information.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartCatalogueAssembly.Bind">
+            <summary>
+            Same as <see cref="M:JetBrains.Application.Parts.PartCatalogueType.Bind"/> for a type, gets the runtime object for this assembly.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Application.Parts.PartCatalogueAssembly.Binder">
+            <summary>
+            Knows how to bind part catalog assemblies to various real-life stuff.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Parts.PartCatalogueType.myNamePieces">
+            <summary>
+            For memory usage optimization purposes, the name is optionally split into two dot-separated pieces (first might be empty, the second always holds some name).
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Parts.PartCatalogueType.myExtraTypes">
+            <summary>
+            Depending on the kind, holds either the generic parameters specialization, or the array item type, or the reference target type.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartCatalogueType.GetGenericTypeDeclarationFullName">
+            <summary>
+            For a generic type specialization (<see cref="P:JetBrains.Application.Parts.PartCatalogueType.IsGenericTypeSpecialization"/>), gets the full type name of the matching generic type definition, e.g. <c>System.Collections.Generic.IList`1</c>, which can be matched with the CLR non-specialized type.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartCatalogueType.AssignRecursiveTypes(JetBrains.Application.Parts.PartCatalogueType.RecursiveData)">
+            <summary>
+            Recursive types. Assigned later than .ctor because for building them we might need this type class already in factory cache (e.g. class CA : IIface{CA}).
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartCatalogueType.GetArrayItemType">
+            <summary>
+            For an array type, returns a type of the array items (without the array rank). Much like getting the only generic parameter of the <see cref="T:System.Collections.Generic.IList`1"/> for its item type.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartCatalogueType.GetReferenceTargetType">
+            <summary>
+            For a reference type, returns the type being referenced.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartCatalogueType.GenericTypeParameterOwner">
+            <summary>
+            For a type which is a generic type parameter reference, gets the type which declares the generic formal parameter.
+            Note that this might be any class containing the usage (immediate, outer, outer-outer, etc).
+            For a method parameter, I believe the choice is limited to the containing method.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Application.Parts.PartCatalogueType.NamePieces">
+            <summary>
+            Internal use only.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Application.Parts.PartCatalogueType.IsGenericTypeSpecialization">
+            <summary>
+            This is a generic type specialized with some generic actual parameters, look in <see cref="M:JetBrains.Application.Parts.PartCatalogueType.GetGenericActualParameters"/> for their values.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Application.Parts.PartCatalogueType.IsGenericTypeDeclaraion">
+            <summary>
+            This is a generic type declaration, an open generic which is not specialized with any parameters.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Application.Parts.PartCatalogueType.IsArray">
+            <summary>
+              <para>The type is actually a single-dimensional array with zero lower bound. Other cases are not supported yet.</para>
+              <para>NOTE(H): If you ever need to support these, which requires a hierarchy of different type classes nesting each other, I'd rather recomment dropping this special class altogether and using the <see cref="T:JetBrains.Metadata.Reader.API.IMetadataType"/> interfaces family with a separate implementation which can be filled from runtime types, from metadata, or from cache.</para>
+              <para>Call <see cref="M:JetBrains.Application.Parts.PartCatalogueType.GetArrayItemType"/> to get the type of items in this array.</para>
+            </summary>
+        </member>
+        <member name="P:JetBrains.Application.Parts.PartCatalogueType.IsReference">
+            <summary>
+              <para>The type is a reference (as in ref/out parameters), a.k.a. <see cref="P:System.Type.IsByRef">ByRef type</see>.</para>
+              <para>Call <see cref="M:JetBrains.Application.Parts.PartCatalogueType.GetReferenceTargetType"/> to get the referenced type.</para>
+            </summary>
+        </member>
+        <member name="P:JetBrains.Application.Parts.PartCatalogueType.ExtraTypes">
+            <summary>
+            Raw access for serialization etc.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Parts.PartCatalogueType.TypeKind.Regular">
+            <summary>
+            A type declaration or a type usage which has no additional info to the type declaration (not generic, not reference, not array, etc).
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Parts.PartCatalogueType.TypeKind.GenericDeclaration">
+            <summary>
+            This is a generic type declaration, an open generic which is not specialized with any parameters. No additional methods available.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Parts.PartCatalogueType.TypeKind.GenericSpecialization">
+            <summary>
+            This is a generic type specialized with some generic actual parameters, look in <see cref="M:JetBrains.Application.Parts.PartCatalogueType.GetGenericActualParameters"/> for their values.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Parts.PartCatalogueType.TypeKind.Array">
+            <summary>
+              <para>The type is actually a single-dimensional array with zero lower bound. Other cases are not supported yet.</para>
+              <para>NOTE(H): If you ever need to support these, which requires a hierarchy of different type classes nesting each other, I'd rather recomment dropping this special class altogether and using the <see cref="T:JetBrains.Metadata.Reader.API.IMetadataType"/> interfaces family with a separate implementation which can be filled from runtime types, from metadata, or from cache.</para>
+              <para>Call <see cref="M:JetBrains.Application.Parts.PartCatalogueType.GetArrayItemType"/> to get the type of items in this array.</para>
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Parts.PartCatalogueType.TypeKind.Reference">
+            <summary>
+              <para>The type is a reference (as in ref/out parameters), a.k.a. <see cref="P:System.Type.IsByRef">ByRef type</see>.</para>
+              <para>Call <see cref="M:JetBrains.Application.Parts.PartCatalogueType.GetReferenceTargetType"/> to get the referenced type.</para>
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Parts.PartCatalogueType.TypeKind.GenericTypeParameterReference">
+            <summary>
+            This type is a reference to the type of the class generic parameter.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Application.Parts.PartCatalogueType.TypeKind.GenericMethodParameterReference">
+            <summary>
+            This type is a reference to the type of the method generic parameter.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Application.Parts.PartCatalogueTypeMember.DeclaringType">
+            <summary>
+            This object is a member of the type returned from this property.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartHelpers.ExpandMetadataValue(JetBrains.Metadata.Reader.API.MetadataAttributeValue)">
+            <summary>
+            Handles complex attribute values in metadata format, e.g. creates arrays and fills them with values recursively.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartHelpers.CreateFileResolver(JetBrains.DataFlow.Lifetime,System.Collections.Generic.IList{JetBrains.Util.FileSystemPath},System.Func{JetBrains.DataFlow.Lifetime,JetBrains.Metadata.Reader.API.IAssemblyResolver},JetBrains.Util.OnError,System.Nullable{JetBrains.Metadata.Reader.API.GacAssemblyResolver.GacResolvePreferences})">
+            <summary>
+            Creates a resolver for reading the group of assemblies.
+            </summary>
+            <param name="lifetime">Lifetime, usually a <see cref="M:JetBrains.DataFlow.Lifetimes.Using(System.Action{JetBrains.DataFlow.Lifetime})"/> around the usage.</param>
+            <param name="assembliesCurrent">The list of assemblies we're going to process during this run. They will be available for resolve.</param>
+            <param name="FCreateAdditionalResolvers">Optional. Creates any additional resolvers.</param>
+            <param name="resolveerrors">Reports unresolved assembly errors when you call into the resolver. The full set of errors will be submitted after you terminate the lifetime.</param>
+            <param name="gacpreferences">Allows to modify GAC lookup strategy for ambiguous matches.</param>
+            <returns>Resolver.</returns>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartHelpers.CreateStreamResolver(JetBrains.DataFlow.Lifetime,System.Collections.Generic.IDictionary{JetBrains.Metadata.Utils.AssemblyNameInfo,System.Func{JetBrains.DataFlow.Lifetime,System.IO.Stream}},System.Func{JetBrains.DataFlow.Lifetime,JetBrains.Metadata.Reader.API.IAssemblyResolver},JetBrains.Util.OnError,System.Nullable{JetBrains.Metadata.Reader.API.GacAssemblyResolver.GacResolvePreferences})">
+            <summary>
+            Creates a resolver for reading the group of assemblies.
+            </summary>
+            <param name="lifetime">Lifetime, usually a <see cref="M:JetBrains.DataFlow.Lifetimes.Using(System.Action{JetBrains.DataFlow.Lifetime})"/> around the usage.</param>
+            <param name="assembliesCurrent">The list of assemblies we're going to process during this run. They will be available for resolve.</param>
+            <param name="FCreateAdditionalResolvers">Optional. Creates any additional resolvers.</param>
+            <param name="resolveerrors">Reports unresolved assembly errors when you call into the resolver. The full set of errors will be submitted after you terminate the lifetime.</param>
+            <param name="gacpreferences">Allows to modify GAC lookup strategy for ambiguous matches.</param>
+            <returns>Resolver.</returns>
+        </member>
+        <member name="T:JetBrains.Application.Parts.PartsCatalogue">
+            <summary>
+            A default implementation for a pre-calculated catalogue.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartsCatalogue.#ctor(System.Collections.Generic.IList{JetBrains.Application.Parts.PartCatalogueType},System.Collections.Generic.IList{JetBrains.Application.Parts.PartCatalogueAssembly})">
+            <summary>
+            Creates the catalogue from precalculated data.
+            </summary>
+            <param name="parts">The types (parts) in the catalog.</param>
+            <param name="assemblies">The assemblies list, if known by creator. If omitted, the list will be deduced from all unique assemblies of the submitted <paramref name="parts" />.</param>
+        </member>
+        <member name="T:JetBrains.Application.Parts.PartsCatalogues">
+            <summary>
+            Factory methods for standard catalogs.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartsCatalogues.Create(System.Collections.Generic.IList{JetBrains.Application.Parts.PartCatalogueType},System.Collections.Generic.IList{JetBrains.Application.Parts.PartCatalogueAssembly})">
+            <summary>
+            Creates the catalogue from precalculated data.
+            </summary>
+            <param name="parts">The types (parts) in the catalog.</param>
+            <param name="assemblies">The assemblies list, if known by creator. If omitted, the list will be deduced from all unique assemblies of the submitted <paramref name="parts" />.</param>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartsCatalogues.CreateFromRuntimeTypes(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Creates a parts catalog over a few specific runtime types — for precision filtering of what gets consumed.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartsCatalogues.CreateFromRuntimeTypes(System.Type[])">
+            <summary>
+            Creates a parts catalog over a few specific runtime types — for precision filtering of what gets consumed.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartsCatalogues.CreateWithMetadataReader(System.Collections.Generic.IEnumerable{JetBrains.Metadata.Utils.AssemblyNameInfo},JetBrains.Application.Parts.IPartCatalogueAssemblyMasterBinderEx,JetBrains.Application.Parts.IPartCatalogueFactory,JetBrains.Application.Parts.IMetadataPartsPassFilter)">
+            <summary>
+            Loads assembly files from streams with our fast metadata reader.
+            </summary>
+            <param name="assemblies">The list of assembly names for assemblies which should be included with the catalog (and scanned for types).</param>
+            <param name="masterbinder">Knows how to bind assembly names for reading, including the listed names and their references.</param>
+            <param name="typeFactory">Factory, mainly for caching creation of equal types.</param>
+            <param name="filter">Which classes to take as parts into the catalog.</param>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartsCatalogues.CreateWithMetadataReaderFromAssemblyFiles(System.Collections.Generic.IList{JetBrains.Util.FileSystemPath},JetBrains.Application.Parts.IPartCatalogueFactory,System.Func{JetBrains.DataFlow.Lifetime,JetBrains.Metadata.Reader.API.IAssemblyResolver},JetBrains.Application.Parts.IMetadataPartsPassFilter)">
+            <summary>
+            Loads assembly files from disk with our fast metadata reader.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartsCatalogues.CreateWithMetadataReaderFromAssemblyFiles(System.Collections.Generic.IList{JetBrains.Util.FileSystemPath},System.Collections.Generic.IList{JetBrains.Util.FileSystemPath},JetBrains.Application.Parts.IPartCatalogueFactory,System.Func{JetBrains.DataFlow.Lifetime,JetBrains.Metadata.Reader.API.IAssemblyResolver},JetBrains.Application.Parts.IMetadataPartsPassFilter)">
+            <summary>
+            Loads assembly files from disk with our fast metadata reader.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartsCatalogues.CreateWithMetadataReaderFromAssemblyStreams(System.Collections.Generic.ICollection{System.IO.Stream},JetBrains.Application.Parts.IPartCatalogueFactory,System.Func{JetBrains.DataFlow.Lifetime,JetBrains.Metadata.Reader.API.IAssemblyResolver},JetBrains.Application.Parts.IMetadataPartsPassFilter)">
+            <summary>
+            Loads assembly files from streams with our fast metadata reader.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartsCatalogues.CreateWithMetadataReaderFromAssemblyStreams(System.Collections.Generic.IEnumerable{JetBrains.Metadata.Utils.AssemblyNameInfo},System.Collections.Generic.IDictionary{JetBrains.Metadata.Utils.AssemblyNameInfo,System.Func{JetBrains.DataFlow.Lifetime,System.IO.Stream}},JetBrains.Application.Parts.IPartCatalogueFactory,System.Func{JetBrains.DataFlow.Lifetime,JetBrains.Metadata.Reader.API.IAssemblyResolver},JetBrains.Application.Parts.IMetadataPartsPassFilter)">
+            <summary>
+            Loads assembly files from streams with our fast metadata reader.
+            </summary>
+            <param name="assemblies">The list of assembly names for assemblies which should be included with the catalog (and scanned for types).</param>
+            <param name="mapResolver">Resolves assembly stream by its assembly name. Must include (1) the assemblies for scanning in <paramref name="assemblies" /> and (2) any of their assembly references, transitively, which might be needed for resolving catalog types/attrs, and which are not present in GAC.</param>
+            <param name="typeFactory">Factory, mainly for caching creation of equal types.</param>
+            <param name="FCreateAdditionalResolvers">Any custom resolvers for metadata loader.</param>
+            <param name="filter">Which classes to take as parts into the catalog.</param>
+        </member>
+        <member name="M:JetBrains.Application.Parts.PartsCatalogues.CheckLoadedAssemblyName(JetBrains.Application.Parts.PartCatalogueAssembly,JetBrains.Metadata.Utils.AssemblyNameInfo)">
+            <summary>
+            After the binder loads an assembly by its assembly name, checks that the assembly actually loaded matches what was requested.
+            </summary>
+            <param name="partassembly"></param>
+            <param name="assname"></param>
+        </member>
+        <member name="T:JetBrains.Application.Parts.PartsCatalogues.RuntimePartsPassFilter">
+            <summary>
+            Similar to <see cref="T:JetBrains.Application.Parts.IMetadataPartsPassFilter"/>, but for runtime types.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Application.Parts.TypesPartsCatalogue">
+            <summary>
+            Creates a parts catalog over a few specific runtime types — for precision filtering of what gets consumed.
+            </summary>
+        </member>
+    </members>
+</doc>

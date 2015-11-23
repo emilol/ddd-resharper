@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OperatorsResolveCacheGenerator</name>
+    </assembly>
+    <members>
+        <member name="T:OperatorsResolveCacheGenerator.CSharp.CSharpOperatorsResolveCacheGeneratorResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:OperatorsResolveCacheGenerator.CSharp.CSharpOperatorsResolveCacheGeneratorResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:OperatorsResolveCacheGenerator.CSharp.CSharpOperatorsResolveCacheGeneratorResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:OperatorsResolveCacheGenerator.CSharp.CSharpOperatorsResolveCacheGeneratorResources.Template">
+             <summary>
+               Looks up a localized string similar to //This file is automatic generated!!! Do not edit!!!
+            using System;
+            using System.Collections.Generic;
+            using JetBrains.ReSharper.Psi;
+            using JetBrains.ReSharper.Psi.Resolve;
+            using JetBrains.ReSharper.Psi.ExtensionsAPI.Resolve;
+            using JetBrains.Util;
+            
+            namespace JetBrains.ReSharper.Psi.CSharp.Impl.Resolve
+            {
+              internal partial class CSharpOperatorTable
+              {
+                private static readonly Pair&lt;string,string&gt; EMPTY = new Pair&lt;string,string&gt;(null, null);
+              
+                private Dictionary&lt;string, Dictionary&lt;Pair&lt;str [rest of string was truncated]&quot;;.
+             </summary>
+        </member>
+    </members>
+</doc>

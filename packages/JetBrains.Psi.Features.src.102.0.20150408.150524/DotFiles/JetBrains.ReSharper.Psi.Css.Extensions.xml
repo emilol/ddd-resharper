@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.Psi.Css.Extensions</name>
+    </assembly>
+    <members>
+        <member name="M:JetBrains.ReSharper.Psi.Css.Html.CssFromHtmlGeneratedDocumentService.#ctor(JetBrains.ReSharper.Psi.ILanguageManager,JetBrains.ProjectModel.HtmlProjectFileType)">
+            <remarks><see cref="T:JetBrains.ReSharper.Psi.ILanguageManager"/> is marker interface, to get dependencies initialized (psi language instances)</remarks>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.Css.Asp.CssFromAspGeneratedDocumentService.#ctor(JetBrains.ReSharper.Psi.ILanguageManager,JetBrains.ProjectModel.AspProjectFileType)">
+            <remarks><see cref="T:JetBrains.ReSharper.Psi.ILanguageManager"/> is marker interface, to get dependencies initialized (psi language instances)</remarks>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.Css.Razor.CssFromRazorGeneratedDocumentService.#ctor(JetBrains.ReSharper.Psi.ILanguageManager,JetBrains.ProjectModel.RazorProjectFileType)">
+            <remarks><see cref="T:JetBrains.ReSharper.Psi.ILanguageManager"/> is marker interface, to get dependencies initialized (psi language instances)</remarks>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.Css.Razor.CSharp.CssFromRazorCSharpGeneratedDocumentService.#ctor(JetBrains.ReSharper.Psi.ILanguageManager,JetBrains.ProjectModel.RazorCSharpProjectFileType)">
+            <remarks><see cref="T:JetBrains.ReSharper.Psi.ILanguageManager"/> is marker interface, to get dependencies initialized (psi language instances)</remarks>
+        </member>
+    </members>
+</doc>

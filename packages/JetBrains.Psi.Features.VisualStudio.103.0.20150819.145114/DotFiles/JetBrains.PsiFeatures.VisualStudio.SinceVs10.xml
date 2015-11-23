@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.PsiFeatures.VisualStudio.SinceVs10</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Browser.View.NugetBrowserView">
+            <summary>
+            NugetBrowserView
+            </summary>
+        </member>
+        <member name="M:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Browser.View.NugetBrowserView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Common.View.ExceptionInformationView">
+            <summary>
+            ExceptionInformationView
+            </summary>
+        </member>
+        <member name="M:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Common.View.ExceptionInformationView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Confirmation.ConfirmationView">
+            <summary>
+            ConfirmationView
+            </summary>
+        </member>
+        <member name="M:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Confirmation.ConfirmationView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Confirmation.ProjectFilter.PassAdditionalFilter(JetBrains.ProjectModel.IProject)">
+            <summary>
+            Additional check for shared projects. It looks awful, but nobody knows how to filter shared project now.
+            </summary>
+        </member>
+        <member name="T:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Default.TestSettings.View.TestSettingProviderView">
+            <summary>
+            TestSettingProviderView
+            </summary>
+        </member>
+        <member name="M:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Default.TestSettings.View.TestSettingProviderView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Default.View.NuGetDefaultView">
+            <summary>
+            NuGetDefaultView
+            </summary>
+        </member>
+        <member name="M:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Default.View.NuGetDefaultView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Installation.View.InstallationStateView">
+            <summary>
+            InstallationStateView
+            </summary>
+        </member>
+        <member name="M:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Installation.View.InstallationStateView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Lookup.View.NuGetLookupView">
+            <summary>
+            NuGetLookupView
+            </summary>
+        </member>
+        <member name="M:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Lookup.View.NuGetLookupView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Lookup.View.PackageResultFullDescriptionView">
+            <summary>
+            PackageResultFullDescriptionView
+            </summary>
+        </member>
+        <member name="M:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Lookup.View.PackageResultFullDescriptionView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Lookup.View.PackageResultShortDescriptionView">
+            <summary>
+            PackageResultShortDescriptionView
+            </summary>
+        </member>
+        <member name="M:JetBrains.PsiFeatures.VisualStudio.SinceVs10.NuGet.NuGetBrowser.ToolWindow.Lookup.View.PackageResultShortDescriptionView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.PsiFeatures.VisualStudio.SinceVs10.TextControl.Intellisense.VsCompletionSourceSinceVs10">
+            <summary>
+            Hooks into VS10+ statement completion to dismiss VS completion sessions when R# is ready to show its own completion.
+            It works in conjunction with <see cref="T:JetBrains.PsiFeatures.VisualStudio.SinceVs10.TextControl.Intellisense.VsIntellisenseDisableMonitorSinceVs10"/> component which provide it with the information on VS completion enabled state.
+            </summary>
+        </member>
+        <member name="T:JetBrains.PsiFeatures.VisualStudio.SinceVs10.TextControl.Intellisense.VsHotSpotSessionMonitorSinceVs10">
+            <summary>
+            The component provides other VS extensions with a flag that a R# hot spot session is active at the moment.
+            </summary>
+        </member>
+        <member name="F:JetBrains.PsiFeatures.VisualStudio.SinceVs10.TextControl.Intellisense.VsIntellisenseDisableMonitorSinceVs10.DoNotDismissSessionKey">
+            <summary>
+            A session property with R# guid key serves as a flag that the session should not be dismissed.
+            </summary>
+        </member>
+        <member name="M:JetBrains.PsiFeatures.VisualStudio.SinceVs10.TextControl.Intellisense.VsIntellisenseDisableMonitorSinceVs10.GetInsertionBuffer(Microsoft.VisualStudio.Language.Intellisense.IIntellisenseSession,Microsoft.VisualStudio.Text.ITextBuffer)">
+            <summary>
+            Return an insertion buffer for the trigger position of the intellisense session.
+            </summary>
+            <remarks>
+            The following code is a kind of heuristic and needs an explanation. 
+            For multi-language documents (like Razor) VS uses projection buffers. Buffer graph could look like:
+            RazorCSharp (projection)
+              CSharp (source)
+              JavaScript (source)
+              css (source)
+            In such cases VS triggers two completion sessions: 
+            - the first (dummy) for the projection buffer and 
+            - the second (real) depends on the content type of the session trigger position.
+            We should not dismiss the first session because if we dismiss it, VS won't trigger the second (real) one.
+            </remarks>
+        </member>
+        <member name="M:JetBrains.PsiFeatures.VisualStudio.SinceVs10.TextControl.Intellisense.VsIntellisenseDisableMonitorSinceVs10.IsVimSession(Microsoft.VisualStudio.Language.Intellisense.IIntellisenseSession)">
+            <summary>
+            <para>VsVim extension has its own WordCompletion. R# should not dismiss it.</para>
+            <para> For the completion session lifetime Vim sets a TextView property with a value of type Vim.UI.Wpf.Implementation.WordCompletion.WordCompletionSessionFactoryService.CompletionData</para>
+            </summary>
+        </member>
+    </members>
+</doc>

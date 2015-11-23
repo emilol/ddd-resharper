@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<Choose>
+		<When Condition="($(IsOutputPathInSeparateFolders) == True) AND ($(IsPsiTasksInSources) == True)"><PropertyGroup><JsLibGen_TaskDll>$(ProductBinariesDir)\Psi.Features.Tasks\JsLibGen\JsLibGen.exe</JsLibGen_TaskDll></PropertyGroup></When>
+		<Otherwise><PropertyGroup><JsLibGen_TaskDll>$(PsiGenToolsDir)\JsLibGen.exe</JsLibGen_TaskDll></PropertyGroup></Otherwise>
+	</Choose>
+
+	<UsingTask
+		TaskName="JetBrains.ReSharper.Build.Tools.JsLibGen"
+		AssemblyFile="$(JsLibGen_TaskDll)"
+	/>
+
+</Project>

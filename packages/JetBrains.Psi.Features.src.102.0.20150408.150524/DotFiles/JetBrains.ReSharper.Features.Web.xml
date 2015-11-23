@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.Features.Web</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.ReSharper.Features.Web.Options.Asp.Editor.AspEditorPage">
+            <summary>
+              The ASP.NET Editor related options.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Features.Web.Options.Html.Editor.HtmlEditorBasePage`1">
+            <summary>
+              The HTML Editor related options.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Features.Web.Options.Html.Editor.HtmlEditorPage">
+            <summary>
+            The HTML Editor related options.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Features.Web.Options.JavaScript.ContextActions.JavaScriptContextActionsPage">
+            <summary>
+              Context actions.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Features.Web.Options.Razor.Editor.RazorEditorPage">
+            <summary>
+              The Razor Editor related options.
+            </summary>
+            TODO: Separate Help Topic Id
+        </member>
+        <member name="T:JetBrains.ReSharper.Features.Web.Options.TypeScript.ContextActions.TypeScriptContextActionsPage">
+            <summary>
+              Context actions.
+            </summary>
+        </member>
+    </members>
+</doc>

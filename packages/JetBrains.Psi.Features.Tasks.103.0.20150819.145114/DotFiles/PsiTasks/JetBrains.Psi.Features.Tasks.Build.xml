@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Psi.Features.Tasks.Build</name>
+    </assembly>
+    <members>
+        <member name="M:JetBrians.Psi.Features.Tasks.Build.BuildScript.PreCompile.Wrap.MakeCustomNugetLayout.CopyTaskBinariesToTasksFolder(System.Collections.Generic.ICollection{JetBrains.Application.BuildScript.Compile.CompiledSubplatformFile})">
+            <summary>
+            The task binaries are normally compiled into the package's content root, and we need to have them in the <see cref="F:JetBrians.Psi.Features.Tasks.Build.BuildScript.PreCompile.Common.PsiTasksBuildConstants.TasksFolderUnderPackageContentRoot"/> subfolder.
+            </summary>
+        </member>
+        <member name="M:JetBrians.Psi.Features.Tasks.Build.BuildScript.PreCompile.Wrap.MakeCustomNugetLayout.EmbedDependentNugets">
+            <summary>
+            Embeds dependencies of the tasks from their corresponding nugets.
+            </summary>
+        </member>
+        <member name="M:JetBrians.Psi.Features.Tasks.Build.BuildScript.PreCompile.Wrap.MakeCustomNugetLayout.EmbedPublishedTargetsAndSides(System.Collections.Generic.IEnumerable{JetBrians.Psi.Features.Tasks.Build.BuildScript.PreCompile.Wrap.PublishedPsiTask},JetBrains.Application.BuildScript.ProductHomeDirArtifact,JetBrains.Application.BuildScript.Solution.AllAssembliesOnSources)">
+            <summary>
+            Targets files and their side-files, as requested by tasks.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:JetBrians.Psi.Features.Tasks.Build.BuildScript.PreCompile.Wrap.PublishedPsiTask">
+            <summary>
+            Only for needs of the Psi.Features\Tasks subplatform needs for publishing tasks for use in either src or binary form.
+            </summary>
+        </member>
+        <member name="M:JetBrians.Psi.Features.Tasks.Build.BuildScript.PreCompile.Wrap.PublishedPsiTask.#ctor(JetBrains.Util.RelativePath)">
+            <summary>
+            Call for the targets file, then add side-files.
+            </summary>
+            <param name="relSubplatformPathToTargetsFile"></param>
+        </member>
+        <member name="F:JetBrians.Psi.Features.Tasks.Build.BuildScript.PreCompile.Wrap.PublishedPsiTask.SubplatformPathToSideFiles">
+            <summary>
+            Side-files (extra files required for the .taregts file to work).
+            </summary>
+        </member>
+        <member name="F:JetBrians.Psi.Features.Tasks.Build.BuildScript.PreCompile.Wrap.PublishedPsiTask.SubplatformPathToTargetsFile">
+            <summary>
+            The .targets file of the task.
+            </summary>
+        </member>
+    </members>
+</doc>

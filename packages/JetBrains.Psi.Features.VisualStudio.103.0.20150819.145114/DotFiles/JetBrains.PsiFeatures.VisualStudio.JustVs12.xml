@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.PsiFeatures.VisualStudio.JustVs12</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.PsiFeatures.VisualStudio.JustVs12.PeekDefinition.PeekDefinitionsTaskExecutor">
+            <summary>
+            Task executor for progress while peeking definitions
+            </summary>
+        </member>
+    </members>
+</doc>

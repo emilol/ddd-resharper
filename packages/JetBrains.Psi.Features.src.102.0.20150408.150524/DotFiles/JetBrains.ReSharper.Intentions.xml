@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.Intentions</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.ReSharper.Intentions.Options.CommonContextActionsPage">
+            <summary>
+              Context actions.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Intentions.Bulbs.IBulbItemsProvider.CollectActions(JetBrains.ReSharper.Intentions.Bulbs.IntentionsBulbItems,JetBrains.ReSharper.Intentions.Bulbs.BulbItems.BulbCache,JetBrains.TextControl.ITextControl,JetBrains.DataFlow.Lifetime,JetBrains.ReSharper.Psi.IPsiSourceFile,System.Object)">
+            <summary>
+            Executed under interruprable read activity to produce bulb items. Use <see cref="M:JetBrains.Application.InterruptableActivityCookie.CheckAndThrow(JetBrains.Application.Progress.IProgressIndicator)"/> in implementation. 
+            </summary>
+            <param name="intentionsBulbItems">Bulb items collection</param>
+            <param name="cacheData">Bulb context</param>
+            <param name="textControl">Current text control</param>
+            <param name="caretPositionLifetime">Lifetime is alive until caret remains at the same position</param>
+            <param name="psiSourceFile">Current source file</param>
+            <param name="precalculatedData">Data calculated while <see cref="M:JetBrains.ReSharper.Intentions.Bulbs.IBulbItemsProvider.PreExecute(JetBrains.TextControl.ITextControl)"/></param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Intentions.Bulbs.IBulbItemsProvider.PreExecute(JetBrains.TextControl.ITextControl)">
+            <summary>
+            Executed synchronously in UI thread without interruption. All documents are commited
+            </summary>
+            <param name="textControl">Current text control</param>
+            <returns>Pre-calculated data, that will be used in <see cref="M:JetBrains.ReSharper.Intentions.Bulbs.IBulbItemsProvider.CollectActions(JetBrains.ReSharper.Intentions.Bulbs.IntentionsBulbItems,JetBrains.ReSharper.Intentions.Bulbs.BulbItems.BulbCache,JetBrains.TextControl.ITextControl,JetBrains.DataFlow.Lifetime,JetBrains.ReSharper.Psi.IPsiSourceFile,System.Object)"/> method call</returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Intentions.Bulbs.IntentionsBulbItems.AddItems(System.Collections.Generic.IEnumerable{JetBrains.UI.BulbMenu.BulbMenuItem})">
+            <summary>Adds items to the menu</summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Intentions.Bulbs.IntentionsBulbItems.AddItemsNoRepost(System.Collections.Generic.IEnumerable{JetBrains.UI.BulbMenu.BulbMenuItem})">
+            <summary>
+            Use the method if and only if <see cref="!:item"/> is already present in the menu. I.e. unit test items from gutter menu.
+            Normally <see cref="M:JetBrains.ReSharper.Intentions.Bulbs.IntentionsBulbItems.AddItems(System.Collections.Generic.IEnumerable{JetBrains.UI.BulbMenu.BulbMenuItem})"/> should be used.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Intentions.Bulbs.QuickFixesProvider.BuildAvailableQuickFixes(JetBrains.ReSharper.Intentions.Bulbs.BulbItems.BulbCache,JetBrains.ReSharper.Intentions.Bulbs.IntentionsBulbItems,JetBrains.TextControl.ITextControl,JetBrains.ReSharper.Intentions.Bulbs.QuickFixesProvider.PrecalculatedData)">
+            <summary>
+            Cannot be done async, since it deals with markup
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Intentions.Formatting.ConfigureFormatDialog">
+            <summary>
+            ConfigureFormatDialog
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Intentions.Formatting.ConfigureFormatDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Intentions.CreateFromUsage.ICreateFromUsageAction.GetBulbItem">
+            <summary>
+            
+            </summary>
+            <returns>null if item is not available</returns>
+        </member>
+        <member name="T:JetBrains.ReSharper.Intentions.Bulbs.BulbIndicator">
+            <summary>
+              The bulb indicator.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Intentions.Bulbs.BulbIndicator.ArrowGap">
+            <summary>
+              width of gap between indicator image and down arrow
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Intentions.Bulbs.BulbIndicator.ShadowExtentBottom">
+            <summary>
+              extra space required for image shadow frame
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Intentions.Bulbs.BulbIndicator.ourArrowDefaultSize">
+            <summary>
+              Size of down arrow
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Intentions.Bulbs.BulbIndicator.ourBorderWidth">
+            <summary>
+              width of indicator border (hot mode)
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Intentions.Bulbs.BulbIndicator.ourIndicatorPadding">
+            <summary>
+              Padding around indicator including border. Used also as a distance from base point to image.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Intentions.Bulbs.BulbIndicator.GetImageSize">
+            <summary>
+              Gets the image size, or the default 16?16 size if it has not been specified yet.
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Intentions.Bulbs.BulbIndicator.MouseOver">
+            <summary>
+              Gets or sets the “hot” control state.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Intentions.Bulbs.PopupIndicator">
+            <summary>
+            The blueish popup indicator with icon and text, eg, the “Import Namespace” popup.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Intentions.Bulbs.PopupIndicator.PaintImpl(System.Drawing.Graphics)">
+            <summary>
+            Does the rendering.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Intentions.Explanatory.CodeInspectionWikiProvider">
+            <summary>
+            Provides bulb items that offer to explain why ReSharper is
+            issuing a particular warning or suggestion.
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Intentions.ContextActions.UseStringEmptyActionBase.Text">
+            <summary>
+            Gets the text.
+            </summary>
+            <value>The text.</value>
+        </member>
+        <member name="M:JetBrains.ReSharper.Intentions.Legacy.ContextActionBase_Obsolete.IsAvailableInternal">
+            <summary>
+            Called to check if ContextAction is available.
+            ReadLock is taken
+            Will not be called if PsiManager, ProjectFile of Solution == null
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Intentions.Legacy.ContextActionBase_Obsolete.ExecuteInternal(System.Object[])">
+            <summary>
+            Called to apply context action. No locks is taken before call
+            </summary>
+        </member>
+    </members>
+</doc>

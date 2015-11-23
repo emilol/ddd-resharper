@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.Intentions.JavaScript</name>
+    </assembly>
+    <members>
+        <member name="M:JetBrains.ReSharper.Intentions.JavaScript.QuickFixes.TypeScript.GenerateInterfaceForJsVariable.GenerateInterfaceItemBase.CreateFile(JetBrains.ReSharper.Psi.IPsiSourceFile,JetBrains.ReSharper.Psi.Tree.ITreeNode,System.String)">
+            <summary>
+            Creates or gets exist file for generating interface 
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Intentions.JavaScript.QuickFixes.TypeScript.GenerateInterfaceForJsVariable.GenerateInterfaceItemBase.DoGenerateInterface(JetBrains.ReSharper.Psi.JavaScript.Resolve.JsTypeResolveResult,JetBrains.ReSharper.Psi.JavaScript.Tree.TypeScript.ITsDeclaredTypeUsage,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext,JetBrains.ReSharper.Psi.JavaScript.Tree.TypeScript.ITsStatement,JetBrains.Application.Progress.IProgressIndicator)">
+            <summary>
+            If specified type usage not exists or it is not 'any' or 'void' and is external;
+            generate interface(not recursive) declaration after anchor; otherwise do nothing
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Intentions.JavaScript.QuickFixes.TypeScript.GenerateInterfaceForJsVariable.GenerateInterfaceItemBase.IsConstructor(JetBrains.ReSharper.Psi.JavaScript.Tree.IFunctionExpression)">
+            <summary>
+            If function expression is similar on constructor returns true; otherwise false
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Intentions.JavaScript.QuickFixes.TypeScript.GenerateInterfaceForJsVariable.TsDeclaredTypeUsageForInterfaceLookupItem">
+            <summary>
+            Lookup item for Ts declared interface type usage
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Intentions.JavaScript.QuickFixes.TypeScript.GenerateInterfaceForJsVariable.TsFunctionTypeUsageLookupItem">
+            <summary>
+            Lookup item for Ts function type usage
+            </summary>
+        </member>
+    </members>
+</doc>

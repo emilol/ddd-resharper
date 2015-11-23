@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ErrorsGen</name>
+    </assembly>
+    <members>
+        <member name="M:JetBrains.ReSharper.Build.Tools.ErrorDescriptionGenerator.ParseCommandLine(System.String[])">
+            <summary>
+            Entry point for the cmdline-mode.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Build.Tools.ErrorDescriptionGenerator.Generate(JetBrains.ReSharper.Build.Tools.WorkMode,System.String,System.String,System.String,System.String,System.String,System.Action{System.String})">
+            <summary>
+            Does all the useful sorta things.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Build.Tools.ErrorsGen">
+            <summary>
+            Generates source code definitions from the <c>Errors.xml</c> files.
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Build.Tools.ErrorsGen.InputFile">
+            <summary>
+            The intput file (XML).
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Build.Tools.ErrorsGen.Mode">
+            <summary>
+            Specifies what to generate, see the <see cref="T:JetBrains.ReSharper.Build.Tools.WorkMode"/> enum for details.
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Build.Tools.ErrorsGen.Namespace">
+            <summary>
+            The namespace for the generated code.
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Build.Tools.ErrorsGen.OutputFile">
+            <summary>
+            The output file (generated source code).
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Build.Tools.ErrorsGen.LangMacro">
+            <summary>
+            Language (used to replace '$LANG$')
+            </summary>
+        </member>
+    </members>
+</doc>

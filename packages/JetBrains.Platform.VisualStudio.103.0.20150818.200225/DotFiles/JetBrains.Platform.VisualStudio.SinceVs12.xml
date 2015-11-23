@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.VisualStudio.SinceVs12</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.Platform.VisualStudio.SinceVs12.IDE.RespawnTextControlOnSharedProjectContextSwitch">
+            <summary>
+            In VS 12 SP 1, when a Shared project switches its context to another Platform project, initiates a respawn of the involved text controls.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Platform.VisualStudio.SinceVs12.ProjectDocuments.VsRunningDocumentTableSinceVs12.IsMonikerValid(System.String)">
+            <summary>
+            Determines whether the given moniker exists in the RDT (since VS12).
+            </summary>
+        </member>
+        <member name="M:JetBrains.Platform.VisualStudio.SinceVs12.ProjectDocuments.VsRunningDocumentTableSinceVs12.GetDocumentProjectGuid(JetBrains.VsIntegration.Interop.Declarations.VsShell.VSCOOKIE)">
+            <summary>
+            Returns the GUID for the project owning the document (since VS12).
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.SinceVs12.Shell.Zones.ISinceVs12Zone">
+            <summary>
+            Visual Studio integrated products, VS 12.0 and above.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.SinceVs12.TextControl.FindWindowFrameForEmbeddedPeekTextView">
+            <summary>
+            Here we got the new “Embedded Peek Text View” inserted as an island inside a big text view, which we also would like to treat as a text control, and it actually does not have a VS Window Frame on its own (only document/toolwindow frames seem to have one).
+            We still need a valid VS window frame to operate the control correctly — at least for detecting its visible state (to suppress some operations when not) and for forcing it into view when needed.
+            We would create a window frame object for this control (not bound to VS entity), then find its parent text view sitting in a real document frame and create a window frame for it, then link the former as a child of the latter.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.SinceVs12.TextControl.DefaultTextViewHostOptionsSinceVs12">
+            <summary>
+            Copy-pasted from VS12 class Microsoft.VisualStudio.Text.Editor.DefaultTextViewHostOptions, not to reference VS12 assembly
+            Microsoft.VisualStudio.Text.UI, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.SinceVs12.TextControl.PredefinedMarginNamesSinceVs12">
+            <summary>
+            Copy-pasted from VS12 class Microsoft.VisualStudio.Text.Editor.PredefinedMarginNames, not to reference VS12 assembly
+            Microsoft.VisualStudio.Text.UI, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+            </summary>
+        </member>
+    </members>
+</doc>

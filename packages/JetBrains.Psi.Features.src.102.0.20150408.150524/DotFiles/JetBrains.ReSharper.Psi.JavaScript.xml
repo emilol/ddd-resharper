@@ -1,0 +1,1367 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.Psi.JavaScript</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Impl.Caches.LruDictionary`2">
+            <summary>  
+            On new element addition evicts the least recently used element if full. Not thread-safe.
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.TypeScript.ITsConstructor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.TypeScript.ITsMemberElement">
+            <summary>
+            Any element that could be inside module/class/interface, local or exported, private or public
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.TypeScript.ITsMemberElement.GetParentElement">
+            <summary>
+            Can be null if parent type is object literal, global module or for local classes/interfaces/modules
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.TypeScript.ITsModuleMember">
+            <summary>
+            Module member
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.TypeScript.ITsStaticTypedProperty">
+            <summary>
+            Type member that can used in structural search - any type member and TS literal property
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.TypeScript.ITsTypeMember">
+            <summary>
+            Class/interface member - public or private
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Impl.Finder.JsDoc.JsDocReferenceSearcher.#ctor(System.Collections.Generic.IEnumerable{JetBrains.ReSharper.Psi.IDeclaredElement},System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="elements"></param>
+            <param name="findCandidates"></param>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.TypeScript.TsProxyTypeBase`1">
+            <summary>
+            When we have a type params invocation for type with several possible signatures, we cannot immediately match
+            type paramaters with type arguments to create an instantiation, so we store it in this class
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsResolvedType.FindSignatures(JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext,JetBrains.ReSharper.Psi.JavaScript.Resolve.JsSignatureKind,JetBrains.Util.dataStructures.FrugalLocalList{JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsFunctionSignature}@)">
+            <summary>
+            Don't use this method directly, use extension method GetSignatures instead
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ITsType.GetIndexSignatureType(JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext,JetBrains.ReSharper.Psi.JavaScript.Tree.TypeScript.IndexerKind)">
+            <summary>
+            Returns result type for index signature. If there is no index signature of the given type, returns struct with ResolvedType == null.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.TypeScript.TsUnionType.#ctor(JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsResolvedType[],JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsInitialResolveContext)">
+            <summary>
+            Please don't use directly, use TsResolveImplUtil.GetUnionOrPlainType
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsUnresolvedType.ToSinglePrimitiveForm(JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsDocumentOffsetProvider)">
+            <summary>
+            Would return primitive with PrimitiveType.Unknown if empty or complex
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsUnresolvedType.BuiltinTypeID">
+            <summary>
+            Return 0 if not a built-in type
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Tree.IJavaScriptDeclaredElementProvider">
+            <summary>
+            Tree nodes that provide names to the parent scope, such as variables, function statement,
+            TS modules, classes and interfaces
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Tree.IArrayLikePattern`1.GetAllArgumentsWithGaps(System.Boolean)">
+            <summary>
+            All pattern arguments, including "holes" between commas represented by "null"
+            </summary>
+            <param name="includeElided">Include elided elements (gaps-only sequence at the end of pattern which has no semantic sense) into the list</param>
+            <returns>List of nodes and nulls for gaps</returns>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Tree.IBlockScope">
+            <summary>
+            Parent for local elements which has block. Could be function, lambda or module.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Tree.IJavaScriptDirectiveOwner.GetDirectives">
+            <summary>
+            Returns all directives from this node
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Tree.IJavaScriptDirectiveOwner.HasUseStrictDirective">
+            <summary>
+            Indcates that this node has 'use strict' directive
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Tree.IJavaScriptDirectiveOwner.ThisOrParentHasUseStrictDirective">
+            <summary>
+            Indicates that this node or some of parents has 'use strict'
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Tree.IJavaScriptDirectiveOwner.GetStatementsOwner">
+            <summary>
+            Returns statements owner to add or remove directives
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsFunctionSignature.DocSignature">
+            <summary>
+            Associated Doc comment signature.
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsFunctionSignature.SourceFile">
+            <summary>
+            Source file where signature owner is declared. Used for presentation.
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsInvocationInfo.InvocationType">
+            <summary>
+            Return, element or constructed
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.LanguageImpl.JavaScriptLanguageService.CodeFormatter">
+            <summary>
+            Get the code formatter
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Naming.JavaScriptNamingUtil.IsValidJsPropertyName(System.String)">
+            <summary>
+            True if valid identifier or has quotes
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Parsing.JavaScriptTreeBuilder.ParseOtherStatementAfterDotAndNewline">
+            <summary>
+            Checks whether we need to treat the expression on new line after dot as a new expression
+            instead of previous expression countinuation, e.g. "myVar.\r\nfor()" should be treated as function
+            but "myVar.\r\nfor(;;)" should be treated as for-loop at the new line
+            </summary>
+            <returns>Whether we should treat newline statement as a different statement</returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.TypeRelationsUtil.CompareTypes(JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext,JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsResolvedType,JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsResolvedType,JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonKind,JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext)">
+            <summary>
+            Compares two TS types for identity, subtyping or assignability
+            </summary>
+            <param name="context">Resolve context</param>
+            <param name="type1">Source type</param>
+            <param name="type2">Target type</param>
+            <param name="comparisonKind">Identity, subtyping or assignability</param>
+            <param name="comparisonContext">If null, creates empty context without preserving errors. If provided, uses provided options.</param>
+            <returns>Comparison result</returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.TypeRelationsUtil.CompareTypes(JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext,JetBrains.ReSharper.Psi.JavaScript.Resolve.JsTypeResolveResult,JetBrains.ReSharper.Psi.JavaScript.Resolve.JsTypeResolveResult,JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonKind,JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext)">
+            <summary>
+            Compares two TS types for identity, subtyping or assignability
+            </summary>
+            <param name="context">Resolve context</param>
+            <param name="type1">Source type</param>
+            <param name="type2">Target type</param>
+            <param name="comparisonKind">Identity, subtyping or assignability</param>
+            <param name="comparisonContext">If null, creates empty context without preserving errors. If provided, uses provided options.</param>
+            <returns>Comparison result</returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.TypeRelationsUtil.CompareSignatures(JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext,JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsFunctionSignature,JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsFunctionSignature,JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonKind,JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext)">
+            <summary>
+            Compares two TS signatures for identity, subtyping or assignability
+            </summary>
+            <param name="context">Resolve context</param>
+            <param name="signature1">Source signature</param>
+            <param name="signature2">Target signature</param>
+            <param name="comparisonKind">Identity, subtyping or assignability</param>
+            <param name="comparisonContext">If null, creates empty context without preserving errors. If provided, uses provided options.</param>
+            <returns>Comparison result</returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.TypeRelationsUtil.CompareSignatureSets(JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext,System.Collections.Generic.IList{JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsFunctionSignature},System.Collections.Generic.IList{JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsFunctionSignature},JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonKind,JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext)">
+            <summary>
+            Compares two TS signature sets for identity, subtyping or assignability
+            </summary>
+            <param name="context">Resolve context</param>
+            <param name="targetSignatures">Target signatures</param>
+            <param name="sourceSignatures">Source signatures</param>
+            <param name="comparisonKind">Identity, subtyping or assignability</param>
+            <param name="comparisonContext">If null, creates empty context without preserving errors. If provided, uses provided options.</param>
+            <returns></returns>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.TsTypeInfo">
+             <![CDATA[ 
+             class Base<Tb> {
+            	x : Tb;
+             }
+            
+             class Derived<Td> extends Base<Wrapper<Td> {
+             }
+             TsTypeInfo created on 'Derived<number>' type will look like this
+             OpenTypeToOperate = Derived<Td -> Td> - pay attention that the type is open type, but still has the substitution that is identical
+             FinalType = Derived<Td -> number>
+             so if we call OpenTypeToOperate.GetProperties we'll get TsSymbolInfo with 
+             - property x of type 'Tb'
+             - substitution for property x = Tb -> Wrapper<Td>
+             then we just should apply this substitution to the type and we'll get open type in terms of 'Derived' (around of its and only its type parameters) of property x - Wrapper<Td>
+             to get the final type we need to apply substitution from FinalSubstitution property (we'll get Wrapper<number>)    
+             ]]>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.TsTypeInfo.FinalTypeFriendlyName">
+            <summary>
+            SLOW: AVOID using this in performance-critical code!!!
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext">
+            <summary>
+            Context for type comparison operations
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.SkipExplicitDerivedCheck">
+            <summary>
+            By default, subtyping check uses a short-cut: if a type is derived, just returns true.
+            Set this flag to not use this short-cut
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.SkipSignatureReturnCheck">
+            <summary>
+            Set this flag to compare signatures without taking their return types into account
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.SubTypingForOverloadsSort">
+            <summary>
+            This flag is only for use within TopoSignatureComparer
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.HasMissingMembers">
+            <summary>
+            If there are missing members, this flag will be set to true
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.RequestFullInfo">
+            <summary>
+            By default, check will interrupt at the first error
+            Set this flag to go deeper
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.AddResult(JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.IComparisonResult,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext)">
+            <summary>
+            Add comparison error result
+            </summary>
+            <param name="result">Result</param>
+            <param name="resolveContext">Resolve context (if null, no logging)</param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.GetMainResult">
+            <summary>
+            Get the top-level comparison error result
+            </summary>
+            <returns>Main comparison error</returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.GetSingleDeepResult">
+            <summary>
+            Returns full hierarchy for errors if there is only single error chain
+            Otherwise, returns null
+            </summary>
+            <returns>Full error hierarchy (0 is top-level, further is deeper) or null</returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.HasErrorInfo">
+            <summary>
+            Returns true if there exist any error messages (so that string error should be available)
+            </summary>
+            <returns>Error messages exist or not</returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.GetErrorText">
+            <summary>
+            Creates error message text for all the errors at all levels
+            Levels are specified by indenting from the left
+            </summary>
+            <returns>Text</returns>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.myDepth">
+            <summary>
+            Current context depth
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.IsInitialCheck">
+            <summary>
+            Use this to ensure that the check is initial for original types, and is not a nested level check
+            </summary>
+            <returns>Whether the check is initial</returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.IsSecondaryCheck">
+            <summary>
+            Use this to ensure that the check is the first nested after the initial for original types, and is not a nested level check
+            </summary>
+            <returns>Whether the check is initial</returns>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.mySilentByDepth">
+            <summary>
+            If context depth exceeds some reasonable level, switch to silent mode to not store 100500 error messages
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.PushDepth">
+            <summary>
+            Make deeper
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.PopDepth">
+            <summary>
+            Make shallower
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.Silent">
+            <summary>
+            Set this flag to not save errors if you don't need them - preserves memory and improves performance
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.ExtraMembers">
+            <summary>
+            If there are extra members, and this is not null, save them here
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.MissingMembers">
+            <summary>
+            If there are missing members, and this is not null, save them here
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ComparisonContext.IdenticalSignatureReturns">
+            <summary>
+            If this is a signature comparison, and signatures are identical, and this is not null, save return types for signatures
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.JsFunctionSignatureTopoComparer">
+            <summary>
+            Use to sort overloads in order in which more specific signature is the first.
+            <see cref="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.JsFunctionSignatureTopoComparer.Compare(JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsFunctionSignature,JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsFunctionSignature)"/> for <see cref="M:JetBrains.Util.SortUtil.TopoSort``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``0,System.Nullable{System.Int32}},System.Collections.Generic.IEqualityComparer{``0})"/>.   
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsTypeComparer`1.Loose">
+            <summary>
+            Loose == don't account for AllowIdentityLoss
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsTypeComparer`1.StrongTyped">
+            <summary>
+            StrongTyped == treat all dynamic types as equals
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Tree.IJsModuleScope.IsGlobal">
+            <summary>
+            Module is file without exports and imports (part of global module)
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Tree.IJsModuleScope.IsExternal">
+            <summary>
+            Module is declared as: declare module "ExternalName" {} or is file with exports and imports
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Tree.JsModifiers.Export">
+            <summary>
+            Modifier for export declarations in modules.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Tree.JsModifiers.Declare">
+            <summary>
+            Ambient declaration in module modifier.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Tree.JsModifiers.Default">
+            <summary>
+            ECMAScript 6 'export default' thing
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Util.JsDoc.JsDocCommentNodeOwnerUtil.FindFirstSameNamedDeclarationFor``1(``0)">
+            <summary>
+            Returns first declaration for given member. Used e.g. to get the first function member overload in interface declaration.
+            <code>
+            interface A {
+              /** 
+               * doc
+               */
+              get(x : Number);
+              get(x : String);
+              get(x : Boolean);
+            }
+            </code>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="declaration"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Util.JsDoc.JsDocCommentNodeOwnerUtil.FindFirstDeclarationFor``1(``0,System.Predicate{``0})">
+            <summary>
+            Works like <see cref="M:JetBrains.ReSharper.Psi.JavaScript.Util.JsDoc.JsDocCommentNodeOwnerUtil.FindFirstSameNamedDeclarationFor``1(``0)"/> but operates on nameless members (call and construct signatures)
+            <code>
+            interface A {
+              /** 
+               * doc
+               */
+              (x : Number);
+              (x : String);
+              (x : Boolean);
+            }
+            </code>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="declaration"></param>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Caches.IJavaScriptSymbol">
+            <summary>
+            Customization point for javascript properties
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Caches.IJavaScriptSymbol.IsExplicit">
+            <summary>
+            Returns true for intentionally declared symbols (like var, {sss:} not just e = ???)
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Caches.IJavaScriptSymbol.SourceFile">
+            <summary>
+            Owner PSI source file
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Caches.IJavaScriptSymbol.NavigationOffset">
+            <summary>
+            Offset where name of symbol is specified
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Caches.IJavaScriptSymbol.IsPrimaryFileSymbol">
+            <summary>
+            Symbol was declared/used in a global java script file (not in HTML)
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Caches.IJavaScriptSymbol.IsFrameworkDeclaration">
+            <summary>
+            Symbol belongs to framework
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Caches.IJavaScriptTypeCache.FindAllPropertyRules(JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsResolveContext,JetBrains.ReSharper.Psi.JavaScript.Caches.IJsRuleConsumer,JetBrains.ReSharper.Psi.IPsiSourceFile,System.Boolean)">
+            <summary>
+            Returns property rules for file
+            </summary>
+            <param name="context"></param>
+            <param name="consumer"></param>
+            <param name="file"></param>
+            <param name="filterOutNonJs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Caches.IJavaScriptTypeCache.FindAllPropertyRules(JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsResolveContext,JetBrains.ReSharper.Psi.JavaScript.Caches.IJsRuleConsumer,System.Boolean)">
+            <summary>
+            Works slow because iterates over whole cache. Use overload with IPsiSourceFile when possible,
+            or, to obtain all dynamic properties use <see cref="M:JetBrains.ReSharper.Psi.JavaScript.Caches.IJavaScriptTypeCache.GetAllDeclarationsSymbolTable(JetBrains.ReSharper.Psi.IPsiSourceFile)"/> or <see cref="M:JetBrains.ReSharper.Psi.JavaScript.Caches.IJavaScriptTypeCache.GetAllMeaningPropertyNames"/>
+            </summary>
+            <param name="context"></param>
+            <param name="consumer"></param>
+            <param name="filterOutNonJs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Caches.IJavaScriptTypeCache.CheckIfRuleCouldExist(JetBrains.ReSharper.Psi.JavaScript.Resolve.JsPrimitive,JetBrains.ReSharper.Psi.JavaScript.Resolve.JsPrimitive,JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsResolveContext,System.Boolean)">
+            <summary>
+            Checks only via hash code, so false positives are possible
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Caches.IJavaScriptTypeCache.FindRulesWithParent(JetBrains.ReSharper.Psi.JavaScript.Resolve.JsPrimitive,JetBrains.ReSharper.Psi.JavaScript.Resolve.JsPrimitive,JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsResolveContext,JetBrains.ReSharper.Psi.JavaScript.Caches.IJsRuleConsumer,System.Boolean)">
+            <summary>
+            Filters only by hash code, so could give consumer more rules than needed, please check for equality in Consume
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Caches.JsFilteringElementList">
+            <summary>
+            JsResolveImplUtil.ShouldAddElementToDeclaredElementList casts to the base collection class to perfrom optimal enumerating 
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.CodeStyle.JavaScriptCodeFormatterBase.FormatDeletedNodes(JetBrains.ReSharper.Psi.Tree.ITreeNode,JetBrains.ReSharper.Psi.Tree.ITreeNode,JetBrains.ReSharper.Psi.Tree.ITreeNode)">
+            <summary>
+            Format code during WritePSI action
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.TypeScript.ITsExtendableTypeElement.GetExtendedBaseElements(System.Boolean,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext)">
+            <summary>Returns elements under 'extended' clause</summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.TypeScript.ITsExtendableTypeElement.GetAllBaseElements(JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext)">
+            <summary>
+            Returns elements under all hierarchy clauses - under 'extends' for interfaces, under 'extends' and 'implements' for classes. 
+            Only immediate bases is returned. Use <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Util.TypeScript.HierarchyUtil"/> for full hierarchy.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.TypeScript.ITsLocalModuleMember">
+            <summary>
+            Local (not exported) module members, except types
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.TypeScript.ITsExportedModuleMember">
+            <summary>
+            Exported module members, except types
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.TypeScript.ITsModuleElement.HasUsableName">
+            <summary>
+            Returns true if module name can be used in code. False will be returned if a module isn't declared by user and corresponding to a ts-file.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Impl.ControlFlow.Inspections.ValueAnalysis.Rules.TableBinaryOpRules.InitTable">
+            <summary>
+            Should initialize a table used for futher calculations. Please note that this method is being called
+            from constructor and, hence, should not assume Derived class will be initialized before its' call.
+            </summary>    
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Impl.ControlFlow.Inspections.ValueAnalysis.Rules.TableUnaryOpRules.InitTable">
+            <summary>
+            Should initialize a table used for futher calculations. Please note that this method is being called
+            from constructor and, hence, should not assume Derived class will be initialized upon its' call.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.IJavaScriptLocalElement">
+            <summary>
+            Local variable of function...
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.IJavaScriptAnyLocalElement.GetOwnerScopeOffset(JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsDocumentOffsetProvider)">
+            <summary>
+            Position of the beginning of the owner scope in the document.
+            It should be valid and != -1 even in case of doc comment parameter.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.IJavaScriptAnyLocalElement.GetOwnerScope">
+            <summary>
+            Can be null in case of parameter from doc comment signature
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.TypeScript.TsSignatureSearcher.Run(JetBrains.Util.dataStructures.FrugalLocalList{JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.TypeScript.TsPrimitiveWithTypeParams}@)">
+            <summary>
+            If myStopAfterFirstTypeWithSignatures, returns if signatures were found in the first (our) type. False means that they were found in base types.
+            Otherwise returns true
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.TypeScript.TsResolveImplUtil.IsRooted(System.String)">
+            <summary>
+            Method taken from tsc source, doesn't work on Win
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.TypeScript.TsResolveImplUtil.GetParameterType(JetBrains.ReSharper.Psi.JavaScript.Resolve.JsParameterInfo[],System.Int32,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext,JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsFunctionSignature,JetBrains.ReSharper.Psi.JavaScript.Resolve.StrongTypeMode)">
+            <summary>
+            Returns Error if index is out of range when there are no rest params, or rest param is not Array type or has wrong instantiation
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.TypeScript.TsResolveImplUtil.GetFormalParameterType(JetBrains.ReSharper.Psi.JavaScript.Resolve.JsParameterInfo[],System.Int32,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext,JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsFunctionSignature,JetBrains.ReSharper.Psi.JavaScript.Resolve.StrongTypeMode,System.Boolean)">
+            <summary>
+            Doesn't check for rest params, only checks range
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.CaseSensitiveMultipleFilterSymbolTable">
+            TODO: Remove. Created just to fix 
+            TODO: http://youtrack.jetbrains.com/issue/RSRP-396750RSRP-396750 
+            TODO: Intellisense shouldn't replace class name by variable name, but should provide both of them instead 
+            <summary>
+            Case sensitive filtering!
+            Filters symbol table with multiple filters
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveLoggerWithTextWriter">
+            <summary>
+            For tests and internal logging features
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Impl.Util.JavaScriptDeclaredElementFunctionUtil.ElementIsNewable(JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.IJavaScriptTypeOwner,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext)">
+            <summary>
+            Returns true if element is a class element or if its type has construct signatures
+            </summary>
+            <param name="element"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Naming.JavaScriptNamingLanguageService.GetConflictedElements(System.String,JetBrains.ReSharper.Psi.Tree.ITreeNode,JetBrains.ReSharper.Psi.Naming.Impl.ScopeKind)">
+            <summary>
+            Finds all conflicting by specified name declarations in specified context with specified kind of scope.    
+            </summary>       
+            <param name="context">    
+            Expected contexts in common scope:
+              1) objectLiteral member - search among owner's members    
+              2) otherwise - search among all enclosing scopes and all nested scopes
+            </param>
+            <param name="kind">
+            common scope - namespace which includes names of symbols
+            type and namespace scope - unsupported
+            local self scoped - unsupported
+            </param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Naming.TypeScript.TsNamingLanguageService.GetConflictedElements(System.String,JetBrains.ReSharper.Psi.Tree.ITreeNode,JetBrains.ReSharper.Psi.Naming.Impl.ScopeKind)">
+            <summary>
+            Finds all conflicting by specified name declarations in specified context with specified kind of scope.    
+            </summary>
+            <param name="name"> checking name </param>
+            <param name="context">    
+            Expected contexts in common scope:
+              1) class/interface/objectType/objectLiteral/enum member - search among owner's members
+              2) context is not last overload signature's or call signature's or index signature's child - search among this overload's params
+              3) otherwise - search among all enclosing scopes and all nested scopes
+            
+            Expected context in type and namespace scope(symbol's namespace and type's namespace):
+              1) any node - search among all enclosing scopes and all nested scopes
+            </param>
+            <param name="kind">
+            common scope - namespace which includes names of symbols only
+            type and namespace scope - namespace which includes names of symbols, types, modules
+            local self scoped - unsupported
+            </param>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Tree.TypeScript.ITsModuleDeclaration.PresentableFullName">
+            <summary>
+            Full name of a module or external module name; 
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Tree.TypeScript.ITsModuleDeclarationName.PresentableFullName">
+            <summary>
+            Full name of a module or external module name;
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.JsDynamicCompositeType.HasSignatures(JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext)">
+            <summary>
+            Returns it this symbol can be used as a function (this check is much faster then Signatures.Any())
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.JsTypingType.Dynamic">
+            <summary>Only use this rule when doing dynamic type resolve</summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.JsTypingType.ImplicitTyping">
+            <summary>Implicit could only be used after checking that there is explicit. Example: var a = expr;</summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.JsTypingType.ExplicitTyping">
+            <summary>Example: var a: type;</summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.JsTypingType.ConditionalAlias">
+            <summary>Can only use property after checking that associated type resolves</summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.JavaScriptTypeEx.GetReturnType(JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsUnresolvedType,System.Int32,JetBrains.ReSharper.Psi.JavaScript.Resolve.JsUnresolvedTypeArray)">
+            <summary>
+            When type is a function returns type of the function return value
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.JavaScriptTypeEx.GetConstructedType(JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsUnresolvedType,JetBrains.ReSharper.Psi.JavaScript.Resolve.JsUnresolvedTypeArray)">
+            <summary>
+            If type is an object constructor returns type of the constructed object
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.JavaScriptTypeEx.GetElementType(JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsUnresolvedType,JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsUnresolvedType)">
+            <summary>
+            If type is instance of Array returns type of element of array
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.JavaScriptTypeEx.GetProperties(JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsResolvedType,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext,System.Boolean,JetBrains.ReSharper.Psi.IPsiSourceFile,System.Int32,System.Boolean)">
+            <summary>
+            Properties of this object...
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.JavaScriptTypeEx.GetTsProperties(JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.ITsType,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext,System.Boolean,System.Boolean)">
+            <summary>
+            Properties of this object...
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.JavaScriptTypeEx.GetSignatures(JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsResolvedType,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext,JetBrains.ReSharper.Psi.JavaScript.Resolve.JsSignatureKind)">
+            <summary>
+            Returns signatures of all possible overloads
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.JavaScriptTypeEx.IsStandardJsType(JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsResolvedType,System.String)">
+            <summary>
+            If fullType is standart type returns true, otherwise false
+            TODO: remake everything
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.JavaScriptTypeEx.IsJsFunction(JetBrains.ReSharper.Psi.JavaScript.Resolve.IJsResolvedType,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext)">
+            <summary>
+            If fullType is function type returns true, otherwise false
+            TODO: remake everything
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Resolve.JsParameterInfo.Name">
+            <summary>
+            In case of ES 6.0 destructuring parameters, like function ({p1, p2}),
+            one positional parameter could encompass several named parameters.
+            In this case name for positional parameter is null.
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Resolve.JsParameterInfo.JsAnnotatedType">
+            <summary>
+            Raw unresolved type as supplied by a user. Don't use unless sure. Use GetUnresolvedType instead.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.JsTypeDescriptionOpInfo.Object">
+            <summary>
+            <see cref="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.JsPrimitiveKindExtensions.HasObject(JetBrains.ReSharper.Psi.JavaScript.Resolve.JsPrimitiveKind)"/> for full info
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.JsTypeDescriptionOpInfo.ParameterIndex">
+            <summary>
+            For return types (invocations) and parameters
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.JsTypeDescriptionOpInfo.TypeList">
+            <summary>
+            For storing parameter types in invocations, constructions, element types, combined types, etc.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resolve.JsTypeDescriptionOpInfo.Offset">
+            <summary>
+            For local types (symbols, obj or func literals, etc)
+            Also used for primitives to store ID - should be remade
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Psi.JavaScript.Resolve.JsTypeDescriptionOpInfo.Name">
+            <summary>
+            For symbols, types, scopes
+            <see cref="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.JsPrimitiveKindExtensions.HasName(JetBrains.ReSharper.Psi.JavaScript.Resolve.JsPrimitiveKind)"/> for full info
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Tree.TypeScript.TsModifiersOwnerExtensions.IsAmbient(JetBrains.ReSharper.Psi.JavaScript.Tree.TypeScript.ITypeScriptModifiersOwner)">
+            <summary>
+            Declaration or it's owner module has 'declare' modifier.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Tree.TypeScript.TsParametersOwnerClassification.Declaration">
+            <summary>
+            Ambient declarations, overloads.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Tree.TypeScript.TsParametersOwnerClassification.Implementation">
+            <summary>
+            Implementation declarations.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Impl.Framework.MicrosoftAjax.NotDebugFilesFilter">
+            <summary>
+            Filter out not debugging files (preferes .debug.js to bare .js)
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Impl.ControlFlow.Inspections.ValueAnalysis.ContractAnnotations.Parser.FunctionAnnotationParser.ParseValueExpression">
+            <summary>
+            </summary>
+            <remarks>
+            Grammar for ValueExpression(expr):
+            
+            expr :: term ('|' term)*
+            term :: factor ('&amp;' factor)*
+            factor :: '(' expr ')'
+            factor :: !factor
+            factor :: VALUE
+            </remarks>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Impl.ControlFlow.Inspections.ValueAnalysis.ContractAnnotations.PreparedAnnotation.WriteArrayElements(JetBrains.Util.PersistentMap.UnsafeWriter,JetBrains.ReSharper.Psi.JavaScript.Impl.ControlFlow.Inspections.ValueAnalysis.Values.JsVariableStateExtended[])">
+            <summary>
+            Note: doesn't write array length.
+            </summary>    
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Impl.ControlFlow.Inspections.ValueAnalysis.DependentAnalysis.JsMemoryHiveExt.FilterHive(JetBrains.ReSharper.Psi.JavaScript.Impl.ControlFlow.Inspections.ValueAnalysis.DependentAnalysis.JsMemoryHive,System.Predicate{JetBrains.ReSharper.Psi.JavaScript.Impl.ControlFlow.Inspections.ValueAnalysis.DependentAnalysis.JsMemorySnapshot})">
+            <summary>
+            
+            </summary>
+            <param name="hive"></param>
+            <param name="filterPredicate"></param>
+            <remarks>filterPredicate should not modify snapshot, passed to it!</remarks>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Impl.ControlFlow.Inspections.ValueAnalysis.ValueAnalysisPreprocessingData.DataBuilder.BuildData">
+            <summary>
+            Returns built ValueAnalysisPreproccessingData. Invalidates builder.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Resolve.TypeScript.TsResolveUtil.GetNumericIndexFromPropertyName(System.String)">
+            <summary>
+            Returns -1 if not
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Util.TypeScript.HierarchyUtil.GetBaseTypesWithLevelsRecursively(JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.TypeScript.ITsExtendableTypeElement,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext)">
+            <summary>
+            Returns pairs of base types with level
+            </summary>
+            <param name="typeElement"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Util.TypeScript.TsBindUtil.CreateReplacementReference(JetBrains.ReSharper.Psi.Tree.ITreeNode,JetBrains.ReSharper.Psi.JavaScript.Impl.Services.TypeScript.TsElementFactory,System.String)">
+            <summary>
+            We shouldn't break the tree, so we replace original references only by corresponding types of references
+            </summary>
+            <param name="reference">Original reference</param>
+            <param name="factory">Factory</param>
+            <param name="format">Format string for replacement</param>
+            <returns>Created replacement</returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Util.JavaScriptReferenceUtil.TryResolveSmart(JetBrains.ReSharper.Psi.Resolve.IReference)">
+            <summary>
+            If reference is JS ReferenceExpressionReference resolves it via FullJavaScriptType
+            </summary>
+            <param name="reference">reference to resolve</param>
+            <returns>resolve result</returns>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons">
+             <summary>
+              <para>
+                <para>Autogenerated identifier classes and identifier objects to Themed Icons registered with <see cref="T:JetBrains.UI.Icons.IThemedIconManager"/>.</para>
+                <para>Identifier classes should be used in attributes, XAML, or generic parameters. Where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected, use the identifier object in the <c>Id</c> field of the identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>This code was compile-time generated to support Themed Icons in the JetBrains application.</para>
+              <para>It has two primary goals: load the icons of this assembly to be registered with <see cref="T:JetBrains.UI.Icons.IThemedIconManager"/> so that they were WPF-accessible and theme-sensitive; and emit early-bound accessors for referencing icons in codebehind in a compile-time-validated manner.</para>
+              <h1>XAML</h1>
+              <para>For performance reasons, the icons are not individually exposed with application resources. There is a custom markup extension to bind an image source in markup.</para>
+              <para>To use an icon from XAML, set an <see cref="T:System.Windows.Media.ImageSource"/> property to the <see cref="T:JetBrains.UI.Icons.ThemedIconExtension"/> markup extension, which takes an icon identifier class (nested in <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class) as a parameter.</para>
+              <para>Example:</para>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+Js}" /&gt;</code>
+              <h1>Attributes</h1>
+              <para>Sometimes you have to reference an icon from a type attriute when you're defining objects in code. Typical examples are Options pages and Tool Windows.</para>
+              <para>To avoid the use of string IDs which are not validated very well, we've emitted identifier classes to be used with <c>typeof()</c> expression, one per each icon. Use the attribute overload which takes a <see cref="T:System.Type"/> for an image, and choose your icon class from nested classes in the <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+              <para>Example:</para>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.Js))]</code>
+              <h1>CodeBehind</h1>
+              <para>In codebehind, we have two distinct tasks: (a) specify some icon in the APIs and (b) render icon images onscreen.</para>
+              <para>On the APIs stage you should only manipulate icon identifier objects (of type <see cref="T:JetBrains.UI.Icons.IconId"/>, statically defined in <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> in <c>Id</c> fields). Icon identifier classes (nested in <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>) should be turned into icon identifier objects as early as possible. Rendering is about getting an <see cref="T:System.Windows.Media.ImageSource"/> to assign to WPF, or <see cref="T:System.Drawing.Bitmap"/> to use with GDI+ / Windows Forms.</para>
+              <para>You should turn an identifier object into a rendered image as late as possible. The identifier is static and lightweight and does not depend on the current theme, while the image is themed and has to be loaded or generated/rasterized. You need an <see cref="T:JetBrains.UI.Icons.IThemedIconManager"/> instance to get the image out of an icon identifier object. Once you got the image, you should take care to change it with theme changes — either by using a live image property, or by listening to the theme change event. See <see cref="T:JetBrains.UI.Icons.IThemedIconManager"/> and its extensions for the related facilities.</para>
+              <para>Example:</para>
+              <code>// Getting IconId identifier object to use with APIs
+            IconId iconid = PsiJavaScriptThemedIcons.Js.Id;</code>
+              <code>// Getting IconId out of an Icon Identifier Class type
+            IconId iconid = CompiledIconClassAttribute.TryGetCompiledIconClassId(typeof(PsiJavaScriptThemedIcons.Js), OnError.Throw);</code>
+              <code>// Getting image for screen rendering by IconId
+            themediconmanager.Icons[icnoid]</code>
+              <code>// Getting image for screen rendering by Icon Identifier Class
+            themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.Js&gt;()</code>
+              <h1>Icons Origin</h1>
+              <para>This code was generated by a pre-compile build task from a set of input files which are XAML files adhering to a certain convention, as convenient for exporting them from the Illustrator workspace, plus separate PNG files with raster icons. In the projects, these files are designated with <c>ThemedIconsXamlV3</c> and <c>ThemedIconPng</c> build actions and do not themselves get into the output assembly. All of such files are processed, vector images for different themes of the same icon are split and combined into the single list of icons in this assembly. This list is then written into the genearted XAML file (compiled into BAML within assembly), and serves as the source for this generated code.</para>
+            </remarks>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.Js">
+             <summary>
+              <para>
+                <para>Autogenerated identifier class for the Js Themed Icon.</para>
+                <para>Identifier classes should be used in attributes, XAML, or generic parameters. Where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected, use the identifier object in the <see cref="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.Js.Id"/> field of the identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+Js}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.Js))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.Js.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.Js&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.Js.Id">
+             <summary>
+              <para>
+                <para>Autogenerated identifier object for the Js Themed Icon.</para>
+                <para>Identifier objects should be used where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected. In attributes, XAML, or generic parameters use the containing <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.Js"/> identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+Js}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.Js))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.Js.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.Js&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsFunction">
+             <summary>
+              <para>
+                <para>Autogenerated identifier class for the JsFunction Themed Icon.</para>
+                <para>Identifier classes should be used in attributes, XAML, or generic parameters. Where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected, use the identifier object in the <see cref="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsFunction.Id"/> field of the identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+JsFunction}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.JsFunction))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.JsFunction.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.JsFunction&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsFunction.Id">
+             <summary>
+              <para>
+                <para>Autogenerated identifier object for the JsFunction Themed Icon.</para>
+                <para>Identifier objects should be used where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected. In attributes, XAML, or generic parameters use the containing <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsFunction"/> identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+JsFunction}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.JsFunction))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.JsFunction.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.JsFunction&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsLabel">
+             <summary>
+              <para>
+                <para>Autogenerated identifier class for the JsLabel Themed Icon.</para>
+                <para>Identifier classes should be used in attributes, XAML, or generic parameters. Where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected, use the identifier object in the <see cref="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsLabel.Id"/> field of the identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+JsLabel}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.JsLabel))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.JsLabel.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.JsLabel&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsLabel.Id">
+             <summary>
+              <para>
+                <para>Autogenerated identifier object for the JsLabel Themed Icon.</para>
+                <para>Identifier objects should be used where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected. In attributes, XAML, or generic parameters use the containing <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsLabel"/> identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+JsLabel}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.JsLabel))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.JsLabel.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.JsLabel&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsMsAjaxNs">
+             <summary>
+              <para>
+                <para>Autogenerated identifier class for the JsMsAjaxNs Themed Icon.</para>
+                <para>Identifier classes should be used in attributes, XAML, or generic parameters. Where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected, use the identifier object in the <see cref="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsMsAjaxNs.Id"/> field of the identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+JsMsAjaxNs}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.JsMsAjaxNs))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.JsMsAjaxNs.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.JsMsAjaxNs&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsMsAjaxNs.Id">
+             <summary>
+              <para>
+                <para>Autogenerated identifier object for the JsMsAjaxNs Themed Icon.</para>
+                <para>Identifier objects should be used where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected. In attributes, XAML, or generic parameters use the containing <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsMsAjaxNs"/> identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+JsMsAjaxNs}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.JsMsAjaxNs))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.JsMsAjaxNs.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.JsMsAjaxNs&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsParameter">
+             <summary>
+              <para>
+                <para>Autogenerated identifier class for the JsParameter Themed Icon.</para>
+                <para>Identifier classes should be used in attributes, XAML, or generic parameters. Where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected, use the identifier object in the <see cref="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsParameter.Id"/> field of the identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+JsParameter}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.JsParameter))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.JsParameter.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.JsParameter&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsParameter.Id">
+             <summary>
+              <para>
+                <para>Autogenerated identifier object for the JsParameter Themed Icon.</para>
+                <para>Identifier objects should be used where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected. In attributes, XAML, or generic parameters use the containing <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsParameter"/> identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+JsParameter}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.JsParameter))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.JsParameter.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.JsParameter&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsProperty">
+             <summary>
+              <para>
+                <para>Autogenerated identifier class for the JsProperty Themed Icon.</para>
+                <para>Identifier classes should be used in attributes, XAML, or generic parameters. Where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected, use the identifier object in the <see cref="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsProperty.Id"/> field of the identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+JsProperty}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.JsProperty))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.JsProperty.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.JsProperty&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsProperty.Id">
+             <summary>
+              <para>
+                <para>Autogenerated identifier object for the JsProperty Themed Icon.</para>
+                <para>Identifier objects should be used where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected. In attributes, XAML, or generic parameters use the containing <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsProperty"/> identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+JsProperty}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.JsProperty))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.JsProperty.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.JsProperty&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsVariable">
+             <summary>
+              <para>
+                <para>Autogenerated identifier class for the JsVariable Themed Icon.</para>
+                <para>Identifier classes should be used in attributes, XAML, or generic parameters. Where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected, use the identifier object in the <see cref="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsVariable.Id"/> field of the identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+JsVariable}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.JsVariable))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.JsVariable.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.JsVariable&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsVariable.Id">
+             <summary>
+              <para>
+                <para>Autogenerated identifier object for the JsVariable Themed Icon.</para>
+                <para>Identifier objects should be used where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected. In attributes, XAML, or generic parameters use the containing <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.JsVariable"/> identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+JsVariable}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.JsVariable))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.JsVariable.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.JsVariable&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.TsIndexer">
+             <summary>
+              <para>
+                <para>Autogenerated identifier class for the TsIndexer Themed Icon.</para>
+                <para>Identifier classes should be used in attributes, XAML, or generic parameters. Where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected, use the identifier object in the <see cref="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.TsIndexer.Id"/> field of the identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+TsIndexer}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.TsIndexer))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.TsIndexer.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.TsIndexer&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.TsIndexer.Id">
+             <summary>
+              <para>
+                <para>Autogenerated identifier object for the TsIndexer Themed Icon.</para>
+                <para>Identifier objects should be used where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected. In attributes, XAML, or generic parameters use the containing <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.TsIndexer"/> identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+TsIndexer}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.TsIndexer))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.TsIndexer.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.TsIndexer&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.TypeScript">
+             <summary>
+              <para>
+                <para>Autogenerated identifier class for the TypeScript Themed Icon.</para>
+                <para>Identifier classes should be used in attributes, XAML, or generic parameters. Where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected, use the identifier object in the <see cref="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.TypeScript.Id"/> field of the identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+TypeScript}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.TypeScript))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.TypeScript.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.TypeScript&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.TypeScript.Id">
+             <summary>
+              <para>
+                <para>Autogenerated identifier object for the TypeScript Themed Icon.</para>
+                <para>Identifier objects should be used where an <see cref="T:JetBrains.UI.Icons.IconId"/> value is expected. In attributes, XAML, or generic parameters use the containing <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons.TypeScript"/> identifier class.</para>
+              </para>
+            </summary>
+            <remarks>
+              <para>For details on Themed Icons and their use, see Remarks on <see cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/> class.</para>
+            </remarks>
+            <seealso cref="T:JetBrains.ReSharper.Psi.JavaScript.Resources.PsiJavaScriptThemedIcons"/>
+            <example>
+              <code>&lt;Image Source="{icons:ThemedIcon myres:PsiJavaScriptThemedIcons+TypeScript}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+              <code>[Item(Name="Sample", Icon=typeof(PsiJavaScriptThemedIcons.TypeScript))]        // C# Type attribute</code>
+            </example>
+            <example>
+              <code>IconId iconid = PsiJavaScriptThemedIcons.TypeScript.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+              <code>themediconmanager.GetIcon&lt;PsiJavaScriptThemedIcons.TypeScript&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.CodeStyle.SettingsUpgrade.JavaScriptCodeStyleSettings">
+            <summary>
+            Used for storing and managing of code style settings
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.DeclaredElements.IJavaScriptArgumentsVariable">
+            <summary>
+            Local 'arguments' variable
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Impl.Framework.jQuery.JQueryNotDocumentedFilesFilter">
+            <summary>
+            Filter out not documented files (preferes -vsdoc.js to bare .js and .min.js)
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Impl.SymbolFilters.BetterSourceFilesFilter">
+            <summary>
+            Filters out elements that don't have doc comments (when there are elements with doc comments)
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsRootResolveContextForCalculations">
+            <summary>
+            First child context stores non-thread-safe cache with temporary values
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Impl.SymbolFilters.DocCommentsOwnerFilter">
+            <summary>
+            Filters out elements that don't have doc comments (when there are elements with doc comments)
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Psi.JavaScript.Services.MinifiedFilesFilter">
+            <summary>
+            Filter out not documented files (preferes bare .js to .min.js)
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Psi.JavaScript.Impl.Util.JavaScriptPsiImplUtil.ourWellKnownSymbols">
+            <summary>
+            ECMAScript 6 well-known symbols
+            (https://people.mozilla.org/~jorendorff/es6-draft.html#sec-well-known-symbols)
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Tree.JavaScriptStatementExtensions.ReplaceBy``1(JetBrains.ReSharper.Psi.JavaScript.Tree.IJavaScriptStatement,``0)">
+            <summary>
+            Replace this statement in the tree by the copy of the given statement
+            </summary>
+            <param name="stmt"></param>
+            <returns>The clone of the original statement which was added into the tree </returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Tree.JavaScriptExpressionExtentions.GetExpressionToReplace(JetBrains.ReSharper.Psi.JavaScript.Tree.IJavaScriptExpression)">
+            <summary>
+            Calculates outer expression which can be redundant parentheses wrapper of <paramref name="expression"/>
+            </summary>
+            <param name="expression"></param>
+            <returns>Wrapper if found, or <paramref name="expression"/> itself otherwise</returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Util.JavaScriptExpressionUtil.GetValueNodeForBinding(JetBrains.ReSharper.Psi.JavaScript.Tree.ISingleNameBinding)">
+            <summary>
+            Gets value node from initializer corresponding to binding element at left
+            </summary>
+            <param name="binding">Binding</param>
+            <returns>Value node, or null if nothing found</returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Util.JavaScriptExpressionUtil.GetValueNodeForPattern``2(JetBrains.ReSharper.Psi.JavaScript.Tree.ISingleItemPattern,JetBrains.ReSharper.Psi.JavaScript.Tree.IJavaScriptExpression)">
+            <summary>
+            Gets value node from an initializer/default value which corresponds to the specified binding/assignment pattern node
+            </summary>
+            <param name="singleItemPattern">Target binding / assignment pattern</param>
+            <param name="valueExpression">Initializer or default value</param>
+            <returns>Value node, or null if nothing found</returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Psi.JavaScript.Util.JavaScriptExpressionUtil.GetValueNodeForPattern``2(JetBrains.ReSharper.Psi.JavaScript.Tree.ISingleItemPattern,JetBrains.ReSharper.Psi.JavaScript.Tree.IJavaScriptExpression,JetBrains.ReSharper.Psi.JavaScript.Tree.IDestructuringPattern)">
+            <summary>
+            Gets value node from an initializer/default value which corresponds to the specified binding/assignment pattern node
+            </summary>
+            <param name="singleItemPattern">Target binding / assignment pattern</param>
+            <param name="valueExpression">Initializer or default value</param>
+            <param name="fullPattern">Full pattern containing target binding</param>
+            <returns>Value node, or null if nothing found</returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.Tests.Framework.Projects</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.TestFramework.Projects.TestDataInNugetsProjectModel">
+            <summary>
+            <seealso cref="T:JetBrains.TestFramework.Utils.TestDataInNugets"/>
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.TestFramework.ReferenceDlls.MsCorLib">
+            <summary>
+            Test project will have reference to the MsCorLib assembly of the test's platform. It's an error if mscorlib is not defined for that platform.
+            </summary>
+        </member>
+        <member name="T:JetBrains.TestFramework.Projects.TestProjectHasClrImpl">
+            <summary>
+            The component is used for platform tests to make the tests behaviour intact. 
+            This is necessary because we have no PSI in platform tests. 
+            The component must be overriden in PSI Tests.
+            </summary>
+        </member>
+    </members>
+</doc>

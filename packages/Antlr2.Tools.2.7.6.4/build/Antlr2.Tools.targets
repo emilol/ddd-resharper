@@ -1,0 +1,11 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <ItemGroup>
+    <!-- Add to the Visual Studio Build Action list on the files. -->
+    <AvailableItemName Include="Antlr" />
+  </ItemGroup>
+
+  <Target Name="BeforeBuild" Condition="'@(Antlr)'!=''">
+    <Exec Command="&quot;$(MSBuildThisFileDirectory)..\tools\antlr.net.exe&quot; -o &quot;@(Antlr->'%(RootDir)%(Directory).')&quot; &quot;@(Antlr->'%(FullPath)')&quot;" />
+  </Target>
+</Project>

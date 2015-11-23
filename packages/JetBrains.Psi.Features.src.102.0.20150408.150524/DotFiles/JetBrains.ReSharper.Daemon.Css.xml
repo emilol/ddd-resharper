@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.Daemon.Css</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.ReSharper.Daemon.Css.Options.View.BrowserInfoView">
+            <summary>
+            BrowserInfoView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Daemon.Css.Options.View.BrowserInfoView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Daemon.Css.Options.View.CssLanguageVersionView">
+            <summary>
+            CssLanguageVersionView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Daemon.Css.Options.View.CssLanguageVersionView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,442 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.BuildEngine</name>
+    </assembly>
+    <members>
+        <member name="P:JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemData.Paths">
+            <summary>
+            The first one is the DLL path, the rest are aux paths.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemUnification">
+            <summary>
+            Allows to unify assembly files, as realized on disk, by their unique assembly name.
+            This is essential when you're loading runtime assemblies from them, otherwise your runtime types won't match.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemUnification.InstallAssemblyResolver(JetBrains.DataFlow.Lifetime)">
+            <summary>
+            For assemblies which has been passed thru unification, and for which we know the mapping of the assembly name onto disk, installs an assembly resolver into the current appdomain.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemUnification.MasterEnsureReleaseOnShutdown">
+            <summary>
+            Master shutdown, releases what's come from slave.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemUnification.UnrealizeAssemblyItem(JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemData,JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemUnification.FilesInUse)">
+            <summary>
+            Reverts assembly realization when its locks are gone, or when the object ends.
+            Has an option to tolerate locked files, e.g. for the Slave mode.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemUnification.RealizeAssemblyItem(JetBrains.DataFlow.Lifetime,JetBrains.Metadata.Utils.AssemblyItem)">
+            <summary>
+            Realizes your assembly item on disk, or extends the lifetime of an already-realized assembly item with the same name and returns its path.
+            </summary>
+            <param name="lifetime">Will exist at the given path for at least this lifetime. Don't delete yourself, might be shared.</param>
+            <param name="item">Assembly name and content.</param>
+            <returns>Path to the disk file for assembly.</returns>
+        </member>
+        <member name="M:JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemUnification.RealizeAssemblyItemNew(JetBrains.DataFlow.Lifetime,JetBrains.Metadata.Utils.AssemblyItem,JetBrains.Util.RelativePath)">
+            <summary>
+            Specifies the explicit subfolder name to place the file into. The file name is still taken from the item.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemUnification.RealizeAssemblyItemNew(JetBrains.DataFlow.Lifetime,JetBrains.Metadata.Utils.AssemblyNameInfo,System.Func{JetBrains.Util.FileSystemPath[]})">
+            <summary>
+            Registers a user-realized assembly item.
+            Fails if already present.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemUnification.Role.Master">
+            <summary>
+            Default mode.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemUnification.Role.Slave">
+            <summary>
+            Slave mode. Means we load some perdefined
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemUnificationEx.RealizeOnAssemblyResolveDemand(JetBrains.Build.Helpers.Metadata.IRealizedAssemblyItemUnification,JetBrains.DataFlow.Lifetime,System.Collections.Generic.ICollection{JetBrains.Metadata.Utils.AssemblyItem})">
+            <summary>
+            Watch for assembly resolve events, if fired for one of the given assemblies, realize it using the assembly unification and load.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemUnificationMaster">
+            <summary>
+            The master unification manager which can share with a slave instance (e.g. running in another appdomain).
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Engine.AssemblyUnification.RealizedAssemblyItemUnificationSlave">
+            <summary>
+            Loads the realizations already known in some master instance and saved with <see cref="M:JetBrains.Build.Helpers.Metadata.IRealizedAssemblyItemUnificationMaster.MasterExportForReuseInSlave(JetBrains.Util.Storage.StructuredStorage.IStructuredStorage)"/>.
+            Won't be freed by slave instance upon termination.
+            In slave instance, if some realizations were made while running the slave instance, defers their release (and deletion) for the master instance.
+            Example: slave instance running in appdomain, realizing and executing assemblies, can't release them because they're locked by the appdomain, but the master instance can after the appdomain is unloaded.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Engine.IsolatedBuild.BuildEngineNugetServices">
+            <summary>
+            Nuget operations serving the build engine itself (rather than the user build script in the build process).
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Engine.IsolatedBuild.BuildLogRecordMarshaller">
+            <summary>
+            Accepts log records on any thread, yields them to consumer (e.g. a ListEvents for binding to UI) in the main thread.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.BuildLogRecordMarshaller.Flush">
+            <summary>
+            MUST be run on the home thread.
+            Flushes the messages still in queue, makes them reach the output func immediately.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildGuestCatalog">
+            <summary>
+            A part of the <see cref="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildGuest"/> responsible of making the build part catalog out of what's given as build script sources and binaries.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngineNestedBuildRunner">
+            <summary>
+            The build-engine-injected implementation of the nested build runner.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.CodeDomSourcesCompiler.MakeReferencedAssembliesList(JetBrains.DataFlow.Lifetime,System.Collections.Generic.ICollection{JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildGuestSources.SourceAssemblyReference},JetBrains.Util.CommandLineBuilderJet)">
+            <summary>
+            Assembly paths, plus aliases for disambiguing the use of the same types.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildGuestProxy">
+            <summary>
+            The proxy assembly for calls from the main to the isolated appdomain, to invoke the Guest run method.
+            Why needed?
+            Can't just call a static or instance method by name directly (no such API), have to load runtime types into the caller appdomain.
+            Doable in C++ because there you can have COM refs in the caller appdomain, but managed code marshals the types into the caller and causes them loaded. Breaks isolation.
+            So we emit an assembly which does not belong to the codebase, so it can be safely loaded into both appdomains without breaking any isolation. And the rest of the data is serialized into a COM stream.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildGuestProxy.InvokeGuestRunInAppDomain(System.AppDomain,System.Void*)">
+            <summary>
+            Invokes the proxy assembly so that it invoked the <see cref="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildGuest"/> from the isolated build engine loaded into the isolated appdomain, whichever it is (shipped or from package).
+            The proxy assembly is expected to be already emitted and saved to the basedir of the isolated appdomain, so that it could be loaded on demand. So as the engine assemblies.
+            </summary>
+            <param name="appdomainIsolated"></param>
+            <param name="lockBytesDataRaw"></param>
+        </member>
+        <member name="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildGuestSources.EngineAssemblyReferences">
+            <summary>
+            References to the interface assemblies in Build Engine itself, incl our assemblies and their GAC requirements.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildGuestSources.ScriptToDllReference.myRegexPragmaReference">
+            <summary>
+              <code>
+            #pragma reference assembly Microsoft.Build
+            #pragma reference package Nuget.Core 2.8.6
+            </code>
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildGuestSources.SourceAssemblyReference.OriginalGacPath">
+            <summary>
+            For assemblies that we're pulling from GAC, means the path is the primary identity of the assembly, and we're not bringing it along.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildGuestSources.SourceAssemblyReference.OriginalImage">
+            <summary>
+            If the assembly has been originally retrieved to be used as a reference (i.e. not coming from build interface, build script binaries, or GAC, but from an e.g. package reference).
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildGuestSources.SourceAssemblyReference.GetOrLoadAssemblyItem">
+            <summary>
+            Loads even if originating on disk.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildGuestSources.SourceAssemblyReference.OriginalAssemblyItem">
+            <summary>
+            Only if originating as an assembly item.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine">
+            <summary>
+            Represents a separate appdomain with a codebase in a TEMP location which has all the assemblies
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.myCrossAppDomainPointer">
+            <summary>
+            The pointer which is passed AS IS across the appdomains.
+            Previously, it's the raw <see cref="T:JetBrains.Interop.WinApi.Declarations.Interfaces.ILockBytes"/> COM object pointer.
+            Next gen, it's the <see cref="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory"/> structure in global memory.
+            NG++, it's the string with path for <see cref="T:JetBrains.Util.Storage.StructuredStorage.DiskFolderStructuredStorage"/> in global memory.
+            </summary>
+            <seealso cref="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossDomainMemoryMode"/>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.myLockBytesData">
+            <summary>
+              <see cref="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossDomainMemoryMode.ILockBytesComPtr"/>
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.myDispatcherHome">
+            <summary>
+            Dispatcher of the home thread, on which e.g. <see cref="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.myLogMarshaller"/> processes the message queue.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.BeginRunBuildScriptWorker(JetBrains.Util.Threading.SynchronizedLifetime,JetBrains.Build.Running.BuildRunnerRequest,JetBrains.Build.Running.BuildRunnerEnvironment,JetBrains.Util.dataStructures.Boxed{JetBrains.Build.Running.BuildRunnerResult})">
+            <summary>
+            Worker thread, main appdomain.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.InitAppdomain">
+            <summary>
+            Worker thread, main appdomain.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.OpenCrossDomainStorage(System.Action{JetBrains.Util.Storage.StructuredStorage.IStructuredStorage})">
+            <summary>
+            Allows to read/write the structured storage which is passed across appdomains, to the isolated build guest.
+            </summary>
+            <param name="FWithStorage"></param>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.Storage_BuildEnvironment">
+            <summary>
+            Build env params, like Nuget connection.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.Storage_BuildGraphs">
+            <summary>
+            Writes graphs for build storage, build plan, etc when in Guest.
+            Due to nested builds, there might be more than one.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.Storage_BuildRequest">
+            <summary>
+            What and how to build, serialized with <see cref="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngineRequest"/> based on <see cref="T:JetBrains.Build.Running.BuildRunnerRequest"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.Storage_IsolatedEngine">
+            <summary>
+            Build engine parameters.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.Storage_IsolatedEngine_AssemblyUnificationMasterToSlave">
+            <summary>
+            Assembly unification, to be used outside and in the appdomain.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.Storage_IsolatedEngine_AssemblyUnificationSlaveToMaster">
+            <summary>
+            Assembly unification, to be used outside and in the appdomain.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.Storage_IsolatedEngine_EngineAssemblies">
+            <summary>
+            The assemblies of the build engine iself.
+            Built-in version, and the proxy assembly. Always defined.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.Storage_OutputArtifacts">
+            <summary>
+            The artifacts in the build storage after the build is run.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.Stream_BuildGraphs_Plan">
+            <summary>
+            Graph with build execution plan.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.Stream_BuildGraphs_Storage">
+            <summary>
+            Graph with build entities in the storage.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.Stream_IsolatedEngine_LogMmf">
+            <summary>
+            MMF for piping the log messages out of the build.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory.CurrentFormat">
+            <summary>
+            Change whenever format/semantic of this data changes.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory.IntegrityValue">
+            <summary>
+            Must never change.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory.Integrity">
+            <summary>
+            Integrity check (points to the valid structure).
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory.Format">
+            <summary>
+            Versioning check.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory.InstanceIdentifier">
+            <summary>
+            Mostly used for access control.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory.MmfHandle">
+            <summary>
+            Handle to the memory-mapped file.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory.MmfTotalSize">
+            <summary>
+            Size of the memory-mapped file.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory.MmfWrittenSize">
+            <summary>
+            The number of bytes actually written into the memory-mapped file, what must be returned as stream length or lockbytes stat size.
+            ACHTUNG: this is a mutable field, so it's critical that the stream were opened on exactly the same pointer instance.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory.OpenStreamOnMemory(JetBrains.DataFlow.Lifetime,JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory*)">
+            <summary>
+            Opens on the existing memory.
+            Make sure you don't open two accesses at a time.
+            </summary>
+            <param name="lifetime">Lifetime for just this stream.</param>
+            <param name="pCrossAppDomainMemory">Pointer to the struct. MUST be mutable!</param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory.CreateNewMmfAndWrap(JetBrains.DataFlow.Lifetime,System.UInt64)">
+            <summary>
+            Creates a new MMF and wraps into this structure.
+            </summary>
+            <param name="lifetime">Lifeitme of the MMF validity. Must stay alive while your clients are using this data.</param>
+            <param name="qwMmfSize"></param>
+        </member>
+        <member name="P:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory.PreferredBankSpec">
+            <summary>
+            Bank size for the bank-switching memory stream.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossDomainMemoryMode.ILockBytesComPtr">
+            <summary>
+            Classic. Create <see cref="T:JetBrains.Interop.WinApi.Declarations.Interfaces.ILockBytes"/> with <see cref="M:JetBrains.Interop.WinApi.Ole32Dll.CreateILockBytesOnHGlobal(System.Void*,System.Int32,JetBrains.Interop.WinApi.Declarations.Interfaces.ILockBytes@)"/>, pass as a raw COM pointer.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossDomainMemoryMode.CrossAppDomainMemoryStructPtrDocFile">
+            <summary>
+            NG. Create an MMF, alloc <see cref="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory"/> in global memory and fill, pass that pointer.
+            The memory layout is managed with a DocFile.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossDomainMemoryMode.CrossAppDomainMemoryStructPtrZipFile">
+            <summary>
+            NG. Create an MMF, alloc <see cref="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory"/> in global memory and fill, pass that pointer.
+            The memory layout is managed with a ZIP SSTG.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossDomainMemoryMode.DiskFolderStructuredStoragePtr">
+            <summary>
+            NG++. Create a <see cref="T:JetBrains.Util.Storage.StructuredStorage.DiskFolderStructuredStorage"/>, alloc path folder in global memory and fill, pass that pointer.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossDomainMemoryMode.CrossAppDomainMemoryStructPtrCustomSstg">
+            <summary>
+            NG#. Create an MMF, alloc <see cref="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngine.DataFormats.CrossAppDomainMemory"/> in global memory and fill, pass that pointer.
+            The memory layout is managed with a special shared-mem SSTG.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunners">
+            <summary>
+            Base impl which is not dependent on Shell (and is thus not a component on iself).
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunners.CreateBuiltInEngine(JetBrains.Util.Threading.SynchronizedLifetime)">
+            <summary>
+            Runs the built-in build engine. Can execute build steps in script.
+            Can't execute steps from compiled packages nicely because those are referencing their own instance of the compiled build engine instead of this one.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunners.CreateSpecificEngine(JetBrains.Util.Threading.SynchronizedLifetime,JetBrains.Build.Running.BuildRunnerRequest)">
+            <summary>
+            Runs the build engine retrieved from packages.
+            Suitable for running builds on steps from packages because they would be using the same types.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunners.BeginRunBuildScript(JetBrains.Util.Threading.SynchronizedLifetime,JetBrains.Build.Running.BuildRunnerRequest,JetBrains.Build.Running.BuildRunnerEnvironment)">
+            <summary>
+            Starts a new build async.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngineRequest">
+            <summary>
+            Written into a storage for passing into the isolated appdomain.
+            Upon reading, reflects what once was in <see cref="T:JetBrains.Build.Running.BuildRunnerRequest"/>.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngineRequest.GetBuildScriptBinaries">
+            <summary>
+            Deserializes the build script binaries list.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngineRequest.GetBuildScriptSources">
+            <summary>
+            Deserializes the build sources list.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngineAssemblies.BuiltInEngineAssemblies">
+            <summary>
+            Engine assemblies, built-in version. Always available.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngineAssemblies.CustomEngineBinaries">
+            <summary>
+            Engine assemblies (or packages), custom binaries version. Present only if running in custom engine mode.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngineAssemblies.GetBuiltInEngineAndProxyAssemblies">
+            <summary>
+            Gets all of the built-in engine assemblies, plus the proxy assembly.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngineAssemblies.GetCustomEngineAndProxyBinaries">
+            <summary>
+            Gets all of the custom engine binaries, plus the proxy assembly.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngineAssemblies.WithOtherCustomEngineBinaries(System.Collections.Generic.IList{JetBrains.Util.Storage.SimpleFileItem})">
+            <summary>
+            A new object with custom binaries replaced.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngineAssemblies.IsolatedBuildGuestProxyAssemblyRaw">
+            <summary>
+            The dynamically-emitted <see cref="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildGuestProxy"/> assembly, if already known (delays emitting it until we're running on another thread).
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngineAssemblies.ChosenEngine">
+            <summary>
+            The <see cref="T:JetBrains.Build.Engine.IsolatedBuild.IsolatedBuildRunnerEngineAssemblies"/>, plus an applied choise for either built-in or custom kind.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.BuildBinaryFileItems.ExpandContainerFileItems(System.Collections.Generic.IEnumerable{JetBrains.Util.Storage.SimpleFileItem})">
+            <summary>
+            Expands file items by unpacking certain kinds of containers:
+            • NuGet package.
+            • Structured Storage with <see cref="M:JetBrains.Build.Serialization.StructuredStorageSerialization.WriteObjectsCollection``1(System.Collections.Generic.IEnumerable{``0},JetBrains.Util.Storage.StructuredStorage.IStructuredStorage,JetBrains.Util.OnError)"/> of <see cref="T:JetBrains.Util.Storage.SimpleFileItem"/>s.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Engine.IsolatedBuild.BuildBinaryFileItems.ExpandContainerFileItemsEx(System.Collections.Generic.IEnumerable{JetBrains.Util.Storage.SimpleFileItem},JetBrains.Util.RelativePath,System.Runtime.Versioning.FrameworkName)">
+            <summary>
+            Expands file items by unpacking certain kinds of containers:
+            • NuGet package.
+            • Structured Storage with <see cref="M:JetBrains.Build.Serialization.StructuredStorageSerialization.WriteObjectsCollection``1(System.Collections.Generic.IEnumerable{``0},JetBrains.Util.Storage.StructuredStorage.IStructuredStorage,JetBrains.Util.OnError)"/> of <see cref="T:JetBrains.Util.Storage.SimpleFileItem"/>s.
+            </summary>
+            <returns>The list of expanded files. For each of the files, also specifies its parent conatiner path, for tracking the file origin in case of any conflicts.</returns>
+        </member>
+    </members>
+</doc>

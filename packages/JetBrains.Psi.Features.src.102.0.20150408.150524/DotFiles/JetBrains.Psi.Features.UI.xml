@@ -1,0 +1,385 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Psi.Features.UI</name>
+    </assembly>
+    <members>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.ICellRenderer.Render(System.Drawing.Graphics,System.Drawing.Rectangle,System.Object,JetBrains.UI.RenderParams,System.Boolean)">
+            <param name="isAnimationSupported"><c>True</c> if you commit to calling this method periodically so that the renderer painted time-dependent animation frames. <c>False</c> means the renderer should not be expecting repaints with enough framerate, and should always yield the same static image.</param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.DevExpressTreeControl.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.DevExpressTreeControl.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UI.DevExpressTreeView.ITreeCellPresentation">
+            <summary>
+            Presentation of the tree node cell
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.NodePainter.RowBackColor(JetBrains.Psi.Features.UI.DevExpressTreeView.DevExpressTreeNode)">
+            <summary>
+            Get the color to paint the background of node cell
+            </summary>
+            <param name="node"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.NodePainter.Paint(JetBrains.Psi.Features.UI.DevExpressTreeView.ITreeCellPresentation,System.Boolean,System.Boolean,DevExpress.XtraTreeList.CustomDrawNodeCellEventArgs)">
+            <summary>
+            Do custom painting of the node in SolutionExplorer tree
+            </summary>
+            <param name="cell"></param>
+            <param name="selected"><c>true</c> if node is selected</param>
+            <param name="focused"></param>
+            <param name="args"></param>
+            <returns><c>true</c> if node was painted. <c>false</c> for default painting </returns>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.NodePainter.GetCellHeight(JetBrains.Psi.Features.UI.DevExpressTreeView.ITreeCellPresentation,System.Drawing.Graphics)">
+            <summary>
+            Calculates the height (in pixels) of given node in the tree
+            </summary>
+            <param name="cell"></param>
+            <param name="graphics"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.NodePainter.GetCellWidth(JetBrains.Psi.Features.UI.DevExpressTreeView.ITreeCellPresentation,System.Drawing.Graphics)">
+            <summary>
+            Calculates the drawn width of the node in the tree
+            </summary>
+            <param name="cell"></param>
+            <param name="graphics"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.NodePainter.ImageHitTest(JetBrains.Psi.Features.UI.DevExpressTreeView.DevExpressTreeNode,System.Drawing.Rectangle,System.Drawing.Point,System.Drawing.Rectangle@)">
+             <summary>
+             Get the node image over which currently mouse is located
+             </summary>
+             <param name="node"></param>
+             <param name="cellBounds"></param>
+             <param name="pos"></param>
+             <returns></returns>
+            <param name="imageRect"></param>
+        </member>
+        <member name="F:JetBrains.Psi.Features.UI.DevExpressTreeView.SplittedContainer.ThemedIconManager">
+            <summary>
+            Null during virtual calls from base ctor.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Psi.Features.UI.DevExpressTreeView.SplittedPanel.Owner">
+            <summary>
+            Null during virtual calls from base ctor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeControlNodeAnchoringRect">
+            <summary>
+            Anchors to the focused node or a manually specified node in the given tree model view.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeControlNodeAnchoringRect.myNode">
+            <summary>
+            <c>Null</c> if tracking selection.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeControlNodeAnchoringRect.myTreeControl">
+            <summary>
+            <c>Null</c> only when disposed.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeControlNodeAnchoringRect.#ctor(JetBrains.DataFlow.Lifetime,DevExpress.XtraTreeList.TreeList,DevExpress.XtraTreeList.Nodes.TreeListNode)">
+            <summary>
+            Creates the instance.
+            </summary>
+            <param name="lifetime"></param>
+            <param name="treeControl">The owning tree model view.</param>
+            <param name="node">The node to anchor to.</param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeControlNodeAnchoringRect.#ctor(JetBrains.DataFlow.Lifetime,DevExpress.XtraTreeList.TreeList,DevExpress.XtraTreeList.Nodes.TreeListNode,DevExpress.XtraTreeList.Columns.TreeListColumn,System.Boolean)">
+            <summary>
+            An internal ctor that allows for <c>Null</c> nodes for tracking the selection.
+            </summary>
+            <param name="lifetime"></param>
+            <param name="treeControl">The owning tree model view.</param>
+            <param name="node">The node to anchor to, or <c>Null</c> to anchor to the selected node.</param>
+            <param name="column">The column to determine cell to anchor to, or null to anchor to whole node</param>
+            <param name="isNodeNullable">Whether to allow <c>Null</c> in <paramref name="node"/>.</param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeControlNodeAnchoringRect.CreateFromSelectionDynamic(JetBrains.DataFlow.Lifetime,DevExpress.XtraTreeList.TreeList)">
+            <summary>
+            Creates the instance that tracks the selected node.
+            When selection changes, the anchor is updated to track the new selection.
+            </summary>
+            <param name="lifetime"></param>
+            <param name="treeControl">The owning tree model view.</param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeControlNodeAnchoringRect.ClientToScreen(JetBrains.DataFlow.Lifetime,JetBrains.Application.Interop.NativeHook.IWindowsHookManager)">
+            <summary>
+            Converts the <see cref="T:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeControlNodeAnchoringRect"/>, which operates in client coordinates, into a screen-coordinates anchor suitable for layouting popups.
+            Nests the current object within a window anchor attached to the tree control.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeControlNodeAnchoringRect.UpdateAnchor">
+            <summary>
+            Updates the anchoring rectangle as it gets dirty.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeControlNodeAnchoringRect.DefaultAnchoringDispositions">
+            <summary>
+            Gets the default dispositions to be used when creating a layouter out of this anchor.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelBrowserPanelImpl.IsControlInitialized">
+            <summary>
+            Gets whether the control is initialized fully
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView">
+            <summary>
+            Provides default viewer for tree models
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.#ctor(JetBrains.UI.TreeView.ITreeViewController,JetBrains.UI.Application.IUIApplication,JetBrains.UI.Tooltips.ITooltipManager,JetBrains.Application.Interop.NativeHook.IWindowsHookManager,JetBrains.ActionManagement.IActionManager)">
+            <summary>
+            Initializes new instance of the TreeModelView
+            </summary>
+            <param name="controller">Controller which defines behavior for this view</param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.#ctor(JetBrains.TreeModels.TreeModel,JetBrains.UI.TreeView.ITreeViewController,JetBrains.UI.Application.IUIApplication,JetBrains.UI.Tooltips.ITooltipManager,JetBrains.Application.Interop.NativeHook.IWindowsHookManager,JetBrains.ActionManagement.IActionManager)">
+            <summary>
+            Initializes new instance of the TreeModelView using specified model
+            </summary>
+            <param name="model">Model to display in this view</param>
+            <param name="controller">Controller which defines behavior for this view</param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.ApplyDefaultApperiance">
+            <summary>
+            Applies colors from System theme
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.Initialize">
+            <summary>
+            Initializes custom properties of the view
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.IsModelNodeVisible(JetBrains.TreeModels.TreeModelNode)">
+            <summary>
+            Returns value indicating if specified viewNode/modelNode pair is visible
+            </summary>
+            <param name="modelNode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.EnsureChildren(JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewNode)">
+            <summary>
+            Ensures that direct children for the node are created
+            </summary>
+            <param name="viewNode"></param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.EnsureDescendants(JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewNode)">
+            <summary>
+            Ensures that whole subtree for the node is created
+            </summary>
+            <param name="viewNode"></param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.InitializeNode(JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewNode,JetBrains.TreeModels.TreeModelNode)">
+            <summary>
+            Initializes visual representation of the model node
+            </summary>
+            <param name="viewNode">View node to initialize</param>
+            <param name="modelNode">Model node associated with view node</param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.UpdateNodePresentation(JetBrains.TreeModels.TreeModelNode)">
+            <summary>
+            Updates presentation of the view node associated with specified model node
+            </summary>
+            <param name="modelNode">Model node to update presentation for</param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.UpdateNodePresentation(System.Object)">
+            <summary>
+            Updates presentation of the view nodes associated with specified data value
+            </summary>
+            <param name="dataValue"></param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.UpdateNodePresentation(JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewNode)">
+            <summary>
+            Updates presentation of the given view node
+            </summary>
+            <param name="viewNode"></param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.UpdateAllNodesPresentation">
+            <summary>
+            Updates presentation for all view nodes
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.UpdateNodesPresentation(System.Collections.Generic.IEnumerable{JetBrains.TreeModels.TreeModelNode})">
+            <summary>
+            Updates presentation for specified model nodes
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.Model">
+            <summary>
+            Gets or sets model which is displayed in the view
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.MinimumRowHeight">
+            <summary>
+            Gets or sets minimum row height
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.RemoveOnCollapse">
+            <summary>
+            Gets or set value indicating whether nodes are removed on collapse or not
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.NavigateOnClick">
+            <summary>
+            Gets or sets value indicating whether Navigate command is issued on single click 
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.CustomPresenters">
+            <summary>
+            Gets map of custom presentation handlers
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.FocusedNode">
+            <summary>
+            Gets or sets currently focused node
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.ModelFocusedNode">
+            <summary>
+            Gets currently focused node in the model space
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.DefaultExpandLevels">
+            <summary>
+            Gets or sets default levels to expand on ExpandAll command (ex. if "*" key pressed)
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.ViewSelection">
+            <summary>
+            Gets currently selected nodes in the view space
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.ModelSelection">
+            <summary>
+            Gets currently selected nodes in the model space
+            </summary>
+        </member>
+        <member name="E:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView.Navigate">
+            <summary>
+            Raised when node navigation is occuring
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelPresentableView.Initialize">
+            <summary>
+            Initializes custom properties of the view
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelPresentableView.Presenter">
+            <summary>
+            Gets or sets presenter for this view
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelPresentableView.ModelColumn">
+            <summary>
+            Gets column which contents is provided my model
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelPresentableViewWPF.ReentrancyGuardExecuteOrQueueOrMerge(System.String,System.Action{System.Boolean})">
+            <param name="action">action to execute , boolean flag is true for immidiate execution</param>
+            <returns><c>True</c> if executed immediately, <c>False</c> if queued (<see cref="M:JetBrains.Threading.ReentrancyGuard.TryExecute(System.String,System.Action)"/>-compatible behavior).</returns>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelPresentableViewWPF.DefaultExpandLevels">
+            <summary>
+            Gets or sets default levels to expand on ExpandAll command (ex. if "*" key pressed)
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewAnchoringRect">
+            <summary>
+            Anchors to the focused node or a manually specified node in the given tree model view.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewAnchoringRect.myViewNode">
+            <summary>
+            <c>Null</c> if tracking selection.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewAnchoringRect.myTreeModelView">
+            <summary>
+            <c>Null</c> only when disposed.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewAnchoringRect.#ctor(JetBrains.DataFlow.Lifetime,JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView,JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewNode,JetBrains.UI.Icons.IThemedIconManager)">
+            <summary>
+            Creates the instance.
+            </summary>
+            <param name="lifetime"></param>
+            <param name="treeModelView">The owning tree model view.</param>
+            <param name="node">The node to anchor to.</param>
+            <param name="themedIconManager"> </param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewAnchoringRect.#ctor(JetBrains.DataFlow.Lifetime,JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView,JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewNode,JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewColumn,System.Boolean,JetBrains.UI.Icons.IThemedIconManager)">
+            <summary>
+            An internal ctor that allows for <c>Null</c> nodes for tracking the selection.
+            </summary>
+            <param name="lifetime"></param>
+            <param name="treeModelView">The owning tree model view.</param>
+            <param name="viewNode">The node to anchor to, or <c>Null</c> to anchor to the selected node.</param>
+            <param name="viewColumn">The column to determine cell to anchor to, or null to anchor to whole node</param>
+            <param name="isNodeNullable">Whether to allow <c>Null</c> in <paramref name="viewNode"/>.</param>
+            <param name="themedIconManager"> </param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewAnchoringRect.UpdateAnchor">
+            <summary>
+            Updates the anchoring rectangle as it gets dirty.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewAnchoringRect.CreateFromSelectionDynamic(JetBrains.DataFlow.Lifetime,JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelView,JetBrains.UI.Icons.IThemedIconManager)">
+            <summary>
+            Creates the instance that tracks the selected node.
+            When selection changes, the anchor is updated to track the new selection.
+            </summary>
+            <param name="lifetime"></param>
+            <param name="treeModelView">The owning tree model view.</param>
+            <param name="themedIconManager"> </param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewAnchoringRect.ClientToScreen(JetBrains.DataFlow.Lifetime,JetBrains.Application.Interop.NativeHook.IWindowsHookManager)">
+            <summary>
+            Converts the <see cref="T:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewAnchoringRect"/>, which operates in client coordinates, into a screen-coordinates anchor suitable for layouting popups.
+            Nests the current object within a window anchor attached to the tree control.
+            </summary>
+            <param name="lifetime"></param>
+            <param name="hookman"></param>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewAnchoringRect.DefaultAnchoringDispositions">
+            <summary>
+            Gets the default dispositions to be used when creating a layouter out of this anchor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewColorScheme">
+            <summary>
+            Represents set of colors which are used in the TreeModelView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewColorScheme.RaiseChanged">
+            <summary>
+            Raises Changed event
+            </summary>
+        </member>
+        <member name="E:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewColorScheme.Changed">
+            <summary>
+            Occurs when the color scheme is changed
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UI.DevExpressTreeView.TreeModelViewToolWindowColorScheme">
+            <summary>
+            Represents color scheme for TreeModelView specific for ToolWindow
+            </summary>
+        </member>
+    </members>
+</doc>

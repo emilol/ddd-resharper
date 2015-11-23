@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.Feature.Services.Css</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.ReSharper.Feature.Services.Css.OptionPages.CssOptionsPage">
+            <summary>
+            Root options page for the CSS language options.
+            </summary>
+        </member>
+    </members>
+</doc>

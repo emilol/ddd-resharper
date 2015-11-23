@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	
+	<Choose>
+		<When Condition="($(IsOutputPathInSeparateFolders) == True) AND ($(IsPsiTasksInSources) == True)"><PropertyGroup><TokenGenerator_TaskDll>$(ProductBinariesDir)\Psi.Features.Tasks\TokenGenerator\TokenGenerator.exe</TokenGenerator_TaskDll></PropertyGroup></When>
+		<Otherwise><PropertyGroup><TokenGenerator_TaskDll>$(PsiGenToolsDir)\TokenGenerator.exe</TokenGenerator_TaskDll></PropertyGroup></Otherwise>
+	</Choose>
+
+	<UsingTask
+		TaskName="JetBrains.ReSharper.PsiGen.TokenGenerator.TokenGenerator"
+		AssemblyFile="$(TokenGenerator_TaskDll)"
+	/>
+	
+</Project>

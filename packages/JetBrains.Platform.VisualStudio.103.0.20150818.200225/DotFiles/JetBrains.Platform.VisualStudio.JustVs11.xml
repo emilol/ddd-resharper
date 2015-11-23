@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.VisualStudio.JustVs11</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.Platform.VisualStudio.JustVs11.ProjectModel.VisualC.CopyPastedAdapters.VCAdaptersJustVsXx">
+            <summary>
+            This is the entry point — a component implementation which wires up all of the cloned interface implementations.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.JustVs11.Shell.Hacks.HealOwnerlessFloatingWindowsJustVs11">
+            <summary>
+            VS11 has a bug.
+            Ownerless floating windows don't notify the main window on their activation, as a result the main VS MSO component is not activated and the command routing becomes broken.
+            This component tries to fix that issue. It monitors VS floating windows activation and if they have no owner, notify the main VS window.
+            </summary>
+            <seealso cref="T:JetBrains.Platform.VisualStudio.SinceVs11.Shell.Hacks.SuppressOwnerlessFloatingWindowsSinceVs11"/>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.JustVs11.Shell.Hacks.SuppressOwnerlessFloatingWindowsJustVs11">
+            <summary>
+              See base comment.
+              Uses the vs-version-specific DLL copy.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.JustVs11.Shell.Zones.IJustVs11Zone">
+            <summary>
+            Visual Studio integrated products, VS 11.0 only.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.JustVs11.TextControl.VsTextControlDevTenIncrementalSearchClientJustVs11">
+            <summary>
+              VS11-specific client (NOTE: in VS11+ the <see cref="T:Microsoft.VisualStudio.Text.IncrementalSearch.IIncrementalSearch"/> implementation is present, but is not active).
+            </summary>
+        </member>
+    </members>
+</doc>

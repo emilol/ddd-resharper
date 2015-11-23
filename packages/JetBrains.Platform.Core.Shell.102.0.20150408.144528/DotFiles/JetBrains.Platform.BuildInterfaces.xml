@@ -1,0 +1,1391 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.BuildInterfaces</name>
+    </assembly>
+    <members>
+        <member name="M:JetBrains.Build.Helpers.BuildHelpers.CreateWorkingDirectory(JetBrains.DataFlow.Lifetime,System.String)">
+            <summary>
+            Creates a working directory for realizing artifacts into files for the duration of the current build step.
+            //TODO: add a possiblity of reuse between steps for speed.
+            // TODO: log everything created in this folder
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.BuildHelpers.MakeDateTimeVersion(JetBrains.Util.Version2,System.Nullable{System.DateTime})">
+            <summary>
+            Version number based on date and time in its two last components.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Helpers.Metadata.PartCatalogueAssemblyMasterBinderOnAssemblyItems">
+            <summary>
+            Helper for binding part catalog assemblies to assembly items, with <see cref="T:JetBrains.Build.Helpers.Metadata.IRealizedAssemblyItemUnification"/> for loading into Runtime.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Helpers.Metadata.PartCatalogueAssemblyMasterBinderOnAssemblyItems.myCacheRealized">
+            <summary>
+            Avoid requesting too many realizations for the same assembly.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Helpers.Metadata.PartCatalogueAssemblyMasterBinderOnAssemblyItems.AssemblyItems">
+            <summary>
+            Gets the assembly items known to this binder.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Helpers.Metadata.IRealizedAssemblyItemUnification">
+            <summary>
+            Allows to unify assembly files, as realized on disk, by their unique assembly name.
+            This is essential when you're loading runtime assemblies from them, otherwise your runtime types won't match.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.Metadata.IRealizedAssemblyItemUnification.RealizeAssemblyItem(JetBrains.DataFlow.Lifetime,JetBrains.Metadata.Utils.AssemblyItem)">
+            <summary>
+            Realizes your assembly item on disk, or extends the lifetime of an already-realized assembly item with the same name and returns its path.
+            </summary>
+            <param name="lifetime">Will exist at the given path for at least this lifetime. Don't delete yourself, might be shared.</param>
+            <param name="item">Assembly name and content.</param>
+            <returns>Path to the disk file for assembly.</returns>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.Metadata.IRealizedAssemblyItemUnification.RealizeAssemblyItemNew(JetBrains.DataFlow.Lifetime,JetBrains.Metadata.Utils.AssemblyItem,JetBrains.Util.RelativePath)">
+            <summary>
+            Specifies the explicit subfolder name to place the file into. The file name is still taken from the item.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.Metadata.IRealizedAssemblyItemUnification.RealizeAssemblyItemNew(JetBrains.DataFlow.Lifetime,JetBrains.Metadata.Utils.AssemblyNameInfo,System.Func{JetBrains.Util.FileSystemPath[]})">
+            <summary>
+            Registers a user-realized assembly item.
+            Fails if already present.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Helpers.Metadata.IRealizedAssemblyItemUnificationMaster">
+            <summary>
+            The master unification manager which can share with a slave instance (e.g. running in another appdomain).
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.Metadata.IRealizedAssemblyItemUnificationMaster.MasterExportForReuseInSlave(JetBrains.Util.Storage.StructuredStorage.IStructuredStorage)">
+            <summary>
+            In master instance, writes the current realizations.
+            Reading them with <see cref="T:JetBrains.Build.Helpers.Metadata.IRealizedAssemblyItemUnificationSlave"/> allows to reuse unified paths for allemblies already realized by the master instance.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.Metadata.IRealizedAssemblyItemUnificationMaster.MasterImportForReleaseFromSlave(JetBrains.Util.Storage.StructuredStorage.IStructuredStorage)">
+            <summary>
+            In master instance, loads what's been yielded in a slave instance for later release by the master instance.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Helpers.Metadata.IRealizedAssemblyItemUnificationSlave">
+            <summary>
+            Loads the realizations already known in some master instance and saved with <see cref="M:JetBrains.Build.Helpers.Metadata.IRealizedAssemblyItemUnificationMaster.MasterExportForReuseInSlave(JetBrains.Util.Storage.StructuredStorage.IStructuredStorage)"/>.
+            Won't be freed by slave instance upon termination.
+            In slave instance, if some realizations were made while running the slave instance, defers their release (and deletion) for the master instance.
+            Example: slave instance running in appdomain, realizing and executing assemblies, can't release them because they're locked by the appdomain, but the master instance can after the appdomain is unloaded.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.EmitTmpBuildFileIfNeeded(JetBrains.DataFlow.Lifetime)">
+            <summary>
+              Problem: MSBuild.exe won't take multiple projects to build. But we still want to be able to do it (running them just in sequence is suboptimal and also fails to utilize the multi-node build).
+              If this is the case, we'd emit a temporary build file which spawns the build of our projects via the MSBuild task.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.MakeStartInfo(JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.LoggerParameterData,JetBrains.Util.FileSystemPath)">
+            <summary>
+              Prepares the cmdline for spawning MSBuild.exe (path to exe + args string).
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.ActualMsbuildVersion">
+            <summary>
+              MSBuild version which will be used for building. Derived from <see cref="P:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.MsbuildVersion"/>, but with an actual value substituted instead of NULL.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.EnvironmentVariables">
+            <summary>
+            Passes name-value pairs as environment variables of the child process.
+            These are available as regular MSBuild property names in the script, first-level or nested, unless an MSBuild proprety with such a name has another value.
+            Also available in any executables run from within MSBuild.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.MsbuildVersion">
+            <summary>
+              MSBuild version. Leave NULL to use the latest one.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.Projects">
+            <summary>
+            One or more projects to build.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.ProjectsOrder">
+            <summary>
+            Tells how the projects in the <see cref="P:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.Projects"/> list should be ordered when being supplied to MSBuild.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.Properties">
+            <summary>
+            Passes name-value pairs as MSBuild properties.
+            These can't be overridden within the first-level MSBuild script, but calling a nested MSBuild task might override any values.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.Verbosity">
+            <summary>
+              <para>Defines verbosity for MSBuild output.</para>
+              <para>This property is favored over PS standard "-Verbose" so that it could be easier parameterized on TC and so that it were uniform between MSBuild loggers and out output. All output always goes to the standard output pipeline.</para>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.DotNetFrameworkArchitecture">
+            <summary>
+            Used to specify the targeted bitness of the .NET Framework for some methods of ToolLocationHelper
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.LoggerParameterData">
+            <summary>
+              Params which are given to the logger object running in the remote MSBuild instance, used for opening a channel for sending build messages to the main cmdlet.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.MsbuildCmdletCentralLogger">
+            <summary>
+              <para>MSBuild logger so that we could get error and warning messages as objects and not as just plain text which has to be parsed.</para>
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.MsbuildCmdletCentralLogger.GetMsbuildCommandLineString(JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.LoggerParameterData)">
+            <summary>
+              Gets a string to be used with MSBuild's "/logger:" parameter for installing this logger.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.MsbuildCmdletForwardingLogger">
+            <summary>
+              <para>MSBuild logger so that we could get error and warning messages as objects and not as just plain text which has to be parsed.</para>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.ProjectsOrdering">
+            <summary>
+            Tells how the projects in the <see cref="P:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.Projects"/> list should be ordered when being supplied to MSBuild.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.ProjectsOrdering.AsInList">
+            <summary>
+            No sorting applied, the projects are dumped into MSBuild in the same order as they're in <see cref="P:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.Projects"/>, and MSBuild deals with their build order on itself.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.ProjectsOrdering.Lexicographical">
+            <summary>
+            The projects are sorted lexicographically, to impose some stable ordering. MSBuild still rules out how to make the build correct against all of the dependencies.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.ProjectsOrdering.ByProjectReferences">
+            <summary>
+            The invoker attempts to predict the correct build order of the projects and supply a partially-toposorted list to MSBuild. MSBuild still rules out how to make the build correct against all of the dependencies, so this sorting is not needed/guaranteed to be correct, but there's a supposition that it might improve build perf.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.WellKnownProperties.IgnoreWarnIntDirInTempDetected">
+            <summary>
+              <para>A property which allows to suppress the VC warning “Warning MSB8029. The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.”, as defined in “C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets” etc.</para>
+              <para>Server build would use temp folders for int/out dirs to ensure clean rebuild, so this property might be worth using to avoid unwanted warnings.</para>
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.WellKnownProperties.IntermediateOutputPath">
+            <summary>
+            OBJ directory.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.WellKnownProperties.OutDir">
+            <summary>
+            Directory for all output files.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.WellKnownProperties.TargetPath">
+            <summary>
+            Path of the main output file (e.g. DLL).
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Helpers.Msbuild.InvokeMsbuild.WellKnownProperties.VisualStudioVersion">
+            <summary>
+              <para>Sets the <c>VisualStudioVersion</c> MSBuild global property.</para>
+              <para>Has no specific meaning, but without it somehow a C++ build might fail with messages like “<c>Error MSB8008. Specified platform toolset (v110_xp) is not installed or invalid. Please make sure that a supported PlatformToolset value is selected.</c>”.</para>
+              <para>If it does, set to the current VS version.</para>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Helpers.Msbuild.MsbuildCompositeProjectEmitter">
+            <summary>
+              Writes an MSBuild project file which invokes a set of other project files.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Helpers.Msbuild.MsbuildFile.Values">
+            <summary>
+            Values for properties etc.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Helpers.Msbuild.MsbuildFile.Values.queue">
+            <seealso cref="F:JetBrains.Build.Helpers.Msbuild.MsbuildFile.Properties.ErrorReport"/>
+        </member>
+        <member name="T:JetBrains.Build.Helpers.InvokeChildProcess">
+            <summary>
+            Helps with invoking a child process during a build.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Helpers.Nuget.NugetPackageIntraspection">
+            <summary>
+              <para>Uses alternative methods for intraspecting Nuget packages, which can give up to 2x total speed and greatly reduces intermediate memory usage.</para>
+              <para>Does not reference the Nuget itself, so is netfx35-friendly.</para>
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.Nuget.NugetPackageIntraspection.EnumNugetEntriesDirectory``1(JetBrains.Util.Storage.SimpleFileItem,JetBrains.Build.Helpers.Nuget.NugetPackageIntraspection.FilterFlags,System.Func{JetBrains.Build.Helpers.Nuget.NugetPartPaths,System.Boolean},System.Func{System.Collections.Generic.IList{JetBrains.Build.Helpers.Nuget.NugetPackageIntraspection.NugetEntry},``0})">
+            <summary>
+              <para>Uses direct ZIP directory access for retrieving Nuget content file items.</para>
+              <para>Benefits:</para>
+              <para>• Nuget uses the .NET OPC implementation which isn't so fast on itself, SharpZipLib feels considerably faster.</para>
+              <para>• Nuget would copy all the streams before handing them out, while ZIP access allows to inftale on the fly.</para>
+              <para>• Nuget does the shadow copying for streams of ALL files, in one gulp and before we filter them. Here we skip all but needed.</para>
+            </summary>
+            <param name="fiNugetPackage">The file item with the package itself (the <c>JetBrains.Application.SinceClr4.BuildScript.NugetPackageFileItem::File</c>).</param>
+            <param name="λFilter">Optional filter to avoid getting unneeded file streams.</param>
+            <param name="λEntries">Processing function. Called on the entries which passed the filter.</param>
+            <param name="flags">Flags to skip certain items, for speed.</param>
+            <returns>The list of matching content items.</returns>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.Nuget.NugetPackageIntraspection.EnumNugetEntriesStream(JetBrains.Util.Storage.SimpleFileItem,JetBrains.Build.Helpers.Nuget.NugetPackageIntraspection.FilterFlags,System.Action{JetBrains.Build.Helpers.Nuget.NugetPartPaths,System.IO.Stream},System.Func{JetBrains.Build.Helpers.Nuget.NugetPartPaths,System.Boolean})">
+            <summary>
+              <para>Uses direct ZIP stream access for retrieving Nuget content file items.</para>
+              <para>Benefits:</para>
+              <para>• Nuget uses the .NET OPC implementation which isn't so fast on itself, SharpZipLib feels considerably faster.</para>
+              <para>• Nuget would copy all the streams before handing them out, while ZIP access allows to inftale on the fly.</para>
+              <para>• Nuget does the shadow copying for streams of ALL files, in one gulp and before we filter them. Here we skip all but needed.</para>
+            </summary>
+            <param name="fiNugetPackage">The file item with the package itself (the <c>JetBrains.Application.SinceClr4.BuildScript.NugetPackageFileItem::File</c>).</param>
+            <param name="λEntry">Processing function. Called for each item which passes all the filters. The stream is temporary and probably not seekable.</param>
+            <param name="λFilter">Optional filter to avoid getting unneeded file streams.</param>
+            <param name="flags">Flags to skip certain items, for speed.</param>
+            <returns>The list of matching content items.</returns>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.Nuget.NugetPackageIntraspection.GetJetContentFileItemsFast(JetBrains.Util.Storage.SimpleFileItem,System.Func{JetBrains.Build.Helpers.Nuget.NugetPartPaths,System.Boolean})">
+            <summary>
+              <para>Uses direct ZIP access for retrieving Nuget content file items.</para>
+              <para>Benefits:</para>
+              <para>• Nuget uses the .NET OPC implementation which isn't so fast on itself, SharpZipLib feels considerably faster.</para>
+              <para>• Nuget would copy all the streams before handing them out, while ZIP access allows to inftale on the fly.</para>
+              <para>• Nuget does the shadow copying for streams of ALL files, in one gulp and before we filter them. Here we skip all but needed.</para>
+            </summary>
+            <param name="fiNugetPackage">The file item with the package itself (the <c>JetBrains.Application.SinceClr4.BuildScript.NugetPackageFileItem::File</c>).</param>
+            <param name="λFilter">Optional filter to avoid getting unneeded file streams.</param>
+            <returns>The list of matching content items.</returns>
+        </member>
+        <member name="F:JetBrains.Build.Helpers.Nuget.NugetPackageIntraspection.FilterFlags.JetContentItemsOnly">
+            <summary>
+            Only take those items for which <see cref="M:JetBrains.Util.Storage.SubplatformPackageLayoutConstants.TryGetJetEffectivePath(JetBrains.Util.RelativePath)"/> is defined, i.e. those recognized as content items by our system.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Helpers.Nuget.NugetPartPaths.PartPath">
+            <summary>
+            The path equivalent of the Part URI in the OPC package.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Helpers.Nuget.NugetPartPaths.EffectivePathJet">
+            <summary>
+            <see cref="M:JetBrains.Util.Storage.SubplatformPackageLayoutConstants.TryGetJetEffectivePath(JetBrains.Util.RelativePath)"/>.
+            Might be undefined for some of the parts.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.TeamCity.TeamCityMessages.Escape(System.String)">
+            <summary>
+            Performs TeamCity-format escaping of a string.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.TeamCity.TeamCityMessages.EscapeEx(System.String)">
+            <summary>
+            Performs TeamCity-format escaping of a string.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.TeamCity.TeamCityMessages.SendMessageCore(System.String,JetBrains.Util.dataStructures.FrugalLocalList{JetBrains.Util.Pair{System.String,System.String}},System.IO.TextWriter)">
+            <summary>
+            Writes the message.
+            Writing MUST occur in one write operation to ensure thread-safety.
+            </summary>
+            <param name="sMessageName"></param>
+            <param name="parameters"></param>
+            <param name="writer"></param>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.TeamCity.TeamCityMessages.MessageContext.NamelessValue(System.String)">
+            <summary>
+            Sends a nameless value.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.TeamCity.TeamCityNetfxTools.TryGetTeamCityMsbuildLoggerParam(System.Version,JetBrains.Build.Helpers.TeamCity.TeamCityProperties)">
+            <summary>
+              Gets the parameter value for MSBuild's "/logger:" parameter which connects it to the TeamCity logger, if currently running in a TeamCity build agent.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Helpers.TeamCity.TeamCityNetfxTools.TryGetTeamCityNunitLauncherExe(JetBrains.Build.Helpers.TeamCity.TeamCityProperties)">
+            <summary>
+              Gets the parameter value for MSBuild's "/logger:" parameter which connects it to the TeamCity logger, if currently running in a TeamCity build agent.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Helpers.TeamCity.TeamCityProperties">
+            <summary>
+              While running within a TeamCity build, we have three sets of properties available:
+              (1) Environment. These are available thru the process environment block.
+              (2) System. There's a pointer to the properties file in one of the environment variables.
+              (3) Configuration.There's a pointer to the properties file in one of the system properties (see the chain?).
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.BuildArtifactAttribute">
+            <summary>
+            Marks a class which is a build artifact type.
+            </summary>
+            <remarks>
+              <para>Artifact is what you request of the build as its result. There're also intermediate artifacts which are required to produce the final result.</para>
+              <para>All of the information required for build steps must be conveyed in the form of artifacts (on which the build step explicitly depends), rather than files on disk, environment variables, or other means of implicit dependencies.</para>
+              <para><see cref="T:JetBrains.Build.BuildStepAttribute">Build steps</see> and artifacts together would make the build chain.</para>
+            </remarks>
+        </member>
+        <member name="T:JetBrains.Build.BuildPartAttribute">
+            <summary>
+            Base for all build-related attributes which should be pulled into the part catalog.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.BuildErrorException">
+            <summary>
+            Formats a build message in a way which is compatible with MSBuild output, which makes it parseable by standard build output parsers (for detecting build errors from text etc).
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.BuildErrorException.#ctor(System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Exception)">
+            <param name="kind">Message kind, like "error", "warning", etc. The exception uses "error" by default.</param>
+        </member>
+        <member name="M:JetBrains.Build.BuildErrorException.FormatBuildMessage(System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Formats a build message in a way which is compatible with MSBuild output, which makes it parseable by standard build output parsers (for detecting build errors from text etc).
+            </summary>
+            <param name="kind">Message kind, like "error", "warning", etc.</param>
+        </member>
+        <member name="T:JetBrains.Build.BuildStepAttribute">
+            <summary>
+              <para>Defines a build step by marking either a class or a method.</para>
+              <para>A method is the simplest build step: its parameters are inputs it requires, and its return value is the artifacts it produces. To produce more than one artifact, use <see cref="T:JetBrains.Util.JetTuple"/> family types.</para>
+            </summary>
+            <remarks>
+            While artifacts hold the build data, build steps define the actions which produce artifacts.
+            There're no explicit dependencies between build steps. By inputing and outputing artifacts, the steps get dependent on each other via the information they deal with.
+            </remarks>
+        </member>
+        <member name="T:JetBrains.Build.Cardinality">
+            <summary>
+            Whether the artifact is allowed to have more than one value.
+            </summary>
+            <remarks>
+            Each build artifact is either having only one value, or holding a set of values.
+            This property is defined when declaring the artifact, and all of the usages must match the choice.
+            You cannot mismatch cardinality when importing an artifact into your build step (even though you might output a single value for supplying a plural artifact).
+            </remarks>
+        </member>
+        <member name="T:JetBrains.Build.Running.BuildEngineImplementationAttribute">
+            <summary>
+            Marks the class which creates the entry point to the build engine implementation. Helps with locating it in the catalog (and its assembly as well).
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.BuildLogRecord.Metadata">
+            <summary>
+            Record metadata which allows to transfer machine-readable notifications alongside with regular text logging.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.BuildRunnerEnvironment.IsBuildScriptCachingEnabled">
+            <summary>
+            Means the Engine can use machine cache for processing build script sources. This is meant to speed up local scenarios.
+            Includes compilation of build script source core (in some scenarios) and building the parts catalog over the compiled build script binaries.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.BuildRunnerEnvironment.NugetConfigFile">
+            <summary>
+            Nuget configuration.
+            Build system mostly uses the list of Nuget sources out of this info, for retrieving the packages required for running the build.
+            The packages taking part in the build itself are managed elsewhere, in build tasks, and might be using another config file.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.BuildRunnerRequest.BuildScriptBinaries">
+            <summary>
+            The already-compiled build script in the binary form.
+            Supports assembly and package files as file items.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.BuildRunnerRequest.BuildScriptSources">
+            <summary>
+            The source code of the build script which is compiled by the build engine.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.BuildRunnerRequest.CustomEngineBinaries">
+            <summary>
+            Custom engine files for the <see cref="F:JetBrains.Build.Running.BuildRunnerRequest.EngineType.CustomCompiled"/> choice in <see cref="F:JetBrains.Build.Running.BuildRunnerRequest.EngineChoice"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.BuildRunnerRequest.EngineChoice">
+            <summary>
+            If custom engine is selected, <see cref="F:JetBrains.Build.Running.BuildRunnerRequest.CustomEngineBinaries"/> must contain the custom engine assemblies and their satellite files.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.BuildRunnerRequest.InputArtifacts">
+            <summary>
+            Input artifacts whose values are known before the build begins — from external parameters, or from the previous stage. In serialized form.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.BuildRunnerRequest.InputArtifactStrings">
+            <summary>
+            Input artifacts whose values are known before the build begins — from external parameters, or from the previous stage. In string form, to be turned into a real artifact with <see cref="T:System.ComponentModel.TypeConverter"/> or <see cref="T:System.Windows.Markup.ValueSerializer"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.BuildRunnerRequest.Objectives">
+            <summary>
+            The artifacts to be calculated by the build.
+            Build steps will be run so that to trace value from known <see cref="F:JetBrains.Build.Running.BuildRunnerRequest.InputArtifacts"/> and to the <see cref="F:JetBrains.Build.Running.BuildRunnerRequest.Objectives"/>.
+            Output values in <see cref="T:JetBrains.Build.Running.BuildRunnerResult"/> would contain these objectives, as well as any other artifacts which support serialization.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.BuildRunnerResult.WithAnotherTypeBinder(JetBrains.Build.Serialization.IBindTypeByName)">
+            <summary>
+            Uses a more specific type binder, e.g. resolves artifact types in the context of the outer build.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.BuildRunnerSession.AsyncBuildResult">
+            <summary>
+            Gets the build result when it's ready.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.IBuildArtifactClass">
+            <summary>
+            Represents a build artifact and its calculated value, if any.
+            Mark a class with <see cref="T:JetBrains.Build.BuildArtifactAttribute"/> to let use it as an artifact.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.IBuildEntityOnType">
+            <summary>
+            Common base for a build entity which is produced out of a type, and can be uniquely identified by that type.
+            Most entities are, but for maybe method-based build steps.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.IBuildEntity">
+            <summary>
+            Common base for build-related entities which could have dependencies on each other etc.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Running.Storage.IBuildEntityOnType.Type">
+            <summary>
+            The type on which this build entity is based on.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.IHaveCardinality">
+            <summary>
+            Tells whether it's singular or plural.
+            Exact semantic depends on the object it's applied to.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Running.Storage.IHaveCardinality.Cardinality">
+            <summary>
+            Tells whether it's singular or plural.
+            Exact semantic depends on the object it's applied to.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Running.Storage.IBuildArtifactClass.ArtifactValues">
+            <summary>
+              <para>Empty, if the artifact has not been calculated yet by the build.</para>
+              <para>A single value, for a fully-defined <see cref="F:JetBrains.Build.Cardinality.Singular"/> artifact.</para>
+              <para>One or more values, for a (partially or fully) defined <see cref="F:JetBrains.Build.Cardinality.Plural"/> artifact.</para>
+              <para>New values might be added, but never removed.</para>
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Running.Storage.IBuildArtifactClass.Cardinality">
+            <summary>
+              <para>Whether the artifact value is singular or plural.</para>
+              <para>If your data is a list of values, there's a choice: either define a singular artifact which holds the complete list inside, or a plural artifact class whch holds just one item, and there'll be a set of them during the build. The determination is whether different build steps might contribute to the list: a singular artifact can only be produced once by a single build step, and values for a plural artifact will be collected from all the producing steps.</para>
+              <para>A singular artifact is imported just with the type of the artifact class. A plural artifact is imported as a <see cref="T:System.Collections.Generic.IEnumerable`1"/>, <see cref="T:System.Collections.Generic.ICollection`1"/> or <see cref="T:System.Collections.Generic.IList`1"/> of the artifact class type.</para>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Data.BuildStepInputInfo">
+            <summary>
+            Describes a build step input parameter.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Data.BuildStepIoInfo">
+            <summary>
+            Base type for a descriptor for build step's input and output items.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Data.BuildStepIoInfo.ItemType">
+            <summary>
+            For a singular item, same as <see cref="F:JetBrains.Build.Running.Data.BuildStepIoInfo.RawType"/>.
+            For a plural item, the <see cref="F:JetBrains.Build.Running.Data.BuildStepIoInfo.RawType"/> might be the generic specialization of the container type, and this is the actual type of the plural item (container type parameter). Dependencies linking goes over this type.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Data.BuildStepIoInfo.RawType">
+            <summary>
+            The raw type of the parameter — type of the method parameter, or method return value.
+            If the method returns a tuple, it gets split before declaring individual output parameters for each member, so this field will be one of the tuple item types.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Running.Data.BuildStepIoInfo.Cardinality">
+            <summary>
+            Whether this item has one or multple values.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Data.BuildStepInputInfo.InputParameterFlags.IsOptional">
+            <summary>
+            The parameter is optional.
+            It is OK to import NULL or an empty collection if the artifact value is not defined, or a helper is not available.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Data.BuildStepOutputInfo">
+            <summary>
+            Describes a build step output parameter.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Data.BuildStepRunnableClass">
+            <summary>
+            Build steps implemented as classes.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.IBuildStepRunnable">
+            <summary>
+            Represents a build step which can be run if we known its inputs and need to learn its outputs.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.IBuildStepRunnable.Run(System.Object[])">
+            <summary>
+            Runs the build step implementation.
+            </summary>
+            <param name="inputs">Inputs. Indices correspond to the <see cref="P:JetBrains.Build.Running.Storage.IBuildStepRunnable.Inputs"/> collection.</param>
+            <returns>Outputs. Indices correspond to the <see cref="P:JetBrains.Build.Running.Storage.IBuildStepRunnable.Outputs"/> collection.</returns>
+        </member>
+        <member name="P:JetBrains.Build.Running.Storage.IBuildStepRunnable.Inputs">
+            <summary>
+            Input parameters.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Running.Storage.IBuildStepRunnable.Outputs">
+            <summary>
+            Output parameters.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Data.BuildStepRunnableMethod">
+            <summary>
+            Build steps implemented as methods.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.IBuildEntityOnMember">
+            <summary>
+            Common base for a build entity which is produced out of a type member, and can be uniquely identified by that type member.
+            An example is a method-based build step.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Running.Storage.IBuildEntityOnMember.Member">
+            <summary>
+            The type member on which this build entity is based on.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Data.BuildStepRunnableMethod.RunCore_ExtractOutputValues(System.Object)">
+            <remarks>
+            NOTE: must match the logic in <see cref="M:JetBrains.Build.Running.Data.BuildStepRunnableMethod.Ctor_ParseOutputTypes(JetBrains.Application.Parts.PartCatalogueType,JetBrains.Application.Parts.PartCatalogueTypeMember,JetBrains.Build.Running.Data.BuildStepOutputInfo[]@,JetBrains.Build.Running.Data.BuildStepRunnableMethod.AssignOutputDelegate[]@)"/>.
+            </remarks>
+        </member>
+        <member name="T:JetBrains.Build.Running.Data.BuildStepRunnableMethod.AssignInputDelegate">
+            <summary>
+            Before reflection-invoking the method, fills its parameters list with the step input values.
+            </summary>
+            <param name="stepinputs">The input values for the step.</param>
+            <param name="index">Current input index.</param>
+            <param name="reflectionparams">The parameter array which will be used for the call.</param>
+        </member>
+        <member name="T:JetBrains.Build.Running.Data.BuildStepRunnableMethod.AssignOutputDelegate">
+            <summary>
+            After reflection-invoking the method, maps its outputs into the step outputs list.
+            </summary>
+            <param name="returns">The return values of the method, after splitting any possible tuples.</param>
+            <param name="reflectionparams">The parameter array used for the call, might hold the out parameters.</param>
+            <param name="index">Current output index.</param>
+            <param name="stepoutputs">Assign step output here.</param>
+        </member>
+        <member name="T:JetBrains.Build.Running.IBuiltInBuildEngineExtraction">
+            <summary>
+            An interface for separating Shell logic (which knows the files possibly belonging to the built-in build engine) and the build engine runner which needs the files but does not reference the Shell and all of than infrastructure.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.IIsolatedBuildRunners">
+            <summary>
+            Entry point interface to the build runner engine (top-level).
+            When running inside the build, import the <see cref="T:JetBrains.Build.Running.INestedBuildRunner"/> build helper into your build step or helper to initiate a nested build.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.IIsolatedBuildRunners.BeginRunBuildScript(JetBrains.Util.Threading.SynchronizedLifetime,JetBrains.Build.Running.BuildRunnerRequest,JetBrains.Build.Running.BuildRunnerEnvironment)">
+            <summary>
+            Initiates a new build, async.
+            </summary>
+            <param name="lifetime">Build-limiting lifetime.</param>
+            <param name="request">Build request (defines what to build and initial artifacts).</param>
+            <param name="environment">Build environment with additional engine-specific env params, like where to pull Nuget packages for providing build script sources with.</param>
+            <returns>Async build result.</returns>
+        </member>
+        <member name="M:JetBrains.Build.Running.INestedBuildRunner.RunNestedBuildSync(JetBrains.DataFlow.Lifetime,JetBrains.Build.Running.BuildRunnerRequest)">
+            <summary>
+            Runs a nested build, synchronously, which means that your build step does not proceed until the nested build completes.
+            </summary>
+            <param name="lifetime">The lifetime for entities returned as a result of the build (as well as for all the build objects). Use local lifetimes if running many builds, to release build results.</param>
+            <param name="request">Build request.</param>
+            <returns>Build result.</returns>
+        </member>
+        <member name="T:JetBrains.Build.Running.InputArtifactStringName">
+            <summary>
+            When specifying input artifact values as strings, gives the name of the artifact to assign the string value to.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.InputArtifactStringName.FullOrLocalTypeName">
+            <summary>
+            Name of the artifact class type, as either a full or a local name (for nested classes, it's just the local name of the nested class, no outers' names added).
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.InputArtifactStringName.IsIgnoringNonexistent">
+            <summary>
+            It's OK of the targeted artifact does not exist. Just skip assigning the value and issue a warning instead of an error.
+            Should potentially be used when new artifacts are introduced to the build in some branch, but other branches still don't know about them — this allows the build configuration which is shared by all branches to define the values for the new artifacts without ruining older builds.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.InputArtifactStringName.Parse(System.String)">
+            <summary>
+            Applies the default convention where a name of the build artifact class which is OK to be missing is followed by a question sign.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Build.Running.Logic.BuildExecutionPlanner.FindAndDropArtifactErrors(JetBrains.Build.Running.Storage.BuildStorageCore,System.Collections.Generic.JetHashSet{JetBrains.Build.Running.Storage.IBuildEntity},System.Collections.Generic.JetHashSet{JetBrains.Build.Running.Storage.IBuildArtifactClass})">
+            <summary>
+            Assert that any of the unresolved artifacts can actually be resolved with some steps.
+            </summary>
+            <param name="storage"></param>
+            <param name="planneds"></param>
+            <param name="unresolveds"></param>
+        </member>
+        <member name="M:JetBrains.Build.Running.Logic.BuildExecutionPlanner.FindBestPath(JetBrains.Build.Running.Storage.BuildStorageCore,JetBrains.Build.Running.Storage.IBuildEntity,JetBrains.Build.Running.Storage.IBuildEntity)">
+            <summary>
+            Prefers singular and very much prefers non-optional edges in the path.
+            </summary>
+            <param name="storage"></param>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Build.Running.Logic.BuildExecutionPlanner.PlanItemsFromEntities(System.Collections.Generic.JetHashSet{JetBrains.Build.Running.Storage.IBuildEntity},System.Collections.Generic.JetHashSet{JetBrains.Build.Running.Storage.IBuildArtifactClass},JetBrains.Build.Running.Storage.BuildStorageCore)">
+            <summary>
+            Filling plan items for entities. Some entities require more than one item, one to create, one to delete.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Logic.BuildExecutionPlanner.TakeDependenciesOfOutputs(JetBrains.Build.Running.Storage.BuildStorageCore,System.Collections.Generic.JetHashSet{JetBrains.Build.Running.Storage.IBuildArtifactClass},System.Collections.Generic.JetHashSet{JetBrains.Build.Running.Storage.IBuildEntity})">
+            <summary>
+            For each output, add what it depends on, transitively.
+            That would be the largest possible work set, might only get filtered down if there're uncomposable optional subgraphs.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Logic.IBuildExecutorDrive">
+            <summary>
+            An interface for driving a proxy build executor object across the thread or apartment boundary.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Logic.BuildExecutor.Logger">
+            <summary>
+            Wraps <see cref="F:JetBrains.Build.Running.Logic.BuildExecutor.myWriteLogRecord"/> with standard Logger APIs.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Logic.BuildExecutor.ExecutingItem">
+            <summary>
+            The currently executing item, if doing one right now. Might get <c>Null</c>s during a run.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Logic.BuildExecutor.IsRunning">
+            <summary>
+            High when running.
+            You can tell if it's “not yet run” or “have already run” by the value of <see cref="F:JetBrains.Build.Running.Logic.BuildExecutor.PlanPosition"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Logic.BuildExecutor.PlanPosition">
+            <summary>
+            The current position in the plan.
+            It's <c>0</c> before execution.
+            When executing an item, it's equal to the index of the currently executing item.
+            After the run, it's the index after the end of the plan (equal to the Count).
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Logic.BuildExecutor.ResolveStepInputs(JetBrains.Build.Running.Storage.BuildStorage,JetBrains.Build.Running.Storage.IBuildStepRunnable,JetBrains.Build.Running.Storage.EntityValueRetrievalContext,JetBrains.Util.ILogger)">
+            <summary>
+            Retrieve artifact values from the storage to fill step inputs.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Logic.BuildExecutor.RunStep(JetBrains.Build.Running.Storage.IBuildStepRunnable,System.Object[],JetBrains.Util.ILogger)">
+            <summary>
+            Just invokes the step run on step-native data.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Logic.BuildExecutor.SubmitStepOutputs(JetBrains.Build.Running.Storage.BuildStorage,JetBrains.Build.Running.Storage.IBuildStepRunnable,System.Object[])">
+            <summary>
+            After a step is executed, assigns its calculated outputs to the artifacts.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Logic.BuildExecutor.Messages">
+            <summary>
+            Controls formatting of machine readable log messages.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Logic.BuildTypeSystemHelpers.CreateArtifact(JetBrains.DataFlow.Lifetime,JetBrains.Application.Parts.PartCatalogueType,JetBrains.Application.Parts.PartCatalogueAttribute,JetBrains.Util.OnError)">
+            <summary>
+            A helper method to create a build artifact from the specific type.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Logic.BuildTypeSystemHelpers.CreateArtifact``1(JetBrains.DataFlow.Lifetime)">
+            <summary>
+            A helper method to create a build artifact from the specific type.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Logic.BuildTypeSystemHelpers.CreateArtifactFromValue``1(JetBrains.DataFlow.Lifetime,``0)">
+            <summary>
+            A helper method to create a build artifact from the specific artifact value (singular artifacts only).
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Logic.BuildTypeSystemHelpers.ExtractFromCatalog(JetBrains.DataFlow.Lifetime,JetBrains.Application.Parts.IPartsCatalogue)">
+            <summary>
+            Creates artifact and build steps by reading the catalog.
+            </summary>
+            <param name="lifetime">Lifetime for the entities to be created.</param>
+            <param name="catalog"></param>
+        </member>
+        <member name="M:JetBrains.Build.Running.Logic.BuildTypeSystemHelpers.GetHiddenImplementations(JetBrains.Application.Parts.PartCatalogueType)">
+            <summary>
+            For a type, calculates the set of types hidden by it — base types and <see cref="T:JetBrains.Application.Components.IHideImplementation`1"/> cases.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Logic.BuildTypeSystemHelpers.Tuples">
+            <summary>
+            Support for tuples which allow passing more than one output type in method's return value.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Logic.BuildTypeSystemHelpers.Tuples.ExtractTypesFromTuple(JetBrains.Application.Parts.PartCatalogueType)">
+            <summary>
+            In case a method build step returns multiple artifact types, those might be packed into a tuple. This method returns the list of types to work with.
+            </summary>
+            <param name="typeMaybeTuple"></param>
+            <returns></returns>
+        </member>
+        <member name="T:JetBrains.Build.Serialization.IBindTypeByName">
+            <summary>
+            Binds a type upon deserialization when only its assembly-qualified name is known.
+            Allows to apply redirection rules, such as changing the version in the assembly full name, or even redirecting assemblies when dealing with build artifacts in script/comnpiled transition.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.IBindTypeByName.Bind(JetBrains.Build.Serialization.AssemblyQualifiedTypeName,JetBrains.Util.OnError)">
+            <summary>
+            Binds the type to runtime type by its name.
+            This should perform two things:
+            (1) Load the appropriate assembly, if needed.
+            (2) Loosely bind by partial type name match (e.g. if redirecting to another assembly name), if required.
+            </summary>
+            <param name="name">Type name. Some binders are not looking at the assembly name, for example.</param>
+            <param name="onerror"></param>
+            <returns></returns>
+        </member>
+        <member name="P:JetBrains.Build.Serialization.IBindTypeByName.Equality">
+            <summary>
+            Gets the equality comparer for comparing type names before they're bound, assuming that two different type names that bind into the same type should be deemed equal.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Serialization.BindArtifactTypeByName.#ctor(JetBrains.Build.Running.Storage.BuildStorage,JetBrains.Application.Parts.IPartsCatalogue)">
+            <summary>
+            Sets up type binding which can bind the type by its fullname into another assembly in case it can't be found in its original assembly.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Serialization.BuildEngineOrScriptBinaries">
+            <summary>
+            Stores binary files for use as a custom build engine, or a the pre-compiled build script.
+            </summary>
+            <remarks>Serves as a typed wrapper for telling apart storages with such data from any other ones.</remarks>
+        </member>
+        <member name="F:JetBrains.Build.Running.Serialization.BuildEngineOrScriptBinaries.Files">
+            <summary>
+            The binary files for use as a custom build engine, or a the pre-compiled build script.
+            Possible file types:
+            • A managed assembly.
+            • A satellite file.
+            • A Nuget package, which is to be extracted to get any of these files yet again.
+            • A Structured Storage with a serialized object of type <see cref="T:JetBrains.Build.Running.Serialization.BuildEngineOrScriptBinaries"/> inside, which is to be extracted to get any of these files yet again.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Serialization.BuildEngineOrScriptBinaries.IsInStorage(JetBrains.Util.Storage.StructuredStorage.IStructuredStorage)">
+            <summary>
+            Gets whether this storage contains this object in a serialized form.
+            // TODO: use serialization infrastructure info for this instead
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Serialization.Build.DataHelpers.ArtifactProperties">
+            <summary>
+            <see cref="T:JetBrains.Build.Running.Serialization.BuildSerialization"/> serialization helper.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Serialization.BuildResultsRoot">
+            <summary>
+            Wraps a <see cref="T:JetBrains.Build.Serialization.SerializedValuesResolver"/> with previous build results for typed access to a structured storage on disk.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Serialization.BuildResultsRoot.#ctor(JetBrains.Build.Serialization.SerializedValuesResolver)">
+            <summary>
+            Creates over an existing resolver.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Serialization.BuildResultsRoot.#ctor(JetBrains.DataFlow.Lifetime,JetBrains.Util.Storage.StructuredStorage.IStructuredStorage)">
+            <summary>
+            Creates over a storage with data. As usual, storage must be open while you're accessing this object.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Serialization.BuildResultsRoot.IsInStorage(JetBrains.Util.Storage.StructuredStorage.IStructuredStorage)">
+            <summary>
+            Gets whether this storage contains this object in a serialized form.
+            // TODO: use serialization infrastructure info for this instead
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Serialization.BuildResultsRoot.OpenStorageWithArtifacts(JetBrains.Util.Storage.StructuredStorage.IStructuredStorage)">
+            <summary>
+            Opens the child storage under the stored copy of <see cref="T:JetBrains.Build.Running.Serialization.BuildResultsRoot"/> which can be treated as <see cref="T:JetBrains.Build.Serialization.SerializedValuesResolver"/> backend.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.BuildEntityLifetime">
+            <summary>
+            Handles importing a lifetime into a build entity.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.IBuildCustomObject">
+            <summary>
+            An entity for importing dynamically-created objects into other build entities, such as they're specific to those entities, such as lifetime, logger, etc.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.BuildEntityLogger">
+            <summary>
+            Handles importing a logger into a build entity so that the logger were configured with the entity's namespace and type name.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.BuildEntityPointer">
+            <summary>
+            A serializable identification of a build entity.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Storage.BuildEntityPointer.myKindIndex">
+            <summary>
+            An index of the build entity kind in the <see cref="F:JetBrains.Build.Running.Storage.BuildEntityKinds.AllKinds"/> array.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Storage.BuildEntityPointer.AssemblyShortName">
+            <summary>
+              <para>Short name of the assembly which declares the entity.</para>
+              <para>Might be empty for some entities because it does not form the strong identity anymore.</para>
+              <para>Note: assembly excluded from identity because the same build entity might be compiled either as a part of the build script (into the source build entities assembly) or into the product package (into a product assembly). The entity equality must be retained, even though assembly names do differ.</para>
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Storage.BuildEntityPointer.MemberName">
+            <summary>
+              <para>For type-based entities, an empty string.</para>
+              <para>For member-based entities, the member name.</para>
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Storage.BuildEntityPointer.TypeFullName">
+            <summary>
+              <para>Full name of the type which declares the entity.</para>
+              <para>Should be defined for all entities.</para>
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Running.Storage.BuildEntityPointer.EntityKind">
+            <summary>
+            Gets the build entity kind of this entity.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Running.Storage.BuildEntityPointer.LocalName">
+            <summary>
+            Calculates the local name of the type, or type and member.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Storage.BuildExecutionPlan.Objectives">
+            <summary>
+            The objectives of this plan.
+            We're running this execution to obtain the values of these artifacts.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.BuildExecutorRunResolveContext">
+            <summary>
+            A context for the whole build run.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.IBuildEntityInstanceResolveContext">
+            <summary>
+            Gets or creates instances for build entities in a specific context.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.IBuildHelper">
+            <summary>
+              <para>A build helper class, which could be imported into a build step as an input parameter.</para>
+              <para>If not marked with the <see cref="F:JetBrains.Build.BuildHelperFlags.IsSingleton"/> flag, which is the preferrable default, is a throw-away class which can be created on-demand (maybe in multiple instances) and discarded at any time. These don't have to be serializable because a new instance can be created at any moment.</para>
+              <para>If <see cref="F:JetBrains.Build.BuildHelperFlags.IsSingleton"/>, the one and only instance might exist, and it should be serializable to support suspended builds.</para>
+              <para>Free-threaded access possible.</para>
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.IBuildHelper.CreateInstance(System.Collections.Generic.IList{JetBrains.Build.Running.Data.BuildStepInputInfo},System.Object[])">
+            <summary>
+            Creates an instance of the build helper object.
+            </summary>
+            <param name="inputsChosen">The inputs set, out of <see cref="P:JetBrains.Build.Running.Storage.IBuildHelper.InputsChoice"/>, chosen for the instantiation. This tells which .ctor to use.</param>
+            <param name="inputvalues">Values for the .ctor input parameters.</param>
+            <returns>The instance.</returns>
+        </member>
+        <member name="P:JetBrains.Build.Running.Storage.IBuildHelper.InputsChoice">
+            <summary>
+            Input parameters from various constructor overloads.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.BuildStepResolveContext">
+            <summary>
+            Works for the single build step only.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Storage.BuildStepResolveContext.myLifetimeOutsideBody">
+            <summary>
+            A lifetime which is broader than that passed to the user in the build step body — to make sure all of the stuff created under it outlives any user code.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Storage.BuildStepResolveContext.myLifetimeBuildStepBody">
+            <summary>
+            The lifeitme passed in constructor governs our object. For passing to user, make a nested lifetime.
+            Basically equivalent to user's creating a <see cref="M:JetBrains.DataFlow.Lifetimes.Using(System.Action{JetBrains.DataFlow.Lifetime})"/> lifetime, but more handy.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStepResolveContext.#ctor(JetBrains.DataFlow.Lifetime,JetBrains.Build.Running.Storage.IBuildStepRunnable,JetBrains.Build.Running.Storage.IBuildEntityInstanceResolveContext)">
+            <summary>
+            </summary>
+            <param name="lifetime">Lifetime for the context. Created only for the time of the single build step operation.</param>
+            <param name="buildstep">The owning step.</param>
+            <param name="contextRun">An outer context, for this build executor run.</param>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.BuildStorage">
+            <summary>
+            An interface to the runtime storage of build steps and artifacts, as well as their relations (which steps are involved with the given artifact, etc).
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStorage.ResolveExact(JetBrains.Build.Running.Data.BuildStepIoInfo)">
+            <summary>
+            Resolves the input/output item into a type-based entity by its item type, also validating the cardinality.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStorage.ResolveExact(JetBrains.Application.Parts.PartCatalogueType)">
+            <summary>
+            Resolves a type-based entity by its originating type.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.BuildStorageCore">
+            <summary>
+            Backend for <see cref="T:JetBrains.Build.Running.Storage.BuildStorage"/> which calculates and maintains all of the relations.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Storage.BuildStorageCore.BuildHelperHides">
+            <summary>
+            An outgoing reference means that its origin hides its destination (e.g. inherits).
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Storage.BuildStorageCore.CacheEntityByBaseType">
+            <summary>
+            All type-based build entities, by their exact type (as reported by entitry) and all of its assignable-to types, which includes base classes and interfaces.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Storage.BuildStorageCore.CacheEntityByLocalName">
+            <summary>
+            All build entities cached by their local name.
+            Note that there's no uniqueness guarantee for the local name really, so there might be more than one result.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Storage.BuildStorageCore.CacheEntityByType">
+            <summary>
+            All type-based build entities, by their exact type (as reported by entitry).
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Storage.BuildStorageCore.Dependencies">
+            <summary>
+            Immediate dependencies between all the build entities.
+            Edges go from outputs to inputs. If A depends on B, then it's from A and to B. This might be if step A takes input B, or step B returns output A.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStorageCore.AddEntities(System.Collections.Generic.IList{JetBrains.Build.Running.Storage.IBuildEntity})">
+            <summary>
+            Adds a pack of (possibly mutually-dependent) entities to the build storage.
+            All of the references must resolve either into this group or into the previously-registered entities.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStorageCore.InitDataFlow_AssertCachedByType(JetBrains.DataFlow.Lifetime,JetBrains.DataFlow.ICollectionEvents{JetBrains.Build.Running.Storage.IBuildEntity},System.Collections.Generic.IDictionary{JetBrains.Application.Parts.PartCatalogueType,JetBrains.Build.Running.Storage.IBuildEntityOnType})">
+            <summary>
+            Type-based access to entities which are type-based.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStorageCore.IsGoodInputForBuildHelper(JetBrains.Build.Running.Storage.IBuildEntityOnType,JetBrains.Util.OnError)">
+            <summary>
+            Checks whether what we have resolved is legal to be assigned to a build helper's input.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.BuildStorageCore.EntityDependencyFlags">
+            <summary>
+            Flags on the entity dependency edges in the <see cref="F:JetBrains.Build.Running.Storage.BuildStorageCore.Dependencies"/> graph.
+            Note that flags are not necessarily mutually exclusive because there might be multiple dependencies between two entities, and flags are merged among them.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStorageInstances.GetRunningInstance(JetBrains.Build.Running.Storage.BuildStorageCore,JetBrains.Build.Running.Storage.IBuildEntity,JetBrains.Util.OnError)">
+            <summary>
+            Gets an already-created instance.
+            This method is kept separated from <see cref="M:JetBrains.Build.Running.Storage.BuildStorageInstances.CreateEntityInstance(JetBrains.Build.Running.Storage.BuildStorageCore,JetBrains.Build.Running.Storage.IBuildEntity,JetBrains.Util.OnError)"/> because an instance is created as a part of the execution plan at a certain iteration, and then must be available when the other iterations need its value.
+            </summary>
+            <returns>NotNull if throwing.</returns>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStorageInstances.SetEntityInstance(JetBrains.DataFlow.Lifetime,JetBrains.Build.Running.Storage.BuildStorageCore,JetBrains.Build.Running.Storage.IBuildEntity,System.Object,JetBrains.Util.OnError)">
+            <summary>
+            A pairing method for <see cref="M:JetBrains.Build.Running.Storage.BuildStorageInstances.GetRunningInstance(JetBrains.Build.Running.Storage.BuildStorageCore,JetBrains.Build.Running.Storage.IBuildEntity,JetBrains.Util.OnError)"/> in case you already have an entity instance.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStorageResolve.ResolveAssignable(JetBrains.Build.Running.Storage.BuildStorageCore,JetBrains.Build.Running.Data.BuildStepInputInfo[][],JetBrains.Util.OnError)">
+            <summary>
+            Resolves an overload list to possible assignable type-based entities.
+            </summary>
+            <param name="storage"></param>
+            <param name="overloads"></param>
+            <param name="onerror"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStorageResolve.ResolveAssignable(JetBrains.Build.Running.Storage.BuildStorageCore,JetBrains.Build.Running.Data.BuildStepInputInfo,JetBrains.Util.OnError)">
+            <summary>
+            Resolves the input item into a type-based entity assignable to the parameter type, also validating the cardinality.
+            NotNull, but reports an error if nothing were found.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStorageResolve.ResolveAssignable(JetBrains.Build.Running.Storage.BuildStorageCore,JetBrains.Application.Parts.PartCatalogueType,JetBrains.Util.OnError)">
+            <summary>
+            Resolves type-based entities which are assignable to the requested type.
+            NotNull, but reports an error if nothing were found.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStorageResolve.ResolveExact(JetBrains.Build.Running.Storage.BuildStorageCore,JetBrains.Build.Running.Data.BuildStepIoInfo,JetBrains.Util.OnError)">
+            <summary>
+            Resolves the input/output item into a type-based entity by its item type, also validating the cardinality.
+            </summary>
+            <returns>NotNull in case of a throwing onerror.</returns>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStorageResolve.ResolveExact(JetBrains.Build.Running.Storage.BuildStorageCore,JetBrains.Application.Parts.PartCatalogueType,JetBrains.Util.OnError)">
+            <summary>
+            Resolves a type-based entity by its originating type.
+            </summary>
+            <returns>NotNull in case of a throwing onerror.</returns>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStorageResolve.IsResolveAllowed(JetBrains.Application.Parts.PartCatalogueType,JetBrains.Build.Running.Storage.IBuildEntityOnType,JetBrains.Util.OnError)">
+            <summary>
+            Checks if it's valid for an entity to be resolved from the specific type.
+            E.g. build artifacts cannot be resolved by an arbitrary base type.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.BuildStorageResolve.OverloadResolutionInfo.ToException">
+            <summary>
+            Builds an exception with an outline with all the information we collected, mostly in the exception data.
+            By traversing the data tree, all of the details will be rendered.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.DirectedGraphWithEdges`2">
+            <summary>
+            Adds a capacity of associating attributes to the graph edges.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Running.Storage.DirectedGraphWithEdges`2.myMapEdgeData">
+            <summary>
+            Data on the edge.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.DirectedGraphWithEdges`2.AddDependency(`0,`0,`1)">
+            <summary>
+            Sets edge data replacing the previous one, if there were any. Registers the dependency if the edge does not exist yet.
+            </summary>
+            <param name="from">From-node of the edge.</param>
+            <param name="to">To-node of the edge.</param>
+            <param name="edgedata">The new data to associate with the edge.</param>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.DirectedGraphWithEdges`2.AddOrUpdateDependency(`0,`0,`1,System.Func{`1,`1,`1})">
+            <summary>
+            Sets edge data replacing the previous one, if there were any. Registers the dependency if the edge does not exist yet.
+            </summary>
+            <param name="from">From-node of the edge.</param>
+            <param name="to">To-node of the edge.</param>
+            <param name="edgedata">The new data to associate with the edge.</param>
+            <param name="FCombineOldAndNew">Optional function to handle assigning data to an edge which already has data on it. Has a chance to combine datas based on whatever rules the graph owner thinks applicable.</param>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.DirectedGraphWithEdges`2.TryGetEdge(`0,`0)">
+            <summary>
+            Gets the data associated with an edge.
+            If there is no such edge in the graph, returns NULL.
+            If the edge exists, but has no data associated with it, also returns NULL.
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.DirectedGraphWithEdges`2.TryGetEdgeData(`0,`0)">
+            <summary>
+            Gets the data associated with an edge.
+            If there is no such edge in the graph, returns NULL.
+            If the edge exists, but has no data associated with it, also returns NULL.
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+        </member>
+        <member name="F:JetBrains.Build.Running.Storage.DirectedGraphWithEdges`2.EdgeEnd.OtherEnd">
+            <summary>
+            Some end of the edge, depending of whether we're considering incoming our outgoing edges.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Running.Storage.EntityValueRetrievalContext.#ctor(System.Func{JetBrains.DataFlow.Lifetime},JetBrains.Build.Running.Storage.IBuildEntity)">
+            <summary>
+            </summary>
+            <param name="FImportLifetime">The lifetime, as it should be imported into the entity. It's a func mostly not because it's a lazy instance, but to outline that it's not a lifetime for this object.</param>
+            <param name="entityImportingFor">The entity for which the values are imported in this context.</param>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.IBuildEntityEx.EntityKindAndNameString">
+            <summary>
+            A delay-rendered string value.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Running.Storage.IBuildEntityEx.EntityPointerKindAndNameString">
+            <summary>
+            A delay-rendered string value.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Serialization.BindIntoLoadedAssemblies">
+            <summary>
+            Considers assemblies loaded into the current appdomain for remapping by full type name.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Serialization.BindTypeByName">
+            <summary>
+            Default impl. Just looks up the runtime type.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Serialization.BindTypeByName.Default">
+            <summary>
+            The default instance of the default binder.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Serialization.AssemblyQualifiedTypeMemberName">
+            <summary>
+            Represents an assembly-qualified type name with a name of a member in the type.
+            Optionally supports loose-matching with some allowance for a difference in version numbers (expected with assembly binding redirections in effect).
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Serialization.AssemblyQualifiedTypeMemberName.EqualityByLooseVersionMatch">
+            <summary>
+            Requires a match in Major.Minor, but allows a difference in subsequent version components.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Serialization.AssemblyQualifiedTypeMemberName.EqualityByTypeFullNameOnly">
+            <summary>
+            Ignores the assembly name completely when checking for type equality.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.AssemblyQualifiedTypeMemberName.AsBareAssemblyName">
+            <summary>
+            Returns a copy which has only the bare assembly name, without any version, culture, or public key specifications on it.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:JetBrains.Build.Serialization.AssemblyQualifiedTypeMemberName.AssemblyName">
+            <summary>
+            Gets or sets the assembly name of the assembly containing the type identified by this object.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Serialization.AssemblyQualifiedTypeMemberName.MemberName">
+            <summary>
+            Gets or sets the name of the member identified by this object.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Serialization.AssemblyQualifiedTypeMemberName.TypeFullName">
+            <summary>
+            Gets or sets the full name of the type identified by this object.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Serialization.AssemblyQualifiedTypeMemberName.TypeLocalName">
+            <summary>
+            Gets the local name of the type, if the type name is set.
+            Calculated.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Serialization.AssemblyQualifiedTypeMemberName.TypeNamespace">
+            <summary>
+            Gets the namespace of the type, if the type name is set.
+            Calculated.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Serialization.ISerializedValuesResolverLoader.Resolver">
+            <summary>
+            Gets or lazy-loads the resolver object.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Serialization.MemberwiseSerializableAttribute">
+            <summary>
+              <para>Means that the artifact should be serialized on member-by-member basis, by reading values of all public fields or properties.</para>
+              <para>When restoring, values should be assigned either back to fields and properties (if writable), or to constructor parameters.</para>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Serialization.AssemblyQualifiedTypeName">
+            <summary>
+            Represents an assembly-qualified type name.
+            Optionally supports loose-matching with some allowance for a difference in version numbers (expected with assembly binding redirections in effect).
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Serialization.AssemblyQualifiedTypeName.EqualityByLooseVersionMatch">
+            <summary>
+            Requires a match in Major.Minor, but allows a difference in subsequent version components.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Serialization.AssemblyQualifiedTypeName.EqualityByTypeFullNameOnly">
+            <summary>
+            Ignores the assembly name completely when checking for type equality.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.AssemblyQualifiedTypeName.AsBareAssemblyName">
+            <summary>
+            Returns a copy which has only the bare assembly name, without any version, culture, or public key specifications on it.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.AssemblyQualifiedTypeName.ToRealPartType(JetBrains.Application.Parts.IPartCatalogueFactory)">
+            <summary>
+            Binds to a fully-initialized part catalog type.
+            This requires binding to a runtime type currently, so the assembly name must resolve in the current appdomain.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.AssemblyQualifiedTypeName.ToRuntimeType(JetBrains.Build.Serialization.IBindTypeByName,JetBrains.Util.OnError)">
+            <summary>
+            Binds to the runtime type.
+            The assembly name must resolve in the current appdomain.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Serialization.AssemblyQualifiedTypeName.AssemblyName">
+            <summary>
+            Gets or sets the assembly name of the assembly containing the type identified by this object.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Serialization.AssemblyQualifiedTypeName.TypeFullName">
+            <summary>
+            Gets or sets the full name of the type identified by this object.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Serialization.AssemblyQualifiedTypeName.TypeLocalName">
+            <summary>
+            Gets the local name of the type, if the type name is set.
+            Calculated.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Serialization.AssemblyQualifiedTypeName.TypeNamespace">
+            <summary>
+            Gets the namespace of the type, if the type name is set.
+            Calculated.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Serialization.XamlSerializableAttribute">
+            <summary>
+            Means that the artifact should be serialized into XAML.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Serialization.DataHelpers.InstanceTypeInfo">
+            <summary>
+            <see cref="T:JetBrains.Build.Serialization.SerializedValuesResolver"/> serialization helper.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Serialization.SerializedValuesResolver">
+            <summary>
+            Stores a list of values.
+            Can give out values by base types / interfaces.
+            Can serialize them into a storage.
+            Upon deserialization, does not unpack the actual values until the instance is actually requested, which allows to install the
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Serialization.SerializedValuesResolver.myLocalPartFactory">
+            <summary>
+            We're not connecting to any partcatalog here, but would like to share between instances to save the number of objects created.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.SerializedValuesResolver.#ctor(JetBrains.DataFlow.Lifetime,System.Collections.Generic.IEnumerable{System.Object},JetBrains.Util.Storage.StructuredStorage.IStructuredStorage,JetBrains.Build.Serialization.IBindTypeByName)">
+            <summary>
+            </summary>
+            <param name="lifetime">The lifetime for this object, AND the lifetime during which we can still access the <paramref name="storage"/> for on-demand deserialization of the actual values. This also applies to all the storages added later with <see cref="M:JetBrains.Build.Serialization.SerializedValuesResolver.LoadFromStorage(JetBrains.Util.Storage.StructuredStorage.IStructuredStorage)"/> calls.</param>
+            <param name="instances">Object instances to add. Same as calling <see cref="M:JetBrains.Build.Serialization.SerializedValuesResolver.Register(System.Object)"/>.</param>
+            <param name="storage">The serialized storage. MUST be available for reading throughout the whole <paramref name="lifetime"/>. Same as calling <see cref="M:JetBrains.Build.Serialization.SerializedValuesResolver.LoadFromStorage(JetBrains.Util.Storage.StructuredStorage.IStructuredStorage)"/> later.</param>
+            <param name="typebinder">Knows how to bind the types written in the storage to actual runtime types. In case there might be multiple alternatives it's critical to match the specific type expected for the usage, e.g. in case of build artifacts.</param>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.SerializedValuesResolver.LoadFromStorage(System.Func{JetBrains.DataFlow.Lifetime,JetBrains.Util.Storage.StructuredStorage.IStructuredStorage})">
+            <summary>
+            Loads serialized instances from a storage.
+            As the storage object must be available thru the whole lifetime of this instance, simplifies tracking by giving you the lifetime to load the storage in.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.SerializedValuesResolver.LoadFromStorage(JetBrains.Util.Storage.StructuredStorage.IStructuredStorage)">
+            <summary>
+            Loads serialized instances from a storage.
+            The provided storage object must be available thru the whole lifetime of this instance. Use an overload with lifetime if not sure.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.SerializedValuesResolver.Register(System.Object)">
+            <summary>
+            Registers a new instance in this resolver.
+            Fluent.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.SerializedValuesResolver.Resolve(System.Type)">
+            <summary>
+            Resolves the component by its type.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.SerializedValuesResolver.Resolve``1">
+            <summary>
+            Resolves the component by its type.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.SerializedValuesResolver.ResolveMultiple``1">
+            <summary>
+            Resolves the components list by its type.
+            It is an error if there are no components of such type.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.SerializedValuesResolver.ResolveMultipleOrEmpty``1">
+            <summary>
+            Resolves the components list by its type.
+            It is an error if there are no components of such type.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.SerializedValuesResolver.Resolve_Wrappers``1(``0,JetBrains.Application.Components.IValueResolveContext)">
+            <summary>
+            Handles wrapping types like <see cref="T:JetBrains.Application.Components.Optional`1"/>, <see cref="T:JetBrains.Util.Lazy.Lazy`1"/>, etc.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Serialization.SerializedValuesResolver.ResolveMultiple(System.Type,JetBrains.Application.Components.IValueResolveContext)">
+            <summary>
+            For the <see cref="T:JetBrains.Application.Components.EnumerableValueResolver"/>.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Serialization.SerializedValuesResolver.Instance">
+            <summary>
+            A single object instance in this container, either coming as a runtime object instance, or being deserialized from the container.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Serialization.SerializedValuesResolver.LiveInstance">
+            <summary>
+            An instance which got the real live value as an input.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Serialization.SerializedValuesResolver.RestoredInstance">
+            <summary>
+            An instance restored from the persistent storage.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Serialization.StringSerializationHelper">
+            <summary>
+            Implements string serialization via a <see cref="T:System.Windows.Markup.ValueSerializer"/> or a <see cref="T:System.ComponentModel.TypeConverter"/> attached to the class.
+            </summary>
+        </member>
+    </members>
+</doc>

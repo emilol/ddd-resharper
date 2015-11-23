@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.Installer</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.Platform.Installer.BuildScript.Entry.NestedInstallerExePackedWithEmbeddedPackages">
+            <summary>
+            TMP exposes the installer-with-embed for running two-stage builds on TC.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.Installer.BuildScript.ProductsToEmbedInInstaller">
+            <summary>
+            When building a pack installer EXE with embedded packages, allows to list specific products to be embedded into the installer.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.Installer.BuildScript.SdkPackagesToPublish">
+            <summary>
+            In addition to product packages publish SDK packages to the gallery
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.Installer.Install.InstallerClipart">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Platform.Installer.Install.InstallerClipart.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Platform.Installer.Install.InstallerClipart.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Platform.Installer.Install.InstallerClipart.InstallerExeIcon">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:JetBrains.Platform.Installer.Install.InstallerClipart.InstallerSplash">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="M:JetBrains.Platform.Installer.Install.InstallerExeTasks.Other.ValidatePackages(JetBrains.Util.ILogger,System.Collections.Generic.ICollection{JetBrains.Application.SinceClr4.BuildScript.InputPackage})">
+            <summary>
+            Validate that packages are NuGet 3.0 compatible and have valid structure
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.Installer.InstallerWindow">
+            <summary>
+            Interaction logic for MainWindow.xaml
+            </summary>
+            <summary>
+            InstallerWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.Platform.Installer.InstallerWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.Installer.Models.InstallKind">
+            <summary>
+            What to do with a product as we decided on startup or choosed later
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.Installer.Models.OlderVersionsVerdict">
+            <summary>
+            What to do with a product as we decided on startup or choosed later
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.Installer.Models.ProductCompatibility">
+            <summary>
+            Compatibility with other products as it was calculated basing on VS we chose and so on...
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Models.Products.InstalledProductBase.PreferredInstalledProductActionKind">
+            <summary>
+            initially: default action from constructer, may be changed
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Models.Products.InstalledProductBase.UserPreferredInstalledProductActionKind">
+            <summary>
+            initially: null but may be changed to user choice once and forever...
+            </summary>
+        </member>
+        <member name="P:JetBrains.Platform.Installer.Models.Products.InstalledProductBase.IsSomePartRemoved">
+            <summary>
+            true for removed product or partially removed (some registration is removed).
+            This property is used to show in quick remove info;
+            </summary>
+        </member>
+        <member name="P:JetBrains.Platform.Installer.Models.Products.InstalledProductBase.ShortNameToMentionInRemoved">
+            <summary>
+            contains no product name when possible.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Models.Products.InstallerProductGroup.Current">
+            <summary>
+            Specifically downloaded from site...
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Models.Products.InstallerProductGroup.Installed">
+            <summary>
+            Presented on user machine in any host or wave in specified hive
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Models.Products.InstallerProductGroup.InstalledToRemove">
+            <summary>
+            Installed on this machine but with default action to remove it
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Models.Products.InstallerProductGroup.Available">
+            <summary>
+            Any other product...
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Models.Products.InstallerProductGroup.Legacy">
+            <summary>
+            Presented on user machine but not found in the gallery
+            </summary>
+        </member>
+        <member name="M:JetBrains.Platform.Installer.Models.Services.InstallerService.RegisterHost_CreateRequest(JetBrains.DataFlow.Lifetime,JetBrains.Application.BuildScript.ProductBinariesDirArtifact,System.Collections.Generic.ICollection{JetBrains.Application.SinceClr4.BuildScript.InputPackage},System.Object[],System.Boolean)">
+            <summary>
+            Shared method for creating request, to fill its required artifacts correctly.
+            TODO: probably, they should be grouped on the script side to simplify the list.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Options.InstallerStartupOptions.VsVersion">
+            <summary>
+            When executed from Visual Studio only >=8 or 0 if not executed from VS.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Options.InstallerStartupOptions.SpecificProductNames">
+            <summary>
+            Product or set of products chosen by user on product website. This option affects default action on product and its location.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Options.InstallerStartupOptions.SpecificProductNamesToRemove">
+            <summary>
+            Product or set of products chosen by user on product website. This option affects default action on product and its location.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Options.InstallerStartupOptions.HostsToRemove">
+            <summary>
+            Full identifiers of hosts to remove silently. This is used in add remove programs menu.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Options.InstallerStartupOptions.HostsToReInstall">
+            <summary>
+            Full identifiers of hosts to reinstall silently (install extensions scenario)
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Options.InstallerStartupOptions.HostsToUpdate">
+            <summary>
+            Full identifiers of hosts to find and apply updates from the gallery...
+            Check for updates showing UI, if fond shows installer, if not shows up-to-date message.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Options.InstallerStartupOptions.HostsToCheckUpdatesInBackground">
+            <summary>
+            Full identifiers of hosts to check for updates and notify in tray if available...
+            Checks for updates in background and shows tray notification if found. Exits if not.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Options.InstallerStartupOptions.ParticipateInEap">
+            <summary>
+            When EAP launcher was downloaded or run from EAP product...
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Options.InstallerStartupOptions.Hive">
+            <summary>
+            When we want to define specific predefined hive.
+            Special value '*' is used in junction with 'HostsToRemove' when we need to uninstall products from all hives.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Options.InstallerStartupOptions.ReSharper9PlusMsi">
+            <summary>
+            Set to true when called from ReSharper9Plus.msi uninstall 
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Options.InstallerStartupOptions.IgnoreExtensions">
+            <summary>
+            Skip automatic registration of installed extensions.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Options.InstallerStartupOptions.Silent">
+            <summary>
+            Run no UI...
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Options.InstallerStartupOptions.PerMachine">
+            <summary>
+            Perform true per-machine installation
+            </summary>
+        </member>
+        <member name="F:JetBrains.Platform.Installer.Options.InstallerStartupOptions.LogFile">
+            <summary>
+            To ensure  that this install only runs once per-user. 
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.Installer.Utils.HiddenAdornerDecorator">
+            <summary>
+            Hack way to hide adorners
+            </summary>
+        </member>
+        <member name="P:JetBrains.Platform.Installer.Models.IntegrationsOptionsViewModel.ActiveRegistrations">
+            <summary>
+            chosen in UI
+            </summary>
+        </member>
+        <member name="P:JetBrains.Platform.Installer.Models.IntegrationsOptionsViewModel.DeFactoActiveRegistrations">
+            <summary>
+            same as ActiveRegistrations but empty when product installs into VS.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Platform.Installer.Models.VisualStudioInfo.ShortName">
+            <summary>
+            Official Visual Studio version name (e.g. Visual Studio 2010)
+            </summary>
+        </member>
+    </members>
+</doc>

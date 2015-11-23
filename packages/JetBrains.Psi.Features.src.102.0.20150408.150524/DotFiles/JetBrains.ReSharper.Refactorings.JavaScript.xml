@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.Refactorings.JavaScript</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.ReSharper.Refactorings.JavaScript.ExtractMethod.ExtractTarget.JsLocalFunctionExtractMethodTarget">
+            <summary>
+            Extract to local function declaration/expression/arrow function.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.JavaScript.ExtractMethod.ExtractTarget.JsPrototypeFunctionExtractMethodTarget">
+            <summary>
+            Extract to member method in the same prototype/constructor object.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.JavaScript.ExtractMethod.ExtractTarget.TsClassExtractMethodTarget">
+            <summary>
+            Extract to TypeScript class method or accessor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.JavaScript.ExtractMethod.ExtractTarget.TsModuleExtractMethodTarget">
+            <summary>
+            Extract to TypeScript module as a function member.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.JavaScript.IntroduceField.TypeScript.IntroFieldWindow.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.JavaScript.IntroduceField.TypeScript.IntroFieldWindow.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.JavaScript.IntroduceField.TypeScript.IntroFieldWindow.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.JavaScript.Move.TypeScript.TypeScriptMoveHelpers.AddNewRequiredJsFileReferences(JetBrains.ReSharper.Psi.IPsiServices,JetBrains.Util.FileSystemPath,JetBrains.ProjectModel.ISolution,JetBrains.Util.FileSystemPath)">
+            <summary>
+            Adds references to generated JS-files for newly created TS-files in HTML files
+            Goes through all files which contain reference to originalLocation, and
+            adds new reference to newLocation above
+            </summary>
+            <param name="psiServices">subj</param>
+            <param name="originalLocation">Location of original JS-file</param>
+            <param name="solution">subj</param>
+            <param name="newLocation">Location of generated file</param>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.JavaScript.Rename.AtomicRenames.DynamicPropertyAtomicRename">
+            <summary>
+            Shows all found dynamic declarations and references except initial one(on which rename was called) in a checkboxed tree, only checked will be renamed.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.JavaScript.Rename.AtomicRenames.JavaScriptAtomicRenameBase.GetOwnStrictDeclarations">
+            <summary>
+            Don't search declarations on the fly in this method, find them in the constructor and return from this method. 
+            Otherwise during rename process offsets of some elements can be changed that can cause invalid search process 
+            (e.g. cache will have updated offsets, but you will search by old offsets)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.JavaScript.Rename.AtomicRenames.JavaScriptAtomicRenameBase.GetOwnStrictReferences(JetBrains.ReSharper.Refactorings.Rename.RenameWorkflow,JetBrains.Application.Progress.IProgressIndicator)">
+            <summary>
+            Don't search references on the fly in this method, find them in the constructor and return from this method. 
+            Otherwise during rename process offsets of some elements can be changed that can cause invalid search process 
+            (e.g. cache will have updated offsets, but you will search by old offsets)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.JavaScript.Rename.AtomicRenames.JavaScriptAtomicRenameBase.GetOptionalDeclarations">
+            <summary>
+            Don't search declarations on the fly in this method, find them in the constructor and return from this method. 
+            Otherwise during rename process offsets of some elements can be changed that can cause invalid search process 
+            (e.g. cache will have updated offsets, but you will search by old offsets)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.JavaScript.Rename.AtomicRenames.JavaScriptAtomicRenameBase.GetOptionalReferences(JetBrains.ReSharper.Refactorings.Rename.RenameWorkflow,JetBrains.Application.Progress.IProgressIndicator)">
+            <summary>
+            Don't search references on the fly in this method, find them in the constructor and return from this method. 
+            Otherwise during rename process offsets of some elements can be changed that can cause invalid search process 
+            (e.g. cache will have updated offsets, but you will search by old offsets)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.JavaScript.Rename.AtomicRenames.ReferencesDeclarationsAtomicRename">
+            <summary>
+            Renames all found references and declarations without confirmation.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.JavaScript.Rename.RelatedElementsPage">
+            <summary>
+            Interaction logic for RelatedElementsPage.xaml
+            </summary>
+            <summary>
+            RelatedElementsPage
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.JavaScript.Rename.RelatedElementsPage.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+    </members>
+</doc>

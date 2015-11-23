@@ -1,0 +1,36 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <JetTestProject Condition="'$(JetTestProject)' == ''">False</JetTestProject>
+    <JetReferencesPrivate Condition="'$(JetReferencesPrivate)' == '' AND '$(JetTestProject)' == 'True'">True</JetReferencesPrivate>
+    <JetReferencesPrivate Condition="'$(JetReferencesPrivate)' == ''">False</JetReferencesPrivate>
+  </PropertyGroup>
+  
+  <Target Name="CopyJetContent" Condition="'$(JetTestProject)' == 'True'" BeforeTargets="PrepareForRun">
+    <Copy SourceFiles="@(JetContent)" DestinationFiles="@(JetContent->'$(OutDir)\%(TargetPath)')" SkipUnchangedFiles="true" ContinueOnError="WarnAndContinue" />
+  </Target>
+
+  <Target Name="CopyJetMetadata" Condition="'$(JetTestProject)' == 'True'" BeforeTargets="PrepareForRun">
+    <Copy SourceFiles="@(JetMetadata)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" ContinueOnError="WarnAndContinue" />
+  </Target>
+
+  <ItemGroup>
+    <ReferencePath Include="@(Reference->'%(HintPath)')" />
+  </ItemGroup>
+
+  <UsingTask TaskName="JetBrains.ReSharper.SDK.MsBuild.InstalledProductsDiscoveryTask" TaskFactory="JetBrains.ReSharper.SDK.Helper.TaskFactory" AssemblyFile="JetBrains.ReSharper.SDK.Helper.dll">
+    <Task Evaluate="true">
+      <Assembly>JetBrains.ReSharper.SDK.MsBuild</Assembly>
+      <Reference>@(ReferencePath)</Reference>
+    </Task>
+  </UsingTask>
+
+  <Target Name="CopyPlugin" AfterTargets="AfterBuild" Condition="'$(HostFullIdentifier)' != ''">
+    <InstalledProductsDiscoveryTask HostFullIdentifier="$(HostFullIdentifier)">
+      <Output TaskParameter="Directories" ItemName="InstallFolder" />
+    </InstalledProductsDiscoveryTask>
+    <Message Text="InstallFolder: @(InstallFolder)" Importance="High">
+    </Message>
+    <Copy SourceFiles="@(MainAssembly)" DestinationFolder="@(InstallFolder)" Condition="Exists('@(InstallFolder)')" />
+  </Target>
+</Project>

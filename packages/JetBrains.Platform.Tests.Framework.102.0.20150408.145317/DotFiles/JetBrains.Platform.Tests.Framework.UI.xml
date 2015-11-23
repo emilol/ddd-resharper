@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.Tests.Framework.UI</name>
+    </assembly>
+    <members>
+        <member name="F:JetBrains.TestFramework.UI.TestImplTooltipManagerComponent.TooltipShown">
+            <summary>
+            Fires when a test implementation mocks a shown tooltip.
+            </summary>
+        </member>
+        <member name="T:JetBrains.TestFramework.UI.TestImplUITaskExecutorSwitchingImplementation">
+            <summary>
+            Test mock for <see cref="T:JetBrains.UI.Application.Progress.UITaskExecutorRuns"/>.
+            </summary>
+        </member>
+        <member name="M:JetBrains.TestFramework.UI.TestImplUITaskExecutorSwitchingImplementation.CreateExecutor(JetBrains.UI.Application.Progress.TaskThreadAffinity,System.Windows.Forms.IWin32Window)">
+            <summary>
+            Switching implementation for <see cref="T:JetBrains.UI.Application.Progress.UITaskExecutorRuns"/>.
+            </summary>
+        </member>
+        <member name="T:JetBrains.TestFramework.UI.TestImplWindowsHookManagerDummy">
+            <summary>
+            Dummy <see cref="T:JetBrains.Application.Interop.NativeHook.IWindowsHookManager"/> test implementation.
+            </summary>
+        </member>
+        <member name="T:JetBrains.TestFramework.UI.TestMemoryUsageIndicator">
+            <summary>
+            Suppresses memory usage indicator initialization by not passing status bar
+            </summary>
+        </member>
+    </members>
+</doc>

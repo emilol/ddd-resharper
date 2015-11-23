@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.Installer.Bootstrap</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.Platform.Installer.Bootstrap.SafeIconBsExtension">
+            <summary>
+            Loads an icon in such a way that it does not cause unhandled exceptions on Windows XP HiColor when it encounters the icons in the icon group which it can't handle with WIC.
+            TODO: load icon with smth else but WIC actually, somewhen
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.Installer.Bootstrap.BootstrapperView">
+            <summary>
+            BootstrapperView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Platform.Installer.Bootstrap.BootstrapperView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.Installer.Bootstrap.Runs">
+            <summary>
+            Public API
+            </summary>
+        </member>
+        <member name="M:JetBrains.Platform.Installer.Bootstrap.Runs.MainX">
+            <summary>
+            Public API
+            </summary>
+        </member>
+    </members>
+</doc>

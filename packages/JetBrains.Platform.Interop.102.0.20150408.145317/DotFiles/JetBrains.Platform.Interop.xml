@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.Interop</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.Platform.Interop.dotMemoryUnit.IExternalProcessLauncher">
+            <summary>
+            This service is introduced for performance optimization reason
+            Shell in dotMemoryUnit.Server starts 5 sec. Choosed solution is keep a pool of already initialized servers and use them on demand, but problem is
+            what to profile passing to server via command line arguments, so we cannot start it, and than pass arguments.
+            This service solves this problem. There are two ways of using server
+            1. Pass arguments as command line - profilng starts immediately, server cannot be resused
+            2. Start server without specifying process to profile, use this service to start work
+            </summary>
+        </member>
+    </members>
+</doc>

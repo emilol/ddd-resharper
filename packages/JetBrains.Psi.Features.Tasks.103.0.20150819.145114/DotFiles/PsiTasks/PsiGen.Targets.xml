@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PsiGen.Targets</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.ReSharper.PsiGen.Targets.ParserGen">
+            <summary>
+            Invokes the Parser Generator.
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.PsiGen.Targets.ParserGen.InputFile">
+            <summary>
+            Gets or sets the source .PSI file.
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.PsiGen.Targets.ParserGen.OutputFolder">
+            <summary>
+            Gets or sets the folder into which the files should be generated.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.PsiGen.Targets.RemoveItemsInFolder">
+            <summary>
+            Scans through the item group and removes any items that fall under the given folder.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.PsiGen.Targets.RemoveItemsInFolder.Execute">
+            <summary>
+            The method to be overriden in inheriting tasks.
+            Throw an exception in case of an errror.
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.PsiGen.Targets.RemoveItemsInFolder.Directory">
+            <summary>
+            Specifies the directory files in which (recursively) should be excluded from <see cref="P:JetBrains.ReSharper.PsiGen.Targets.RemoveItemsInFolder.Items"/>.
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.PsiGen.Targets.RemoveItemsInFolder.Items">
+            <summary>
+            Specifies the list of the files to be filtered down.
+            Note: you should not be using the same item group for input and output, as the output contributes to the item group but would not replace it.
+            </summary>
+        </member>
+    </members>
+</doc>

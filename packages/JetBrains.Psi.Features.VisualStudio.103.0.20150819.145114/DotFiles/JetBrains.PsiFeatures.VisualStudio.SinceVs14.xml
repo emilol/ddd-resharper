@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.PsiFeatures.VisualStudio.SinceVs14</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.PsiFeatures.VisualStudio.SinceVs14.Daemon.ResharperDaemonVsBulbRemover">
+            <summary>
+            Hide VS14+ Bulb margin, if R# does not support current document language.
+            </summary>
+        </member>
+        <member name="M:JetBrains.PsiFeatures.VisualStudio.SinceVs14.Inspections.VsBulbItemsProvider.NormalizeSuggestedActionText(System.String)">
+            <summary>
+            <para>Remove all unnecessary stuff from VS ISuggestedAction.DisplayText.</para>
+            <para>It seems that suggested action text could contain a piece of source code with new lines (at least VS LightBulb class expects it.)</para>
+            <para>Underscore '_' can be used as an accelerator symbol. If suggestion text contains underscores VS quotes them with another underscore.</para>
+            </summary>
+        </member>
+    </members>
+</doc>

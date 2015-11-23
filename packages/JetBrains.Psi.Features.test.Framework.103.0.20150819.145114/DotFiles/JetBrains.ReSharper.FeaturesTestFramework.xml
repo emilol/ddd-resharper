@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.FeaturesTestFramework</name>
+    </assembly>
+    <members>
+        <member name="F:JetBrains.ReSharper.FeaturesTestFramework.Completion.CodeCompletionTestBase.myLookupItemInsertType">
+            <summary>
+              Completion type
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.FeaturesTestFramework.Daemon.HighlightingTestBase.ProcessAllFiles">
+            <summary>
+            Process all project files
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.FeaturesTestFramework.Daemon.HighlightingTestBase.ProcessAllSourceFiles">
+            <summary>
+            Process all source files
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.IntentionsTests.Navigation.AllNavigationProvidersTestBase.SearchPattern">
+            <summary>
+            Affects only FindUsagesAdvancedProvider
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.FeaturesTestFramework.Utils.DocumentRangeUtil.DumpRanges(JetBrains.DocumentModel.IDocument,System.Collections.Generic.IEnumerable{JetBrains.Util.TextRange},System.Func{System.Int32,System.String},System.Func{System.Int32,System.String})">
+            <summary>
+            Dump all text ranges into document text
+            </summary>
+        </member>
+    </members>
+</doc>

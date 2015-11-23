@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.Daemon.JavaScript</name>
+    </assembly>
+    <members>
+        <member name="M:JetBrains.ReSharper.Daemon.JavaScript.Stages.SmartResolver.JsExtraResolverProcessor.IsSelfPassedParameterPattern(JetBrains.ReSharper.Psi.JavaScript.Tree.IJavaScriptParameterDeclarationBase,JetBrains.ReSharper.Psi.Tree.IDeclaration,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext)">
+            <summary>
+            Checks the case if parameter of outer function is passed in inplace invocation of inner function as parameter with the same name, e.g.
+            function outer(parameters) {
+              var s = (function (parameters) {
+              }) (parameters);
+            }
+            </summary>
+            <param name="parameterDeclaration">parameter if inner function</param>
+            <param name="outerDeclaration">local element of outer function</param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Daemon.JavaScript.Stages.TypeScript.SmartResolver.TsExtraResolverProcessor.ShouldHighlightDuplicateParametersError">
+            <summary>
+            Handled by compiler errors
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:JetBrains.ReSharper.Daemon.JavaScript.Stages.JSon.JsonIdentifierHighlighterProcess">
+            <summary>
+            Unfortunately we cannot have the same class process for different stages (because there is indexing by type), 
+            so we need different one
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Daemon.JavaScript.Stages.TypeScript.Syntax.TypeScriptDerivedInspectionsProcess.ShouldHighlightReservedKeywordsUsing">
+            <summary>
+            Should ignore keywords using in TS because it is handled by compiler
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Daemon.JavaScript.Stages.TypeScript.Syntax.TypeScriptDerivedInspectionsProcess.ShouldHighlightDuplicatingProperties">
+            <summary>
+            Will be handled by compiler errors
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Daemon.JavaScript.Stages.TypeScript.Util.TsResolveDaemonUtil.GetDeclarationsCount(JetBrains.ReSharper.Psi.IDeclaredElement,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext)">
+            <summary>
+            Fast, relies on symbols only, doesn't calculate declarations themselves
+            </summary>
+            <param name="element"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Daemon.JavaScript.Stages.TypeScript.Util.TsResolveDaemonUtil.GetNonDeclarationSymbolsCount(JetBrains.ReSharper.Psi.IDeclaredElement,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext)">
+            <summary>
+            Fast, relies on symbols only, doesn't calculate declarations themselves
+            </summary>
+            <param name="element"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.ReSharper.Daemon.JavaScript.Stages.TypeScript.Util.TsResolveDaemonUtil.GetDeclarationsCountExcept(JetBrains.ReSharper.Psi.IDeclaredElement,JetBrains.ReSharper.Psi.Tree.IDeclaration,JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.JsResolveContext)">
+            <summary>
+            Fast, relies on symbols only
+            Calculates declarations count except specified item
+            </summary>
+            <param name="element"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:JetBrains.ReSharper.Daemon.JavaScript.Util.JavaScriptIdentifierHighlighter.IJavaScriptIdentifierHighlighter">
+            <summary>
+            Language specialization of the highlighter
+            </summary>
+        </member>
+    </members>
+</doc>

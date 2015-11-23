@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.VisualStudio.JustVs10</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.Platform.VisualStudio.JustVs10.ProjectModel.VisualC.CopyPastedAdapters.VCAdaptersJustVsXx">
+            <summary>
+            This is the entry point — a component implementation which wires up all of the cloned interface implementations.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.JustVs10.ProjectModel.Dev10AsyncCtpDetector">
+            <summary>
+            Check .NET4 is targeted and 'AsyncCtpLibrary' is referenced
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.JustVs10.Shell.Zones.IJustVs10Zone">
+            <summary>
+            Visual Studio integrated products, VS 10.0 only.
+            </summary>
+        </member>
+    </members>
+</doc>

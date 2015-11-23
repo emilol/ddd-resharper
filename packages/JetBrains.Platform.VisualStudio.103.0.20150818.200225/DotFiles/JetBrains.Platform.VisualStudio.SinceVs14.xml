@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.VisualStudio.SinceVs14</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.Platform.VisualStudio.SinceVs14.Shell.Install.VsEmitHighResolutionIconsSinceVs14">
+            <summary>
+            Emits high resolution icons for VS14 CTP3+.
+            </summary>
+            <remarks>
+            To emit high resolution icons we need to:
+            1) Store xaml/baml and/or png icons to the package resources.
+            2) Create imagemanifest-file and put it to the folder where pkgdef and vsixmanifest reside.
+            3) Mark command buttonss with the new "IconIsMoniker" attribute in package's CTO (see CtoBuilder and VsctCommandFlags).
+            </remarks>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.SinceVs14.Shell.Install.VsRepairRoslynSquigglesSinceVs14">
+            <summary>
+            Before Wave03 EAP5 we used internal VS registry key to remove Roslyn squiggles (JFYI nowadays we just make the squiggles layer transparent).
+            If the registry value stuck in the off state, users have no chance to see the squiggles. 
+            We had better not to delete the key, because we don't know who has created it. We just turn it on, if it exists.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.SinceVs14.Shell.Zones.ISinceVs14Zone">
+            <summary>
+            Visual Studio integrated products, VS 14.0 and above.
+            </summary>
+        </member>
+    </members>
+</doc>

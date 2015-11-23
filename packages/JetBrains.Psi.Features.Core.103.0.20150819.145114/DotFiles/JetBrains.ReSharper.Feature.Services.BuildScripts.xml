@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.Feature.Services.BuildScripts</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.ReSharper.Feature.Services.BuildScripts.OptionPages.BuildScriptsPage">
+            <summary>
+            Root options page for the build scripts options.
+            </summary>
+        </member>
+    </members>
+</doc>

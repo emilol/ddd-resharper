@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns="urn:schemas-jetbrains-com:css-xml">
+  <browser id="IE" name="Internet Explorer" prefix="-ms-" />
+  <browser id="C" name="Chrome" prefix="-webkit-" />
+  <browser id="S" name="Safari" prefix="-webkit-" />
+  <browser id="FF" name="Firefox" prefix="-moz-" />
+  <browser id="O" name="Opera" prefix="-o-" />
+</definitions>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.Intentions.Html</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.ReSharper.Intentions.Html.Options.HtmlContextActionsPage">
+            <summary>
+              Context actions.
+            </summary>
+        </member>
+    </members>
+</doc>

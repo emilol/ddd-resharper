@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.VisualStudio.JustVs12</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.Platform.VisualStudio.JustVs12.Shell.Hacks.SuppressOwnerlessFloatingWindowsJustVs12">
+            <summary>
+              See base comment.
+              Uses the vs-version-specific DLL copy.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.JustVs12.ProjectModel.VisualC.CopyPastedAdapters.VCAdaptersJustVsXx">
+            <summary>
+            This is the entry point — a component implementation which wires up all of the cloned interface implementations.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.JustVs12.Shell.Zones.IJustVs12Zone">
+            <summary>
+            Visual Studio integrated products, VS 12.0 only.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Platform.VisualStudio.JustVs12.TextControl.VsTextControlDevTenIncrementalSearchClientJustVs12">
+            <summary>
+              VS12-specific client (NOTE: in VS11+ the <see cref="T:Microsoft.VisualStudio.Text.IncrementalSearch.IIncrementalSearch"/> implementation is present, but is not active).
+            </summary>
+        </member>
+    </members>
+</doc>

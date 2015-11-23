@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.Refactorings.CSharp</name>
+    </assembly>
+    <members>
+        <member name="F:JetBrains.ReSharper.Refactorings.CSharp.ExtractMethod2.Common.ExtractMethodChooseMethodKind.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.CSharp.ExtractMethod2.Common.ExtractMethodChooseMethodKind.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.CSharp.ExtractMethod2.Common.ExtractMethodChooseMethodKind.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.CSharp.ExtractMethod2.Common.CSharpExtractMethodParameterKind.PassByValue">
+            <summary>
+            p -> m
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.CSharp.ExtractMethod2.Common.CSharpExtractMethodParameterKind.ReturnOnly">
+            <summary>
+            return value only
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.CSharp.ExtractMethod2.Common.CSharpExtractMethodParameterKind.Return">
+            <summary>
+            return value, out parameter
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.CSharp.ExtractMethod2.Common.CSharpExtractMethodParameterKind.CanReturn">
+            <summary>
+            value is defined in the method and can be returned but it has no usages outside.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.CSharp.ExtractMethod2.Common.CSharpExtractMethodParameterKind.PassThrough">
+            <summary>
+            ref parameter or a combination of value parameter and return value...
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.CSharp.ExtractMethod2.Common.CSharpExtractMethodParameterKind.DoNotPass">
+            <summary>
+            Do not pass this parameter at all 
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.CSharp.ExtractMethod2.Common.ExtractMethodOptionsPage.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.CSharp.ExtractMethod2.Common.ExtractMethodOptionsPage.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.CSharp.ExtractMethod2.Common.ExtractMethodOptionsPage.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.CSharp.ExtractMethod2.Common.ParametersCheckList">
+            <summary>
+              Interaction logic for CheckedList.xaml
+            </summary>
+            <summary>
+            ParametersCheckList
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.CSharp.ExtractMethod2.Common.ParametersCheckList.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.CSharp.ChangeSignature.Impl.TypeSuggestion">
+            <summary>
+            Suggestion for an unresolved type
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.CSharp.Rename.ConstructorParameterRenameEvaluator">
+            <summary>
+            Constructor parameter to:
+            1. initialized field...
+            2. Base constructor parameter...
+            3. Derived constructor parameter...
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.CSharp.Rename.EventRenameEvaluator">
+            <summary>
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.CSharp.Rename.FieldDerivedRenames">
+            <summary>
+            Add renames derived from field
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.CSharp.Rename.PropertyDerivedRenameEvaluator">
+            <summary>
+            Property to it's backing field...
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.CSharp.Util.CSharpAbstractor.MakeDeclaration``1(JetBrains.ReSharper.Psi.Tree.IDeclaration,System.Boolean)">
+            <summary>
+            Create CS abstracts declaration
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+    </members>
+</doc>

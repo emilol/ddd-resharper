@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.Feature.Services.JavaScript</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.LeafTransformer`1">
+            <summary>
+            This is kind of transformer, which transforms tree and can produce new nodes
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerBase`1.CreatePattern">
+            <summary>    
+            If you use placeholder from parent pattern, you should create equivalently placeholder into child pattern.
+            DON'T USE placeholder with same name as from parent pattern for other target.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerBase`1.CheckPreCondition(JetBrains.ReSharper.Psi.Tree.ITreeNode,JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerMatchContext)">
+            <summary>
+            Checks additional simple syntax invariant as like location of node; before structural pattern matching
+            </summary>    
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerBase`1.CheckPostCondition(JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.ITransformerMatchResult)">
+            <summary>
+            Checks additional sematic invariant; after structural pattern matching
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.IChildTransformersOwner.ApplyRecursivelyTo(JetBrains.ReSharper.Psi.Tree.ITreeNode,JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerMatchContext,JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.LocalTransformerDataContext)">
+            <summary>
+            Apply child transformers recursively to specified root
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.IChildTransformersOwner.ApplyTo(System.Collections.Generic.IList{JetBrains.ReSharper.Psi.Tree.ITreeNode},JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerMatchContext,JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.LocalTransformerDataContext)">
+            <summary>
+            Apply child transformers to the sequence of elements without checking what all elements are applicable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.IChildTransformersOwner.ApplyToAll(System.Collections.Generic.IList{JetBrains.ReSharper.Psi.Tree.ITreeNode},JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerMatchContext,JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.LocalTransformerDataContext)">
+            <summary>
+            Apply child transformers to the sequence of elements. Use, if sequence of elements are satisfy predicate <see cref="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.IChildTransformersOwner.CheckAllElementsAreMatched(System.Collections.Generic.IEnumerable{JetBrains.ReSharper.Psi.Tree.ITreeNode},JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerMatchContext)"/>.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.IChildTransformersOwner.ApplyTo(JetBrains.ReSharper.Psi.Tree.ITreeNode@,JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerMatchContext,JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.LocalTransformerDataContext)">
+            <summary>
+            Apply child transformers to the element. Use, if sequence of elements are satisfy predicate <see cref="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.IChildTransformersOwner.CheckAnyElementIsMatched(System.Collections.Generic.IEnumerable{JetBrains.ReSharper.Psi.Tree.ITreeNode},JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerMatchContext,JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.ITransformerMatchResult@)"/>.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.IChildTransformersOwner.CheckAllElementsAreMatched(System.Collections.Generic.IEnumerable{JetBrains.ReSharper.Psi.Tree.ITreeNode},JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerMatchContext)">
+            <summary>
+            Checks what at least one child transformer are applicable to element in sequence.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.LeafProducer`1">
+            <summary>
+            This is kind of transformer, which produces new nodes into consumer and delegates other actions to parent transformer.
+            That pass doesn't update caches.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.LocalTransformerDataContext">
+            <summary>
+            LocalTransformerDataContext is shared among child transformers and their owner.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.GlobalTransformerDataContext">
+            <summary>
+            GlobalTransformerDataContext is shared among transformers working on same file.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.LastDefinitionFinder.FindLastDefintionAndCopyFor``1(JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.IReferenceExpressionReferenceOwner,JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.IDefinitionType{``0},JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerDataContext)">
+            <summary>
+            Finds last reaching definition for read usage <paramref name="referenceOwner"/> and copies it.
+            This is simple approximation.
+            Notes: control flow analysis doesn't give better effect.
+            </summary>   
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.LastDefinitionFinder.FindLastDefintionFor``1(JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.IReferenceExpressionReferenceOwner,JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.IDefinitionType{``0},JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerDataContext)">
+            <summary>
+            Finds last reaching definition for read usage <paramref name="referenceOwner"/> without copying.
+            </summary>    
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.LastDefinitionFinder.HasLastStrictDefintionFor``1(JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.IReferenceExpressionReferenceOwner,JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.IDefinitionType{``0},JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerDataContext)">
+            <summary>
+            Note: put to cache original node, not copy.
+            Use in pair with <see cref="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.LastDefinitionFinder.FindLastDefintionFor``1(JetBrains.ReSharper.Psi.JavaScript.Impl.Resolve.IReferenceExpressionReferenceOwner,JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.IDefinitionType{``0},JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerDataContext)"/>.
+            </summary>    
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformerManager.GetAllTransformerPasses``1">
+            <summary>
+            for unit tests only
+            </summary>    
+        </member>
+        <member name="T:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.INoopReplacement">
+            <summary>
+            stub replacement
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Feature.Services.JavaScript.Naming.TypeScriptNamingOptionsPageView">
+            <summary>
+            TypeScriptNamingOptionsPageView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.Naming.TypeScriptNamingOptionsPageView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Feature.Services.JavaScript.OptionPages.TypeScriptPage">
+            <summary>
+            Root options page for the TypeScript language options.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformersImpl.OverloadSignaturesInferring.Inspector.WideParameterTypeEx.GetParameterTypeByStringValue(System.String)">
+            <summary>
+            Returns ParameterType corresponding returned string of op 'typeof'
+            </summary>    
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformersImpl.OverloadSignaturesInferring.Inspector.ParameterTypeEx.Merge(JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformersImpl.OverloadSignaturesInferring.Inspector.ParameterType,JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformersImpl.OverloadSignaturesInferring.Inspector.ParameterType)">
+            <summary>
+            This is meet operator.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.js2tsTools.TransformersImpl.PrototypeClass.PrototypeClassUtil.ProcessMethodNameOverlap(System.Collections.Generic.IEnumerable{JetBrains.ReSharper.Psi.JavaScript.Tree.TypeScript.ITsObjectPropertyDeclaration})">
+            <summary>
+            Emulates behavior of Prototype.js: in cases of method name overlap, later arguments take precedence over earlier arguments.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.StructuralSearch.JavaScriptStructuralSearchPatternFromCodeCreator.IsLocalSymbol(JetBrains.ReSharper.Psi.IDeclaredElement)">
+            <summary>
+            Checks what it is local symbol exclude function's property "arguments"
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.JavaScript.StructuralSearch.TypeScript.TsStructuralSearchReplacer.CreateReplacementTreeNode``1(JetBrains.ReSharper.Feature.Services.StructuralSearch.IStructuralMatchResult,System.String,System.Collections.Generic.IDictionary{System.String,JetBrains.ReSharper.Feature.Services.StructuralSearch.IPlaceholder},System.Boolean)">
+            <summary>
+            It is used into js2ts transformations.
+            Creates typed replacement tree node.
+            </summary> 
+        </member>
+        <member name="T:JetBrains.ReSharper.Feature.Services.JavaScript.StructuralSearch.Matchers.CompoundOrSimpleExpressionMatcher">
+            <summary>
+            wrapper for simple expression matcher
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Feature.Services.JavaScript.StructuralSearch.Matchers.StatementOrBlockMatcher">
+            <summary>
+            wrapper for no block statement matcher
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Feature.Services.JavaScript.OptionPages.JavaScriptPage">
+            <summary>
+            Root options page for the Js language options.
+            </summary>
+        </member>
+    </members>
+</doc>

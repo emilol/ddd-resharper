@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TokenGenerator</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.ReSharper.PsiGen.TokenGenerator.TokenGenerator">
+            <summary>
+            Generates source code definitions from the <c>Errors.xml</c> files.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Enables support for the “JsLibGen” build action in the projects. -->
+
+  <PropertyGroup>
+    <PsiGenToolsDir Condition="'$(PsiGenToolsDir)' == ''">$(MSBuildThisFileDirectory)</PsiGenToolsDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <JsLibGenHomeDir Condition="'$(JsLibGenHomeDir)' == ''">$(MSBuildThisFileDirectory)</JsLibGenHomeDir>
+    <PrepareResourcesDependsOn>
+      $(PrepareResourcesDependsOn);
+      JsLibGen_Generate;
+    </PrepareResourcesDependsOn>
+  </PropertyGroup>
+
+  <Import Project="JsLibGen.Tasks" />
+
+  <ItemGroup>
+    <!-- Add to the Visual Studio Build Action list on the files. -->
+    <AvailableItemName Include="JsLibGen" />
+    <!-- Calculate output. -->
+    <JsLibGenOutput Include="@(JsLibGen->'%(OutputFile)')">
+      <AutoGen>True</AutoGen>
+    </JsLibGenOutput>
+    <EmbeddedResource Include="@(JsLibGenOutput)" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <GenerateJsLibGenInputs Include="@(JsLibGen)" />
+    <GenerateJsLibGenInputs Include="$(PsiGenToolsDir)/JsLibGen.exe" />
+    <GenerateJsLibGenInputs Include="$(PsiGenToolsDir)/JsLibGen.Targets" />
+    <GenerateJsLibGenInputs Include="$(PsiGenToolsDir)/JsLibGen.Tasks" />
+  </ItemGroup>
+
+  <Target Name="JsLibGen_Generate" Inputs="@(GenerateJsLibGenInputs);$(PsiGenToolsDir)\JsLibGen.exe" Outputs="@(JsLibGenOutput)" Condition="'@(JsLibGen)' != ''">
+    <JsLibGen InputFile="%(JsLibGen.FullPath)" OutputFile="%(OutputFile)" />
+    <Message Text="%(JsLibGen.FullPath) --(*)--> %(OutputFile)" />
+  </Target>
+
+  <Target Name="CleanJsLibGen_Clean">
+    <Delete Files="@(JsLibGenOutput)" TreatErrorsAsWarnings="true"  />
+  </Target>
+
+</Project>

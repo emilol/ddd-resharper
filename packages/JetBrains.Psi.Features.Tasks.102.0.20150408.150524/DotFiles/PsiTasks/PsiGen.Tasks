@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	
+	<Choose>
+		<When Condition="($(IsOutputPathInSeparateFolders) == True) AND ($(IsPsiTasksInSources) == True)"><PropertyGroup><ParserGen_TaskDll>$(ProductBinariesDir)\Psi.Features.Tasks\PsiGen.Targets\PsiGen.Targets.dll</ParserGen_TaskDll></PropertyGroup></When>
+		<Otherwise><PropertyGroup><ParserGen_TaskDll>$(PsiGenToolsDir)\PsiGen.Targets.dll</ParserGen_TaskDll></PropertyGroup></Otherwise>
+	</Choose>
+
+	<UsingTask
+		TaskName="JetBrains.ReSharper.PsiGen.Targets.ParserGen"
+		AssemblyFile="$(ParserGen_TaskDll)"
+	/>
+
+	<UsingTask
+		TaskName="JetBrains.ReSharper.PsiGen.Targets.RemoveItemsInFolder"
+		AssemblyFile="$(ParserGen_TaskDll)"
+	/>
+	
+</Project>
