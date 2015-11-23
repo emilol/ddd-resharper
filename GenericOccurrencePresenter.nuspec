@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+    <metadata>
+        <id>ReSharper.GenericOccurencePresenter</id>
+        <version>1.0.0</version>
+        <title>Generic Occurence Presenter</title>
+        <authors>Emily</authors>
+        <description>Adds type paremeter information to generic occurences</description>
+        <copyright>Copyright 2015</copyright>
+        <dependencies>
+            <dependency id="Wave" version="[3.0]" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="GenericOccurrencePresenter\bin\GenericOccurrencePresenter.*" target="DotFiles" />
+    </files>
+</package>
